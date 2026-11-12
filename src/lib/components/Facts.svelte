@@ -19,7 +19,7 @@
 				The church phone rings {pastor}. Call with a question about faith, or if you just need
 				someone to talk to. <a class="nowrap" href={phone.tel}>{phone.display}</a>
 			</p>
-			<img src={pastorPhoto} width="360" height="450" loading="lazy" alt="Photo of {pastor}" />
+			<img src={pastorPhoto} width="240" height="300" loading="lazy" alt="Photo of {pastor}" />
 		</div>
 	</div>
 	<div class="row">
