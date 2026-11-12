@@ -37,7 +37,8 @@ small { font-size: .62em; font-weight: 500; }
 .sub em { white-space: nowrap; }
 .qr { display: block; width: 100%; height: auto; }
 .qr-block { text-align: center; }
-.qr-url { font-weight: 700; line-height: 1.25; margin-top: .08in; }
+/* The written address may run wider than the tile; it never wraps mid-word. */
+.qr-url { font-weight: 700; line-height: 1.25; margin-top: .08in; white-space: nowrap; margin-left: -1in; margin-right: -1in; }
 .what b { color: var(--cream); font-weight: 700; }
 .qr-ph-flag {
   display: block; margin-top: .3em; background: #ffe500; color: #b00000;
@@ -72,7 +73,7 @@ small { font-size: .62em; font-weight: 500; }
 {# Broken at item boundaries so no line ends on a stray "&". #}
 {% macro menu(narrow=false) -%}
 {% if narrow -%}
-Turkey, dressing,<br>mashed potatoes &amp; gravy,<br>green beans, rolls, salad,<br>pie &amp; desserts<br>Tea, coffee &amp; water
+Turkey, dressing, green beans,<br>mashed potatoes &amp; gravy,<br>rolls, salad, pie &amp; desserts<br>Tea, coffee &amp; water
 {%- else -%}
 <span class="nowrap">Turkey, dressing, mashed potatoes &amp; gravy</span><br><span class="nowrap">Green beans, rolls, salad, pie &amp; desserts</span><br>Tea, coffee &amp; water
 {%- endif %}
@@ -88,5 +89,9 @@ Turkey, dressing,<br>mashed potatoes &amp; gravy,<br>green beans, rolls, salad,<
 {%- endmacro %}
 
 {# RSVP wording follows rsvp_method in event.toml. #}
+{# "Your name and how many are coming / by <deadline>", broken on purpose. #}
+{% macro rsvp_ask(short=false) -%}
+{% if short %}Your name and how many,<br>{% else %}Your name and how many are coming<br>{% endif %}by <b class="nowrap">{{ rsvp_deadline }}</b>
+{%- endmacro %}
 {% macro rsvp_how() %}{{ 'by text' if rsvp_text else 'by phone' }}{% endmacro %}
 {% macro rsvp_verb() %}{{ 'Text' if rsvp_text else 'Call' }}{% endmacro %}
