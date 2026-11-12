@@ -32,11 +32,13 @@ html { font-family: "Besley", Georgia, serif; color: var(--cream); }
   font-weight: 700; font-style: normal; letter-spacing: 0; font-size: .8em;
   border: 2px dashed #b00000; padding: 0 .2em; white-space: nowrap;
 }
-.sage { color: var(--sage); }
 .nowrap { white-space: nowrap; }
 small { font-size: .62em; font-weight: 500; }
 .sub em { white-space: nowrap; }
 .qr { display: block; width: 100%; height: auto; }
+.qr-block { text-align: center; }
+.qr-url { font-weight: 700; line-height: 1.25; margin-top: .08in; }
+.what b { color: var(--cream); font-weight: 700; }
 .qr-ph-flag {
   display: block; margin-top: .3em; background: #ffe500; color: #b00000;
   border: 2px dashed #b00000; font-weight: 700; text-align: center;
@@ -52,20 +54,34 @@ small { font-size: .62em; font-weight: 500; }
 {{ time }}&#8202;<small>{{ half }}</small>
 {%- endmacro %}
 
-{# The line every piece carries under its title. #}
+{# The line every piece carries. #}
+
+{# The two event times. Worship is the smaller of the pair; the meal is the event. #}
+{% macro event_times() -%}
+<div class="times">
+  <div class="worship"><p class="what">Worship · guests welcome</p><p class="time">{{ t("10:30", "a.m.") }}</p></div>
+  <div class="meal"><p class="what"><b>Free</b> meal</p><p class="time">12:30–{{ t("2:30", "p.m.") }}</p></div>
+</div>
+{%- endmacro %}
+
+{% macro caterer() %}Catered by Bellflower <span class="nowrap">Youth Club</span>{% endmacro %}
 {% macro subtitle() -%}
 <p class="sub">You’re not just welcome. <em>You’re invited.</em></p>
 {%- endmacro %}
 
-{% macro menu() -%}
-Turkey, dressing, mashed potatoes &amp; gravy, green beans, rolls, salad, pie &amp; desserts<br>Tea, coffee &amp; water
+{# Broken at item boundaries so no line ends on a stray "&". #}
+{% macro menu(narrow=false) -%}
+{% if narrow -%}
+Turkey, dressing,<br>mashed potatoes &amp; gravy,<br>green beans, rolls, salad,<br>pie &amp; desserts<br>Tea, coffee &amp; water
+{%- else -%}
+<span class="nowrap">Turkey, dressing, mashed potatoes &amp; gravy</span><br><span class="nowrap">Green beans, rolls, salad, pie &amp; desserts</span><br>Tea, coffee &amp; water
+{%- endif %}
 {%- endmacro %}
 
-{# The QR code in its cream mat, with the address written out under it. #}
-{% macro qr_block(caption) -%}
+{# The QR code on its cream tile, with the address written out under it. #}
+{% macro qr_block() -%}
 <div class="qr-block">
-  <div class="qr-mat">{{ qr }}</div>
-  {% if caption %}<div class="qr-caption">{{ caption }}</div>{% endif %}
+  {{ qr }}
   <div class="qr-url">{{ site_label }}</div>
   {% if not final %}<span class="qr-ph-flag">PLACEHOLDER QR: DO NOT PRINT</span>{% endif %}
 </div>

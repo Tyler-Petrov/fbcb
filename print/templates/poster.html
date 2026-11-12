@@ -3,14 +3,16 @@
 {% set H = page_h[:-2]|float %}
 {% set mat = 0.4 %}
 {% set s = 0.85 if H < 15 else 1.0 %}{# type scale: 11x14 runs a little smaller #}
-{% set g = 0.62 if H < 15 else 1.0 %}{# vertical gap scale #}
 {% macro pt(n) %}{{ '%.1f' % (n * s) }}pt{% endmacro %}
 {% set css %}
 @page { size: {{ page_w }} {{ page_h }}; margin: 0; }
+/* Three groups: title, details, and RSVP pinned to the bottom. */
 .card {
   left: {{ mat }}in; top: {{ mat }}in; width: {{ W - 2 * mat }}in; height: {{ H - 2 * mat }}in;
-  padding: {{ 0.75 * g }}in .8in 0;
+  padding: {{ 0.7 * s }}in .8in {{ 0.65 * s }}in;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
+.card > * { min-width: 0; }
 .host { font-style: italic; color: var(--sage); font-size: {{ pt(24) }}; line-height: 1.3; }
 h1 {
   font-weight: 800; font-size: {{ pt(92) }}; line-height: .98; letter-spacing: -.012em;
@@ -19,37 +21,32 @@ h1 {
 h1 span { display: block; font-style: italic; font-weight: 500; }
 .sub { font-weight: 500; font-size: {{ pt(29) }}; line-height: 1.2; margin-top: {{ 0.24 * s }}in; }
 
-.when { margin-top: {{ 0.7 * g }}in; }
+/* WeasyPrint gives all the flex slack to the last gap, so the first one is set by hand. */
+.details { margin-top: {{ 0.45 if H < 15 else 0.55 }}in; }
 .date { font-weight: 800; font-size: {{ pt(54) }}; line-height: 1.05; letter-spacing: -.01em; }
-.times {
-  display: flex; margin-top: {{ 0.2 * s }}in;
-  border-top: 1.5pt solid var(--line); border-bottom: 1.5pt solid var(--line);
-  padding: {{ 0.16 * s }}in 0 {{ 0.2 * s }}in;
+.times { margin-top: {{ 0.16 * s }}in; border-top: 1.5pt solid var(--line); }
+.times > div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: .3in;
+  border-bottom: 1.5pt solid var(--line); padding: {{ 0.1 * s }}in 0 {{ 0.12 * s }}in;
 }
-.times > div { flex: 1; }
-.times > div + div { border-left: 1.5pt solid var(--line); padding-left: .4in; }
-.what { font-weight: 500; font-size: {{ pt(24) }}; line-height: 1.25; color: var(--sage); }
-.time { font-weight: 700; font-size: {{ pt(50) }}; line-height: 1.1; white-space: nowrap; }
+.what { font-size: {{ pt(25) }}; line-height: 1.25; color: var(--sage); }
+.time { font-weight: 700; line-height: 1.1; white-space: nowrap; }
+.worship .time { font-size: {{ pt(40) }}; }
+.meal .time { font-size: {{ pt(52) }}; }
 
-.facts { margin-top: {{ 0.5 * g }}in; }
-.facts > div { display: flex; gap: .3in; padding: {{ 0.15 * s }}in 0 {{ 0.17 * s }}in; border-bottom: 1.5pt solid var(--line); }
-.facts > div:first-child { padding-top: 0; }
-.facts dt { width: {{ 1.35 * s }}in; flex: none; font-weight: 800; font-size: {{ pt(24) }}; line-height: 1.3; }
+.facts > div { display: flex; gap: .3in; padding: {{ 0.12 * s }}in 0 {{ 0.14 * s }}in; border-bottom: 1.5pt solid var(--line); }
+.facts dt { width: {{ 1.2 * s }}in; flex: none; color: var(--sage); font-size: {{ pt(24) }}; line-height: 1.3; }
 .facts dd { flex: 1; font-size: {{ pt(24) }}; line-height: 1.3; }
-.facts dd .quiet { color: var(--sage); font-style: italic; font-size: {{ pt(20) }}; }
+.facts dd b { font-weight: 700; }
+.facts .quiet { color: var(--sage); font-style: italic; font-size: {{ pt(21) }}; display: block; margin-top: .04in; }
 
-.rsvp {
-  position: absolute; left: .8in; right: .8in; bottom: {{ 0.7 * g }}in;
-  display: flex; align-items: flex-end; gap: .5in;
-}
+.rsvp { display: flex; align-items: flex-end; gap: .5in; }
 .rsvp .text { flex: 1; }
 .rsvp .lead { font-weight: 800; font-size: {{ pt(28) }}; line-height: 1.2; }
 .rsvp .phone { font-weight: 800; font-size: {{ pt(66) }}; line-height: 1.05; letter-spacing: -.01em; }
 .rsvp p { font-size: {{ pt(23) }}; line-height: 1.35; margin-top: .05in; }
-.qr-block { width: {{ 2.1 * s }}in; text-align: center; flex: none; }
-.qr-mat { border-radius: 3pt; overflow: hidden; }
-.qr-caption { font-size: {{ pt(15) }}; line-height: 1.25; margin-top: .08in; color: var(--sage); font-style: italic; }
-.qr-url { font-weight: 700; font-size: {{ pt(16) }}; line-height: 1.25; }
+.qr-block { width: {{ 2.1 * s }}in; flex: none; }
+.qr-url { font-size: {{ pt(16) }}; }
 {% endset %}
 {{ b.head("Community Friendsgiving poster", css) }}
 <body>
@@ -60,18 +57,14 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
     {{ b.subtitle() }}
   </header>
 
-  <section class="when">
+  <section class="details">
     <p class="date">Sunday, December 6</p>
-    <div class="times">
-      <div><p class="what">Worship service</p><p class="time">{{ b.t("10:30", "a.m.") }}</p></div>
-      <div><p class="what">Free Thanksgiving meal</p><p class="time">12:30–{{ b.t("2:30", "p.m.") }}</p></div>
-    </div>
+    {{ b.event_times() }}
+    <dl class="facts">
+      <div><dt>Where</dt><dd><b>Bellflower Community Building</b><br>{{ venue_address }}</dd></div>
+      <div><dt>Menu</dt><dd>{{ b.menu() }}<span class="quiet">{{ b.caterer() }}</span></dd></div>
+    </dl>
   </section>
-
-  <dl class="facts">
-    <div><dt>Where</dt><dd>Bellflower Community Building<br>{{ venue_address }}</dd></div>
-    <div><dt>Menu</dt><dd>{{ b.menu() }}<br><span class="quiet">Catered by the Bellflower Youth Club</span></dd></div>
-  </dl>
 
   <section class="rsvp">
     <div class="text">
@@ -79,7 +72,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
       <p class="phone">{{ phone }}</p>
       <p>Your name and how many are coming, by <b>{{ rsvp_deadline }}</b></p>
     </div>
-    {{ b.qr_block("Church website") }}
+    {{ b.qr_block() }}
   </section>
 </div>
 </body>

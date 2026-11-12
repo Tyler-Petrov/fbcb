@@ -201,7 +201,7 @@ def rounded_qr_svg(qr: segno.QRCode, border: int = 4) -> str:
         rings.append(f'<path d="{rrect(x + 2, y + 2, 3, 3, 0.9)}"/>')
     return (
         f'<svg class="qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">'
-        f'<rect width="{size}" height="{size}" rx="{size * 0.09:.2f}" fill="{QR_CREAM}"/>'
+        f'<rect width="{size}" height="{size}" rx="{size * 0.07:.2f}" fill="{QR_CREAM}"/>'
         f'<g fill="{QR_DARK}">{"".join(rings)}{"".join(dots)}</g></svg>'
     )
 
