@@ -1,98 +1,102 @@
 {% import "base.html" as b with context %}
+{% set W = page_w[:-2]|float %}
 {% set H = page_h[:-2]|float %}
-{% set s = 0.92 if H < 15 else 1.08 %}
-{% set g = 0.8 if H < 15 else 1.25 %}{# vertical gap scale #}
+{% set mat = 0.4 %}
+{% set s = 0.84 if H < 15 else 1.0 %}{# type scale: 11x14 runs a little smaller #}
+{% set g = 0.6 if H < 15 else 1.0 %}{# vertical gap scale #}
 {% macro pt(n) %}{{ '%.1f' % (n * s) }}pt{% endmacro %}
 {% set css %}
-@page { size: {{ page_w }} {{ page_h }}; margin: 0.45in; }
-.frame {
-  height: {{ H - 0.9 }}in;
-  border: 3pt solid var(--gold);
-  outline: 1pt solid var(--gold); outline-offset: -8pt;
-  padding: {{ 0.5 * g }}in 0.6in 0.4in; position: relative;
-  text-align: center;
+@page { size: {{ page_w }} {{ page_h }}; margin: 0; }
+.card {
+  left: {{ mat }}in; top: {{ mat }}in; width: {{ W - 2 * mat }}in; height: {{ H - 2 * mat }}in;
+  padding: {{ 0.7 * s }}in 0.75in {{ 0.65 * s }}in;
 }
-.kicker {
-  font-weight: 700; color: var(--olive); text-transform: uppercase;
-  letter-spacing: .07em; font-size: 16pt; line-height: 1.3;
-}
+.when { margin-top: {{ 0.55 * g }}in; }
+.menu { margin-top: {{ 0.45 * g }}in; }
+.bottom { position: absolute; left: .75in; right: .75in; bottom: {{ 0.65 * s }}in; }
+.host { font-style: italic; font-size: {{ pt(24) }}; line-height: 1.3; color: var(--sage); }
 h1 {
-  font-family: "Fraunces"; font-weight: 800; color: var(--rust);
-  font-size: {{ pt(86) }}; line-height: .98; margin-top: .06in; letter-spacing: -.01em;
+  font-weight: 800; font-size: {{ pt(90) }}; line-height: .98; letter-spacing: -.012em;
+  margin-top: {{ 0.12 * s }}in;
 }
-.leaves { display: block; margin: .14in auto .1in; height: auto; }
-.free {
-  font-family: "Fraunces"; font-weight: 600; font-size: {{ pt(34) }}; line-height: 1.15;
+h1 span { display: block; font-style: italic; font-weight: 500; }
+.free { font-weight: 500; font-size: {{ pt(30) }}; line-height: 1.2; margin-top: {{ 0.22 * s }}in; }
+
+.date { font-weight: 800; font-size: {{ pt(50) }}; line-height: 1.05; letter-spacing: -.01em; }
+.times {
+  display: flex; gap: .5in; margin-top: {{ 0.18 * s }}in;
+  border-top: 1.5pt solid var(--line); border-bottom: 1.5pt solid var(--line);
+  padding: {{ 0.16 * s }}in 0 {{ 0.2 * s }}in;
 }
-section.info { margin-top: {{ 0.3 * g }}in; }
-.when {
-  font-family: "Fraunces"; font-weight: 800; color: var(--ink);
-  font-size: {{ pt(54) }}; line-height: 1;
-}
-.sched { margin: .12in auto 0; border-collapse: collapse; font-size: {{ pt(27) }}; }
-.sched td { padding: .03in .12in; text-align: left; line-height: 1.25; }
-.sched td.t { text-align: right; font-weight: 700; white-space: nowrap; }
-.where { font-size: {{ pt(25) }}; line-height: 1.3; margin-top: .1in; }
-.where b { font-size: {{ pt(27) }}; }
+.times > div { flex: 1; }
+.what { font-weight: 500; font-size: {{ pt(24) }}; line-height: 1.25; }
+.time { font-weight: 700; font-size: {{ pt(46) }}; line-height: 1.1; white-space: nowrap; }
+.note { font-style: italic; color: var(--sage); font-size: {{ pt(19) }}; line-height: 1.3; margin-top: .04in; }
+.where { font-weight: 700; font-size: {{ pt(28) }}; line-height: 1.3; margin-top: {{ 0.16 * s }}in; }
+.where .addr { font-weight: 400; }
+
 .menu {
-  margin: {{ 0.28 * g }}in 0 0; background: var(--tint); border-radius: 10pt; padding: .16in .3in .18in;
+  background: var(--green-lit); border-radius: 5pt;
+  padding: {{ 0.22 * s }}in .3in {{ 0.24 * s }}in;
 }
-.menu h2 {
-  font-family: "Fraunces"; font-weight: 600; color: var(--rust);
-  font-size: {{ pt(28) }}; line-height: 1.1; margin-bottom: .06in;
-}
-.menu ul { list-style: none; font-size: {{ pt(23) }}; line-height: 1.35; }
+.menu h2 { font-weight: 800; font-size: {{ pt(28) }}; line-height: 1.1; margin-bottom: .05in; }
+.menu ul { list-style: none; font-size: {{ pt(23) }}; line-height: 1.4; }
 .menu li { display: inline; white-space: nowrap; }
-.menu li:not(:last-child)::after { content: " ·"; color: var(--gold); font-weight: 700; }
-.menu .by { font-style: italic; font-size: {{ pt(17) }}; margin-top: .06in; }
-.bottom { position: absolute; left: 0.6in; right: 0.6in; bottom: {{ 0.4 * g }}in; display: flex; align-items: center; gap: .35in; text-align: left; }
+.menu li:not(:last-child)::after { content: " ·"; color: var(--sage); }
+.menu .drinks { font-style: italic; color: var(--sage); font-size: {{ pt(21) }}; margin-top: .03in; }
+
+.bottom { display: flex; align-items: flex-end; gap: .5in; }
 .rsvp { flex: 1; }
-.rsvp .lead {
-  font-family: "Fraunces"; font-weight: 600; color: var(--rust);
-  font-size: {{ pt(30) }}; line-height: 1.1;
-}
-.rsvp p { font-size: {{ pt(22) }}; line-height: 1.3; margin-top: .06in; }
-.rsvp .phone {
-  font-weight: 700; font-size: {{ pt(44) }}; line-height: 1.05; margin-top: .04in;
-  letter-spacing: .01em;
-}
-.qr-block { width: {{ 2.1 * s }}in; text-align: center; }
-.qr-caption { font-weight: 700; font-size: {{ pt(15) }}; margin-top: .06in; line-height: 1.2; }
-.qr-url { font-size: {{ pt(14) }}; line-height: 1.2; }
+.rsvp .lead { font-weight: 800; font-size: {{ pt(34) }}; line-height: 1.1; }
+.rsvp .phone { font-weight: 800; font-size: {{ pt(60) }}; line-height: 1.05; letter-spacing: -.01em; margin-top: .02in; }
+.rsvp p { font-size: {{ pt(23) }}; line-height: 1.35; margin-top: .06in; }
+.rsvp p + p { margin-top: 0; }
+.qr-block { width: {{ 2.3 * s }}in; text-align: center; flex: none; }
+.qr-mat { border-radius: 3pt; overflow: hidden; }
+.qr-caption { font-size: {{ pt(15) }}; line-height: 1.25; margin-top: .08in; color: var(--sage); font-style: italic; }
+.qr-url { font-weight: 700; font-size: {{ pt(16) }}; line-height: 1.25; }
 {% endset %}
-{{ b.head("Friendsgiving poster", css) }}
+{{ b.head("Community Friendsgiving poster", css) }}
 <body>
-<div class="frame">
+<div class="card">
   <header>
-    <div class="kicker">First Baptist Church of Bellflower invites you to a</div>
-    <h1>Community<br>Friendsgiving</h1>
-    {{ b.leaves("3.2in") }}
-    <div class="free">A free meal. Everyone is welcome.</div>
+    <p class="host">First Baptist Church of Bellflower invites you to a</p>
+    <h1>Community <span>Friendsgiving</span></h1>
+    <p class="free">A free meal, and everyone is welcome.</p>
   </header>
 
-  <section class="info">
-    <div class="when">Sunday, December 6</div>
-    <table class="sched">
-      <tr><td class="t">10:30 a.m.</td><td>Worship service</td></tr>
-      <tr><td class="t">12:30 – 2:30 p.m.</td><td>Thanksgiving meal</td></tr>
-    </table>
-    <div class="where"><b>Bellflower Community Building</b><br>{{ venue_address }}</div>
+  <section class="when">
+    <p class="date">Sunday, December 6</p>
+    <div class="times">
+      <div>
+        <p class="what">Worship service</p>
+        <p class="time">{{ b.t("10:30", "a.m.") }}</p>
+        <p class="note">Guests are invited</p>
+      </div>
+      <div>
+        <p class="what">Thanksgiving meal</p>
+        <p class="time">12:30–{{ b.t("2:30", "p.m.") }}</p>
+      </div>
+    </div>
+    <p class="where">Bellflower Community Building<br><span class="addr">{{ venue_address }}</span></p>
   </section>
 
   <section class="menu">
     <h2>On the table</h2>
-    <ul>{{ b.menu_items() }}</ul>
-    <div class="by">Catered by the Bellflower Youth Club</div>
+    <div>
+      <ul>{{ b.menu_items() }}</ul>
+      <p class="drinks">{{ b.drinks() }} to drink. Catered by the Bellflower Youth Club.</p>
+    </div>
   </section>
 
   <section class="bottom">
     <div class="rsvp">
-      <div class="lead">Please RSVP by text</div>
-      <p>Send your name and how many are coming to</p>
-      <div class="phone">{{ phone }}</div>
-      <p>by <b>{{ rsvp_deadline }}</b></p>
+      <p class="lead">RSVP {{ b.rsvp_how() }}</p>
+      <p class="phone">{{ phone }}</p>
+      <p>{{ b.rsvp_verb() }} with your name and how many are coming.</p>
+      <p>Please reply by <b>{{ rsvp_deadline }}</b>.</p>
     </div>
-    {{ b.qr_block("Scan to visit our church website") }}
+    {{ b.qr_block("Scan for our church website") }}
   </section>
 </div>
 </body>

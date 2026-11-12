@@ -1,56 +1,75 @@
 {% import "base.html" as b with context %}
+{% set mat = 0.3 %}
 {% set css %}
 /* Letter sheet, folded across the middle into an A-frame tent.
-   The top panel is printed upside down so both sides read upright. */
+   The top half is printed upside down so both sides read upright on the table.
+   Each half is its own card, so the fold lands on bare paper and the green never cracks. */
 @page { size: 8.5in 11in; margin: 0; }
 .sheet { width: 8.5in; height: 11in; position: relative; }
-.panel {
-  position: absolute; left: 0; width: 8.5in; height: 5.5in;
-  padding: .45in .5in .4in;
-  display: flex; gap: .35in; align-items: center;
+.half { position: absolute; left: 0; width: 8.5in; height: 5.5in; }
+.half.top { top: 0; transform: rotate(180deg); }
+.half.bottom { top: 5.5in; }
+.card {
+  left: {{ mat }}in; top: {{ mat }}in; width: {{ 8.5 - 2 * mat }}in; height: {{ 5.5 - 2 * mat }}in;
+  padding: .36in .45in .32in;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-.panel.top { top: 0; transform: rotate(180deg); }
-.panel.bottom { top: 5.5in; }
-.fold { position: absolute; top: 5.5in; width: .3in; border-top: 1pt solid #a89a8c; }
+.fold { position: absolute; top: 5.5in; width: .25in; border-top: .75pt solid #9aa79f; }
 .fold.l { left: 0; } .fold.r { right: 0; }
-.fold-label { position: absolute; top: 5.42in; left: .38in; font-size: 7pt; color: #a89a8c; }
 
-.info { flex: 1; }
-.welcome { font-family: "Fraunces"; font-weight: 800; color: var(--rust); font-size: 30pt; line-height: 1.05; }
-.church { font-weight: 700; font-size: 16pt; color: var(--olive); margin-top: .04in; }
-.leaves { display: block; margin: .08in 0 .06in; height: auto; }
-.sched { border-collapse: collapse; font-size: 16pt; }
-.sched td { padding: .02in .12in .02in 0; line-height: 1.3; }
-.sched td.t { font-weight: 700; white-space: nowrap; }
-.contact { font-size: 14pt; line-height: 1.35; margin-top: .08in; }
-.qr-block { width: 2.05in; text-align: center; }
-.qr-caption { font-weight: 700; font-size: 13pt; line-height: 1.2; margin-top: .06in; }
-.qr-url { font-size: 12pt; line-height: 1.2; }
+.head { display: flex; gap: .4in; align-items: flex-start; }
+.head .text { flex: 1; }
+.thanks { font-style: italic; color: var(--sage); font-size: 15pt; line-height: 1.3; }
+h1 { font-weight: 800; font-size: 30pt; line-height: 1.05; letter-spacing: -.012em; margin-top: .06in; }
+h1 span { display: block; font-style: italic; font-weight: 500; }
+.welcome { font-size: 13.5pt; line-height: 1.4; margin-top: .1in; color: var(--sage); }
+.qr-block { width: 1.55in; flex: none; text-align: center; }
+.qr-mat { border-radius: 2pt; overflow: hidden; }
+.qr-caption { font-style: italic; color: var(--sage); font-size: 10pt; line-height: 1.25; margin-top: .06in; }
+.qr-url { font-weight: 700; font-size: 10.5pt; line-height: 1.25; word-break: break-all; }
+
+.times {
+  display: flex; gap: .3in;
+  border-top: 1pt solid var(--line); border-bottom: 1pt solid var(--line);
+  padding: .1in 0 .12in;
+}
+.times > div { flex: 1; }
+.what { font-weight: 500; font-size: 12.5pt; line-height: 1.25; }
+.time { font-weight: 700; font-size: 25pt; line-height: 1.1; white-space: nowrap; }
+.find { display: flex; justify-content: space-between; align-items: baseline; gap: .3in; margin-top: .12in; }
+.find p { font-size: 13pt; line-height: 1.3; }
+.find b { font-weight: 700; }
 {% endset %}
-{% macro panel(cls) -%}
-<div class="panel {{ cls }}">
-  <div class="info">
-    <div class="welcome">Thank you for eating with us!</div>
-    <div class="church">First Baptist Church of Bellflower</div>
-    {{ b.leaves("2.2in") }}
-    <table class="sched">
-      <tr><td>Sunday School</td><td class="t">Sundays, {{ sunday_school_time }}</td></tr>
-      <tr><td>Worship</td><td class="t">Sundays, {{ sunday_worship_time }}</td></tr>
-      <tr><td>Bible Study</td><td class="t">Wednesdays, {{ wednesday_study_time }}</td></tr>
-    </table>
-    <div class="contact">
-      {{ church_address }}, Bellflower<br>
-      {{ pastor }} · {{ phone }}
+{% macro half(cls) -%}
+<div class="half {{ cls }}">
+  <div class="card">
+    <div class="head">
+      <div class="text">
+        <p class="thanks">Thank you for sharing this meal with us.</p>
+        <h1>First Baptist Church <span>of Bellflower</span></h1>
+        <p class="welcome">A small church with an open door. Come as you are, any week.</p>
+      </div>
+      {{ b.qr_block("Scan for our website") }}
+    </div>
+    <div>
+      <div class="times">
+        <div><p class="what">Sunday school</p><p class="time">{{ sunday_school_time|ampm }}</p></div>
+        <div><p class="what">Sunday worship</p><p class="time">{{ sunday_worship_time|ampm }}</p></div>
+        <div><p class="what">Wednesday Bible study</p><p class="time">{{ wednesday_study_time|ampm }}</p></div>
+      </div>
+      <div class="find">
+        <p><b>{{ church_address }}, MO 63333</b></p>
+        <p>{{ pastor }}, <b class="nowrap">{{ phone }}</b></p>
+      </div>
     </div>
   </div>
-  {{ b.qr_block("Scan for our website") }}
 </div>
 {%- endmacro %}
-{{ b.head("Friendsgiving table tent", css) }}
+{{ b.head("Church table tent", css) }}
 <body>
 <div class="sheet">
-  {{ panel("top") }}
-  {{ panel("bottom") }}
+  {{ half("top") }}
+  {{ half("bottom") }}
   <div class="fold l"></div><div class="fold r"></div>
 </div>
 </body>

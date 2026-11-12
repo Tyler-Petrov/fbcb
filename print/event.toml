@@ -15,7 +15,7 @@ rsvp_deadline = ""
 venue_address = ""
 
 # Church street address. Confirmed by Tyler, Nov 9.
-church_address = "302 S Main St., Bellflower"
+church_address = "302 S Main St, Bellflower"
 
 # Weekly schedule for the table tent. Confirmed by Tyler, Nov 9.
 sunday_school_time = "9:30 a.m."

@@ -22,8 +22,10 @@ CONFIG = ROOT / "event.toml"
 OUT = ROOT / "out"
 PLACEHOLDER_URL = "https://example.com/FBCB-PLACEHOLDER"
 
-# Ink colors for the QR code. Dark brown reads as black to scanners.
-QR_DARK = "#2b1a0f"
+# QR ink is the church green. On the prints it sits on a cream tile, the way the
+# cover photo sits in a cream mat on the website; standalone files use white.
+QR_DARK = "#0f2f25"
+QR_CREAM = "#f4eddc"
 
 
 def set_url(url: str) -> None:
@@ -77,11 +79,14 @@ def main() -> None:
     stem = "fbcb-website-qr" if final else "fbcb-website-qr-PLACEHOLDER"
     qr_svg = qr_dir / f"{stem}.svg"
     qr_png = qr_dir / f"{stem}.png"
+    qr_pdf = qr_dir / f"{stem}-print.pdf"
     qr.save(qr_svg, scale=10, border=4, dark=QR_DARK, light="#ffffff")
     # 40 px per module: about 2,000 px wide, sharp at any print size used here.
     qr.save(qr_png, scale=40, border=4, dark=QR_DARK, light="#ffffff")
+    # Vector copy for the print shop: 2 in. square, scales to any size.
+    qr.save(qr_pdf, scale=144 / (qr.symbol_size(border=4)[0]), border=4, dark=QR_DARK)
     qr_inline = Markup(
-        qr.svg_inline(scale=1, border=0, dark=QR_DARK, omitsize=True, svgclass="qr")
+        qr.svg_inline(scale=1, border=4, dark=QR_DARK, light=QR_CREAM, omitsize=True, svgclass="qr")
     )
 
     # ---- Render ----------------------------------------------------------
@@ -89,7 +94,15 @@ def main() -> None:
         loader=FileSystemLoader(ROOT / "templates"),
         autoescape=select_autoescape(["html"]),
     )
+    # "9:30 a.m." -> "9:30 <small>a.m.</small>", the way the website sets times.
+    env.filters["ampm"] = lambda v: Markup(
+        re.sub(r"\s*([ap]\.m\.)", "&#8202;<small>\\1</small>", str(v))
+    )
+    method = str(cfg.get("rsvp_method", "text")).strip().lower()
+    if method not in ("text", "call"):
+        sys.exit(f'rsvp_method must be "text" or "call", got: {method!r}')
     ctx = dict(
+        rsvp_text=method == "text",
         final=final,
         qr=qr_inline,
         site_label=site_label,
