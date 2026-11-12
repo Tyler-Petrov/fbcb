@@ -1,51 +1,51 @@
 <script lang="ts">
-	import About from '#lib/components/About.svelte';
-	import Contact from '#lib/components/Contact.svelte';
 	import Events from '#lib/components/Events.svelte';
-	import Footer from '#lib/components/Footer.svelte';
+	import Facts from '#lib/components/Facts.svelte';
 	import Hero from '#lib/components/Hero.svelte';
-	import Nav from '#lib/components/Nav.svelte';
-	import Pastor from '#lib/components/Pastor.svelte';
-	import Sermons from '#lib/components/Sermons.svelte';
-	import { address, scheduleSummary } from '#lib/church.ts';
+	import Visit from '#lib/components/Visit.svelte';
+	import { address, scheduleSummary, tagline } from '#lib/church.ts';
 </script>
 
 <svelte:head>
 	<title>First Baptist Church of Bellflower · Bellflower, Missouri</title>
 	<meta
 		name="description"
-		content="A small Southern Baptist church at {address.street} in Bellflower, Missouri. {scheduleSummary} Everyone is welcome."
+		content="A small Southern Baptist church at {address.street} in Bellflower, Missouri. {scheduleSummary} {tagline.join(
+			' '
+		)}"
 	/>
 	<meta property="og:title" content="First Baptist Church of Bellflower" />
 	<meta property="og:description" content="{scheduleSummary} {address.street}, Bellflower, MO." />
-	<!-- PLACEHOLDER: once the cover photo is in static/, add
-	<meta property="og:image" content="https://YOUR-DOMAIN/christmas-eve.jpg" /> -->
 </svelte:head>
 
 <a class="skip" href="#times">Skip to service times</a>
-<Nav />
-<main id="top">
-	<Hero />
+<Hero />
+<main>
+	<Visit />
 	<Events />
-	<About />
-	<Pastor />
-	<Sermons />
-	<Contact />
+	<Facts />
 </main>
-<Footer />
+<footer class="frame">
+	First Baptist Church of Bellflower, {address.street}, {address.city}
+</footer>
 
 <style>
 	.skip {
 		position: absolute;
 		left: -999px;
 		top: 0.5rem;
-		background: var(--gold);
-		color: var(--bg);
-		padding: 0.6rem 1rem;
 		z-index: 20;
+		padding: 0.6rem 1rem;
+		background: var(--cream);
+		color: var(--green);
 		font-weight: 700;
 	}
 	.skip:focus {
 		left: 0.5rem;
+	}
+	footer {
+		padding-block: 1.75rem 2.75rem;
+		color: var(--sage);
+		font-size: 1rem;
 	}
 </style>

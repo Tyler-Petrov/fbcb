@@ -1,11 +1,15 @@
 // Everything a volunteer might need to change lives in this file.
-// After editing, rebuild the site (pnpm build) so the change reaches the published pages.
+// After editing, open a pull request to main. Once it is merged, run pnpm release to publish it.
 
 export const phone = {
 	display: '573-340-1070',
 	tel: 'tel:+15733401070',
 	sms: 'sms:+15733401070'
 };
+
+// The line under the church name at the top of the page. Each sentence stays whole, so on a
+// phone they sit one above the other.
+export const tagline = ["You're not just welcome.", "You're invited."];
 
 // Confirmed by Tyler, Nov 9. Map links search by church name, which lands on Google's pin.
 export const address = {
@@ -15,7 +19,6 @@ export const address = {
 
 const mapQuery = 'First+Baptist+Church+of+Bellflower,+Bellflower,+MO+63333';
 export const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
-export const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&z=16&output=embed`;
 
 // The church's Facebook presence is a group, not a page. Facebook offers no embed or
 // API for group events, so event cards below are entered by hand.
@@ -25,24 +28,18 @@ export const facebookUrl = 'https://www.facebook.com/groups/1522672238925411';
 // auto-playing the newest upload.
 export const youtubeUrl = 'https://www.youtube.com/@FirstBaptistChurchBellflower/videos';
 
-// PLACEHOLDER: the Christmas Eve church-family photo. Resize it to about 2000px wide
-// (under ~500 KB, for slow rural connections), save it as static/christmas-eve.jpg, and fill
-// this in with its real pixel size. The photo keeps its own shape, so nobody gets cropped.
-// Empty slots show a labeled box while developing and are left out of the published site.
-export const heroPhoto: {
-	src: string;
-	width: number;
-	height: number;
-	alt: string;
-	caption: string;
-} | null = null;
-// e.g. { src: '/christmas-eve.jpg', width: 2000, height: 1333,
-//        alt: 'The whole congregation of First Baptist Church of Bellflower together on Christmas Eve',
-//        caption: 'Our church family on Christmas Eve' }
-
-// PLACEHOLDER: the church's mission statement, word for word. While it's null the
-// About section shows a labeled empty slot.
-export const missionStatement: string | null = null;
+// The photo behind the church name at the top of the page.
+// STAND-IN: a free stock photo, not our congregation. It is "Large choir performance in a
+// modern church" by Caleb Oquendo (pexels.com/photo/34611802, Pexels license), mirrored and
+// trimmed at the top.
+// To use our own photo, replace the four hero-* files in src/lib/assets (800 and 1600 pixels
+// wide, as .jpg and .webp) and update this description. The photo is cropped to fit. On a
+// phone only about the right half shows, and the church name covers its bottom quarter. On
+// wide screens the name covers its left side. So a group photo needs everyone in the top
+// right, or a crop that puts them there.
+export const heroPhoto = {
+	alt: 'People standing together in a church, clapping along with the music'
+};
 
 // Statement of faith. PLACEHOLDER until Tyler confirms: a plain-language summary of the
 // Baptist Faith & Message 2000, the Southern Baptist Convention's confession. If the church
@@ -82,79 +79,66 @@ export const statementOfFaith: { title: string; text: string }[] = [
 	}
 ];
 
-// PLACEHOLDER: Pastor Jim's photo and a few short paragraphs about him.
-// Photo: a portrait-orientation (taller than wide) head-and-shoulders shot works best.
-// Save it as static/pastor-jim.jpg, then set photo to '/pastor-jim.jpg'.
-export const pastor: { name: string; photo: string | null; bio: string[] | null } = {
-	name: 'Pastor Jim',
-	photo: null,
-	bio: null
-};
+// His photo is src/lib/assets/pastor-jim.jpg, 240 by 300 pixels. To change it, replace that
+// file with another photo of the same shape (4 wide by 5 tall).
+export const pastor = 'Pastor Jim';
 
-export type Gathering = {
-	what: string;
-	/** 0 = Sunday … 6 = Saturday */
-	day: number;
-	/** minutes after midnight, Central time */
-	start: number;
-	end: number;
-	time: string;
-	ampm: 'a.m.' | 'p.m.';
-};
+export type Gathering = { what: string; time: string; ampm: 'a.m.' | 'p.m.' };
 
-export const schedule: { day: string; rows: Gathering[] }[] = [
-	{
-		day: 'Sunday',
-		rows: [
-			{ what: 'Sunday school', day: 0, start: 570, end: 630, time: '9:30', ampm: 'a.m.' },
-			{ what: 'Worship', day: 0, start: 630, end: 720, time: '10:30', ampm: 'a.m.' }
-		]
-	},
-	{
-		day: 'Wednesday',
-		rows: [{ what: 'Bible study', day: 3, start: 1080, end: 1155, time: '6:00', ampm: 'p.m.' }]
-	}
+export const schedule: Gathering[] = [
+	{ what: 'Sunday school', time: '9:30', ampm: 'a.m.' },
+	{ what: 'Sunday worship', time: '10:30', ampm: 'a.m.' },
+	{ what: 'Wednesday Bible study', time: '6:00', ampm: 'p.m.' }
 ];
 
-/** e.g. "Sundays: Sunday school 9:30 a.m., worship 10:30 a.m. Wednesdays: Bible study 6:00 p.m." */
-export const scheduleSummary = schedule
-	.map(
-		(g) =>
-			`${g.day}s: ${g.rows.map((r, i) => `${i ? r.what.toLowerCase() : r.what} ${r.time} ${r.ampm}`).join(', ')}`
-	)
-	.join(' ');
+/** e.g. "Sunday school 9:30 a.m., Sunday worship 10:30 a.m., Wednesday Bible study 6:00 p.m." */
+export const scheduleSummary = schedule.map((g) => `${g.what} ${g.time} ${g.ampm}`).join(', ');
 
 export type ChurchEvent = {
+	/** Short and unique, like 'friendsgiving-2026'. */
 	id: string;
+	/** Shown large. For a long word, put \u00AD (a soft hyphen) where it may break, as in
+	 * 'Friends\u00ADgiving'. Otherwise the title shrinks to fit on small screens. */
 	title: string;
-	month: string;
-	date: string;
 	/** Include the year so the card can't be misread later. */
 	when: string;
-	details: [string, string][];
-	body: string;
+	/** A paragraph or two. Say what it is, then give the times and the place. */
+	text: string[];
+	/** Adds a button for texting an RSVP to the church phone. */
 	rsvp?: boolean;
-	/** Shown under the service times while the event is upcoming, for anything that changes a regular service. */
-	notice?: string;
-	/** ISO date (Central time) on which the card disappears */
-	hideAfter: string;
+	/** The last day the card shows, as YYYY-MM-DD in Central time. Usually the day of the
+	 * event. Visitors with JavaScript turned off keep seeing it until the site is released again. */
+	lastDay: string;
 };
 
 export const events: ChurchEvent[] = [
 	{
 		id: 'friendsgiving-2026',
 		title: 'Community Friends\u00ADgiving',
-		month: 'Dec',
-		date: '6',
 		when: 'Sunday, December 6, 2026',
-		details: [
-			['Worship', '10:30 a.m.'],
-			['Meal', '12:30 to 2:30 p.m.'],
-			['Where', 'Bellflower community building. Worship and the meal are both there that day.']
+		text: [
+			'A free turkey dinner with all the trimmings and pie, catered by the Bellflower Youth Club. Everyone in Bellflower is invited to the service, the meal, or both.',
+			'That Sunday, worship is at 10:30 a.m. and the meal runs from 12:30 to 2:30 p.m. Both are at the Bellflower community building.'
 		],
-		body: 'A free turkey dinner with all the trimmings and pie, catered by the Bellflower Youth Club. Everyone in Bellflower is invited to the service, the meal, or both.',
 		rsvp: true,
-		notice: 'Dec. 6 only: worship is at the Bellflower community building, then a free meal.',
-		hideAfter: '2026-12-07'
+		lastDay: '2026-12-06'
 	}
 ];
+
+// Mistakes here would quietly break the page, so they stop the build instead. Each event's id
+// names its spot on the page, so a repeated id would break links to it. A lastDay that isn't
+// a real date written YYYY-MM-DD would compare wrongly and keep an event up for months.
+const eventIds = events.map((e) => e.id);
+if (new Set(eventIds).size !== eventIds.length) {
+	throw new Error('Each event in src/lib/church.ts needs its own id.');
+}
+for (const e of events) {
+	const day = new Date(`${e.lastDay}T00:00:00Z`);
+	if (
+		!/^\d{4}-\d{2}-\d{2}$/.test(e.lastDay) ||
+		isNaN(day.getTime()) ||
+		day.toISOString().slice(0, 10) !== e.lastDay
+	) {
+		throw new Error(`Event "${e.id}" in src/lib/church.ts: write lastDay like 2027-01-15.`);
+	}
+}

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0f2f25">
+<title>First Baptist Church of Bellflower</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..800;1,400..800&display=swap">
+<style>
+/* Design 3: The family photo.
+   A page from the church album: the Christmas Eve photo in a cream mat, one typeface, one green. */
+:root {
+	--green: #0f2f25;
+	--green-lit: #173d31;
+	--line: #2f5d4d;
+	--cream: #f4eddc;
+	--sage: #b7cabd; /* quieter text */
+	--face: 'Besley', Clarendon, Rockwell, Georgia, serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+	margin: 0;
+	background: var(--green);
+	color: var(--cream);
+	font: 400 1.125rem/1.6 var(--face);
+	overflow-wrap: break-word;
+}
+a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1.5px; }
+p { margin: 0; text-wrap: pretty; }
+:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; border-radius: 2px; }
+
+/* The photo and everything under it share one width, so their edges line up. */
+.frame { width: min(100% - 2.5rem, 56rem, max(34rem, 82svh)); margin-inline: auto; }
+
+.cover { margin-block: 1.25rem 0; position: relative; }
+.cover img { display: block; width: 100%; height: auto; border: 0.45rem solid var(--cream); }
+.cover figcaption { margin-top: 0.7rem; font: italic 400 1rem/1.4 var(--face); color: var(--sage); }
+.standin {
+	position: absolute; left: 1rem; top: 1rem;
+	padding: 0.3rem 0.6rem;
+	background: rgba(0, 0, 0, 0.6); color: #fff;
+	font: 400 0.8125rem/1.3 system-ui, sans-serif;
+}
+
+.intro { margin-top: 1.75rem; }
+h1 {
+	margin: 0;
+	font: 800 clamp(2.3rem, 10vw, 3.9rem)/1.02 var(--face);
+	letter-spacing: -0.012em;
+	text-wrap: balance;
+}
+h1 span { display: block; font-style: italic; font-weight: 500; }
+.welcome { margin-top: 1rem; max-width: 26rem; color: var(--sage); }
+
+.times { list-style: none; margin: 1.6rem 0 0; padding: 0; border-bottom: 1px solid var(--line); }
+.times li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--line); }
+.what { font-weight: 500; }
+.time { font-weight: 700; font-size: 1.5rem; line-height: 1.1; white-space: nowrap; }
+.time small { font-size: 1rem; font-weight: 500; }
+.where { margin-top: 1.25rem; font-weight: 700; }
+.nowrap { white-space: nowrap; }
+
+.acts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.btn {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0 0.3em;
+	flex: 1 1 auto;
+	min-height: 3.25rem;
+	padding: 0.7rem 0.9rem;
+	border: 2px solid var(--cream);
+	border-radius: 4px;
+	background: var(--cream);
+	color: var(--green);
+	font: 700 1rem/1.15 var(--face);
+	text-decoration: none;
+	white-space: nowrap;
+}
+.btn:hover { background: #fff; border-color: #fff; }
+.btn--line { background: transparent; color: var(--cream); }
+.btn--line:hover { background: var(--green-lit); border-color: var(--cream); }
+
+.event { margin-top: 2.75rem; padding: 1.5rem 1.25rem 1.6rem; background: var(--green-lit); border-radius: 4px; display: grid; gap: 1rem; }
+.date { font-style: italic; color: var(--sage); }
+h2 { margin: 0.15rem 0 0; font: 800 clamp(1.7rem, 7vw, 2.3rem)/1.08 var(--face); letter-spacing: -0.01em; text-wrap: balance; }
+.event-text { display: grid; gap: 0.85rem; }
+
+.facts { margin-block: 2.75rem 0; border-bottom: 1px solid var(--line); }
+.facts > div { padding: 1.1rem 0 1.2rem; border-top: 1px solid var(--line); }
+.facts dt { font-weight: 800; }
+.facts dd { margin: 0.2rem 0 0; }
+.facts dd a { font-weight: 700; }
+summary { cursor: pointer; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; }
+.beliefs { margin: 1rem 0 0; display: grid; gap: 0.9rem; }
+.beliefs dt { font-weight: 700; }
+.beliefs dd { margin: 0.1rem 0 0; color: var(--sage); }
+.beliefs + p { margin-top: 1rem; color: var(--sage); }
+
+.foot { padding-block: 1.75rem 2.75rem; color: var(--sage); font-size: 1rem; }
+
+@media (min-width: 52rem) {
+	.cover { margin-top: 2rem; }
+	.cover img { border-width: 0.7rem; }
+	.cover figcaption { text-align: center; }
+	.intro { margin-top: 1.75rem; }
+	h1 { font-size: clamp(2rem, 4.6vw, 2.4rem); }
+	h1 span { display: inline; }
+	.welcome { margin-top: 0.5rem; max-width: none; }
+	.times { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2rem; margin-top: 1.25rem; padding-block: 0.85rem 1rem; border-top: 1px solid var(--line); }
+	.times li { display: block; padding: 0; border: 0; }
+	.what, .time { display: block; }
+	.time { margin-top: 0.15rem; font-size: 2rem; }
+	.find { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 1.1rem; }
+	.where, .find .acts { margin-top: 0; }
+	.find .acts { flex: none; flex-wrap: nowrap; }
+	.btn { flex: none; padding-inline: 1.25rem; }
+	.event { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 3rem; padding: 2rem; margin-top: 3.5rem; }
+	.facts { margin-top: 3.5rem; }
+	.facts > div { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 2rem; }
+	.facts dd { margin: 0; }
+}
+
+/* Mock review switcher, not part of the design */
+.mock { position: fixed; top: 0.6rem; right: 0.6rem; z-index: 50; display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(0, 0, 0, 0.7); font: 600 12px/1 system-ui, sans-serif; }
+.mock a { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; color: #fff; text-decoration: none; }
+.mock a[aria-current] { background: #fff; color: #000; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<nav class="mock" aria-label="Design mocks, round 3">
+	<a href="https://pagedrop.page/fbcb/home-mocks/r3-1-says-it-straight">1</a>
+	<a href="https://pagedrop.page/fbcb/home-mocks/r3-2-one-screen">2</a>
+	<a href="https://pagedrop.page/fbcb/home-mocks/r3-3-family-photo" aria-current="page">3</a>
+</nav>
+
+<header>
+	<figure class="cover frame">
+		<img src="photo-standin.svg" width="1200" height="800" alt="Blurred stand-in for the photo of the whole congregation on Christmas Eve">
+		<span class="standin">Stand-in for the Christmas Eve photo</span>
+		<figcaption>Our church family on Christmas Eve.</figcaption>
+	</figure>
+
+	<div class="intro frame">
+		<h1>First Baptist Church <span>of Bellflower</span></h1>
+		<p class="welcome">A small church with an open door. Come as you are. You'll be welcome here.</p>
+		<ul class="times" aria-label="Every week">
+			<li><span class="what">Sunday school</span> <span class="time">9:30 <small>a.m.</small></span></li>
+			<li><span class="what">Sunday worship</span> <span class="time">10:30 <small>a.m.</small></span></li>
+			<li><span class="what">Wednesday Bible study</span> <span class="time">6:00 <small>p.m.</small></span></li>
+		</ul>
+		<div class="find">
+			<p class="where">302 S Main St, Bellflower, Missouri</p>
+			<p class="acts">
+				<a class="btn" href="https://www.google.com/maps/search/?api=1&query=First+Baptist+Church+of+Bellflower,+Bellflower,+MO+63333">Get directions</a>
+				<a class="btn btn--line" href="tel:+15733401070"><span>Call</span> <span>573-340-1070</span></a>
+			</p>
+		</div>
+	</div>
+</header>
+
+<main>
+	<section class="event frame" id="friendsgiving">
+		<div>
+			<p class="date">Sunday, December 6</p>
+			<h2>Community Friends&shy;giving</h2>
+		</div>
+		<div class="event-text">
+			<p>A free turkey dinner with all the trimmings and pie, catered by the Bellflower Youth Club. Everyone in Bellflower is invited to the service, the meal, or both.</p>
+			<p>That Sunday, worship is at 10:30 a.m. and the meal runs from 12:30 to 2:30 p.m. Both are at the Bellflower community building.</p>
+			<p class="acts"><a class="btn" href="sms:+15733401070"><span>Text 573-340-1070</span> <span>to RSVP</span></a></p>
+		</div>
+	</section>
+
+	<dl class="facts frame">
+		<div>
+			<dt>On Main Street</dt>
+			<dd>Our building went up in 1907, and it's where we still meet every week. We're a Southern Baptist church, part of the Twin Rivers Baptist Association.</dd>
+		</div>
+		<div>
+			<dt>Pastor Jim</dt>
+			<dd>The church phone rings Pastor Jim. Call with a question about faith, or if you just need someone to talk to. <a class="nowrap" href="tel:+15733401070">573-340-1070</a></dd>
+		</div>
+		<div>
+			<dt>Sermons</dt>
+			<dd>Missed a Sunday? <a href="https://www.youtube.com/@FirstBaptistChurchBellflower/videos">Watch on YouTube</a>.</dd>
+		</div>
+		<div>
+			<dt>News</dt>
+			<dd>It goes up in our <a href="https://www.facebook.com/groups/1522672238925411">Facebook group</a> first.</dd>
+		</div>
+		<div>
+			<dt>Beliefs</dt>
+			<dd>
+				<details>
+					<summary>Read what we believe</summary>
+					<dl class="beliefs">
+						<div><dt>The Bible</dt><dd>The Bible is God's inspired Word, true and trustworthy, and our final authority for what we believe and how we live.</dd></div>
+						<div><dt>God</dt><dd>There is one true God, who exists eternally as Father, Son, and Holy Spirit.</dd></div>
+						<div><dt>Jesus Christ</dt><dd>Jesus is God the Son. He was born of a virgin, lived without sin, died on the cross for our sins, and rose bodily from the dead.</dd></div>
+						<div><dt>Salvation</dt><dd>Salvation is a free gift of God's grace. It is received by turning from sin and trusting in Jesus, not earned by good works.</dd></div>
+						<div><dt>The church</dt><dd>A local church is a family of baptized believers who gather to worship, grow in the faith, serve, and share the good news.</dd></div>
+						<div><dt>Baptism and the Lord's Supper</dt><dd>Baptism by immersion pictures a believer's new life in Christ. The Lord's Supper remembers his death until he comes again.</dd></div>
+						<div><dt>His return</dt><dd>Jesus will return personally and visibly to judge the world and make all things new.</dd></div>
+					</dl>
+					<p>We affirm the <a href="https://bfm.sbc.net/bfm2000/">Baptist Faith &amp; Message (2000)</a>, the statement of faith shared by Southern Baptist churches.</p>
+				</details>
+			</dd>
+		</div>
+	</dl>
+</main>
+
+<footer class="foot frame">First Baptist Church of Bellflower, 302 S Main St, Bellflower, MO 63333</footer>
+
+<script>
+// Friendsgiving comes off the page the day after (Central time).
+(function () {
+	var today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(new Date());
+	if (today >= '2026-12-07') document.getElementById('friendsgiving').remove();
+})();
+</script>
+</body>
+</html>
