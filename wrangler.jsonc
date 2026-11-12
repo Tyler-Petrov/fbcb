@@ -5,5 +5,7 @@
 	"name": "fbcb",
 	"compatibility_date": "2026-11-01",
 	"assets": { "directory": "./build" },
+	// Production URL. Temporary until the church's own domain is set up.
+	"routes": [{ "pattern": "fbcb.tpetrov.dev", "custom_domain": true }],
 	"preview_urls": true
 }
