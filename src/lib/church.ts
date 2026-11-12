@@ -33,9 +33,10 @@ export const youtubeUrl = 'https://www.youtube.com/@FirstBaptistChurchBellflower
 // modern church" by Caleb Oquendo (pexels.com/photo/34611802, Pexels license), mirrored and
 // trimmed at the top.
 // To use our own photo, replace the four hero-* files in src/lib/assets (800 and 1600 pixels
-// wide, as .jpg and .webp) and update this description. The church name sits over the bottom
-// of the photo on phones and over its left side on wide screens, so faces need to be toward
-// the top right.
+// wide, as .jpg and .webp) and update this description. The photo is cropped to fit. On a
+// phone only about the right half shows, and the church name covers its bottom quarter. On
+// wide screens the name covers its left side. So a group photo needs everyone in the top
+// right, or a crop that puts them there.
 export const heroPhoto = {
 	alt: 'People standing together in a church, clapping along with the music'
 };
@@ -99,12 +100,16 @@ export type ChurchEvent = {
 	title: string;
 	/** Include the year so the card can't be misread later. */
 	when: string;
-	/** A paragraph or two: what it is, then the times and the place. */
+	/** A paragraph or two. Say what it is, then give the times and the place. */
 	text: string[];
 	/** Adds a button for texting an RSVP to the church phone. */
 	rsvp?: boolean;
-	/** ISO date (Central time) on which the card disappears */
-	hideAfter: string;
+	/** One line shown right under the service times, for anything that moves or changes a
+	 * regular service. Leave it out for events that don't. */
+	notice?: string;
+	/** The last day the card shows, as YYYY-MM-DD in Central time. Usually the day of the
+	 * event. Visitors with JavaScript turned off keep seeing it until the site is rebuilt. */
+	lastDay: string;
 };
 
 export const events: ChurchEvent[] = [
@@ -117,6 +122,15 @@ export const events: ChurchEvent[] = [
 			'That Sunday, worship is at 10:30 a.m. and the meal runs from 12:30 to 2:30 p.m. Both are at the Bellflower community building.'
 		],
 		rsvp: true,
-		hideAfter: '2026-12-07'
+		notice:
+			'On Sunday, December 6, worship and a free meal are at the Bellflower community building.',
+		lastDay: '2026-12-06'
 	}
 ];
+
+// Each event's id names its spot on the page, so a repeated id would break links to it.
+// Stop the build instead.
+const eventIds = events.map((e) => e.id);
+if (new Set(eventIds).size !== eventIds.length) {
+	throw new Error('Each event in src/lib/church.ts needs its own id.');
+}

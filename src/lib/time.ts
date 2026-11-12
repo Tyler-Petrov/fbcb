@@ -19,4 +19,4 @@ export function bellflowerDate(date = new Date()): string {
  * the browser both use it, so they match; components then switch to the live date. */
 export const builtOn = bellflowerDate(new Date(__BUILD_TIME__));
 
-export const isUpcoming = (event: ChurchEvent, today: string) => today < event.hideAfter;
+export const isUpcoming = (event: ChurchEvent, today: string) => today <= event.lastDay;

@@ -1,22 +1,19 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { events, phone } from '#lib/church.ts';
-	import { bellflowerDate, builtOn, isUpcoming } from '#lib/time.ts';
+	import { builtOn, isUpcoming } from '#lib/time.ts';
 
-	// Starts from the build date (so the built HTML already leaves out past events), then
-	// switches to today's date in the visitor's browser.
-	let today = $state(builtOn);
-	onMount(() => {
-		today = bellflowerDate();
-	});
-	let upcoming = $derived(events.filter((e) => isUpcoming(e, today)));
+	// Events already over when the site was built are left out. The script in src/app.html hides
+	// the rest in the visitor's browser after their last day.
+	const upcoming = events.filter((e) => isUpcoming(e, builtOn));
 </script>
 
 {#each upcoming as event (event.id)}
-	<section class="event frame" aria-labelledby={event.id}>
-		<div>
-			<p class="date">{event.when}</p>
+	<section class="event frame" aria-labelledby={event.id} data-last-day={event.lastDay}>
+		<!-- The date shows above the title but follows it in the page, so jumping to the
+		     heading still reads the date next. -->
+		<div class="head">
 			<h2 id={event.id}>{event.title}</h2>
+			<p class="date">{event.when}</p>
 		</div>
 		<div class="text">
 			{#each event.text as paragraph (paragraph)}
@@ -24,7 +21,9 @@
 			{/each}
 			{#if event.rsvp}
 				<p class="acts">
-					<a class="btn" href={phone.sms}><span>Text {phone.display}</span> <span>to RSVP</span></a>
+					<a class="btn" href={phone.sms}
+						><span>Text</span> <span>{phone.display}</span> <span>to RSVP</span></a
+					>
 				</p>
 			{/if}
 		</div>
@@ -34,11 +33,17 @@
 <style>
 	.event {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 1rem;
 		margin-top: 2.75rem;
 		padding: 1.5rem 1.25rem 1.6rem;
 		border-radius: 4px;
 		background: var(--green-lit);
+	}
+	.head {
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: flex-end;
 	}
 	.date {
 		font-style: italic;
@@ -47,6 +52,9 @@
 	h2 {
 		margin: 0.15rem 0 0;
 		font: 800 clamp(1.7rem, 7vw, 2.3rem) / 1.08 var(--face);
+		/* Enlarged text: capped so the longest word, "Community" (about 6.5em), fits inside the
+		   panel, which is the screen less 2.5rem of page margin and 2.5rem of padding. */
+		font-size: min(clamp(1.7rem, 7vw, 2.3rem), (100vw - 5rem) / 6.6);
 		letter-spacing: -0.01em;
 		hyphens: manual;
 	}
@@ -61,6 +69,11 @@
 			gap: 3rem;
 			margin-top: 3.5rem;
 			padding: 2rem;
+		}
+		/* Here the title has the narrower of two columns: the panel less 4rem of padding and a
+		   3rem gap, split 1 to 1.25. */
+		h2 {
+			font-size: min(clamp(1.7rem, 7vw, 2.3rem), (min(100vw - 2.5rem, 56rem) - 7rem) / 2.25 / 6.6);
 		}
 	}
 </style>

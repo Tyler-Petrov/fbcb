@@ -77,6 +77,8 @@
 	h1 {
 		margin: 0;
 		font: 800 clamp(2.3rem, 10vw, 3.6rem) / 1.02 var(--face);
+		/* Enlarged text: capped by the screen width, so no word in the name splits. */
+		font-size: min(clamp(2.3rem, 10vw, 3.6rem), 14vw);
 		letter-spacing: -0.012em;
 		text-shadow: 0 1px 1.25rem rgba(15, 47, 37, 0.7);
 	}
@@ -145,6 +147,18 @@
 		.tagline {
 			margin-top: 1rem;
 			font-size: 1.5rem;
+		}
+	}
+
+	/* Phones held sideways and other short screens: a shorter photo and a smaller name, so the
+	   name and tagline fit on the first screen. vh rather than svh, so every browser gets it. */
+	@media (orientation: landscape) and (max-height: 30rem) {
+		.hero {
+			--photo-h: clamp(12rem, 55vh, 20rem);
+			--overlap: 5rem;
+		}
+		h1 {
+			font-size: clamp(2rem, 7vw, 2.8rem);
 		}
 	}
 </style>

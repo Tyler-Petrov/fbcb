@@ -10,12 +10,12 @@
 	<title>First Baptist Church of Bellflower · Bellflower, Missouri</title>
 	<meta
 		name="description"
-		content="A small Southern Baptist church at {address.street} in Bellflower, Missouri. {scheduleSummary}. {tagline.join(
+		content="A small Southern Baptist church at {address.street} in Bellflower, Missouri. {scheduleSummary} {tagline.join(
 			' '
 		)}"
 	/>
 	<meta property="og:title" content="First Baptist Church of Bellflower" />
-	<meta property="og:description" content="{scheduleSummary}. {address.street}, Bellflower, MO." />
+	<meta property="og:description" content="{scheduleSummary} {address.street}, Bellflower, MO." />
 </svelte:head>
 
 <a class="skip" href="#times">Skip to service times</a>

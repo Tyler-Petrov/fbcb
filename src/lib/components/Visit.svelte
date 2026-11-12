@@ -1,8 +1,14 @@
 <script lang="ts">
-	import { address, directionsUrl, phone, schedule } from '#lib/church.ts';
+	import { address, directionsUrl, events, phone, schedule } from '#lib/church.ts';
+	import { builtOn, isUpcoming } from '#lib/time.ts';
+
+	// Upcoming events that move or change a regular service get a line right under the times.
+	// The script in src/app.html hides it after the event's last day.
+	const notices = events.filter((e) => e.notice && isUpcoming(e, builtOn));
 </script>
 
-<section class="frame" aria-label="Service times and directions">
+<section class="frame" aria-labelledby="times-heading">
+	<h2 id="times-heading" class="visually-hidden">Service times and directions</h2>
 	<ul class="times" id="times" tabindex="-1" aria-label="Every week">
 		{#each schedule as row (row.what)}
 			<li>
@@ -11,6 +17,11 @@
 			</li>
 		{/each}
 	</ul>
+	{#each notices as event (event.id)}
+		<p class="notice" data-last-day={event.lastDay}>
+			<a href="#{event.id}">{event.notice}</a>
+		</p>
+	{/each}
 	<div class="find">
 		<p class="where">{address.street}, Bellflower, Missouri</p>
 		<p class="acts">
@@ -30,15 +41,19 @@
 	.times:focus {
 		outline: none;
 	}
+	/* The time sits at the right of its name, and drops under it when enlarged text runs out of
+	   room. */
 	li {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: baseline;
-		gap: 1rem;
+		gap: 0 1rem;
 		padding: 0.65rem 0;
 		border-top: 1px solid var(--line);
 	}
 	.what {
+		flex: 1 1 8rem;
 		font-weight: 500;
 	}
 	.time {
@@ -50,6 +65,12 @@
 	small {
 		font-size: 1rem;
 		font-weight: 500;
+	}
+	.notice {
+		margin-top: 1.1rem;
+		padding-left: 0.85rem;
+		border-left: 3px solid var(--cream);
+		font-weight: 700;
 	}
 	.where {
 		margin-top: 1.25rem;
@@ -81,11 +102,14 @@
 			margin-top: 0.15rem;
 			font-size: 2rem;
 		}
+		/* The buttons sit beside the address, and move under it when enlarged text needs the
+		   room. */
 		.find {
 			display: flex;
+			flex-wrap: wrap;
 			align-items: center;
 			justify-content: space-between;
-			gap: 2rem;
+			gap: 0.8rem 2rem;
 			margin-top: 1.1rem;
 		}
 		.where,
@@ -93,8 +117,7 @@
 			margin-top: 0;
 		}
 		.acts {
-			flex: none;
-			flex-wrap: nowrap;
+			flex: 0 1 auto;
 		}
 	}
 </style>

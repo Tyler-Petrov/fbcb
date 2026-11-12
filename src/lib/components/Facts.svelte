@@ -10,28 +10,29 @@
 	} from '#lib/church.ts';
 </script>
 
-<dl class="facts frame">
-	<div class="pastor">
-		<dt>{pastor}</dt>
-		<dd>
+<!-- Each row has a small heading, so screen reader users can jump between them. -->
+<div class="facts frame">
+	<div class="row pastor">
+		<h2>{pastor}</h2>
+		<div class="body">
 			<img src={pastorPhoto} width="360" height="450" loading="lazy" alt="Photo of {pastor}" />
 			<p>
 				The church phone rings {pastor}. Call with a question about faith, or if you just need
 				someone to talk to. <a class="nowrap" href={phone.tel}>{phone.display}</a>
 			</p>
-		</dd>
+		</div>
 	</div>
-	<div>
-		<dt>Sermons</dt>
-		<dd>Missed a Sunday? <a href={youtubeUrl}>Watch on YouTube</a>.</dd>
+	<div class="row">
+		<h2>Sermons</h2>
+		<p class="body">Missed a Sunday? <a href={youtubeUrl}>Watch on YouTube</a>.</p>
 	</div>
-	<div>
-		<dt>News</dt>
-		<dd>It goes up in our <a href={facebookUrl}>Facebook group</a> first.</dd>
+	<div class="row">
+		<h2>News</h2>
+		<p class="body">It goes up in our <a href={facebookUrl}>Facebook group</a> first.</p>
 	</div>
-	<div>
-		<dt>Beliefs</dt>
-		<dd>
+	<div class="row">
+		<h2>Beliefs</h2>
+		<div class="body">
 			<details>
 				<summary>Read what we believe</summary>
 				<dl class="beliefs">
@@ -47,41 +48,49 @@
 					shared by Southern Baptist churches.
 				</p>
 			</details>
-		</dd>
+		</div>
 	</div>
-	<div>
-		<dt>On Main Street</dt>
-		<dd>
+	<div class="row">
+		<h2>On Main Street</h2>
+		<p class="body">
 			Our building went up in 1907, and it's where we still meet every week. We're a Southern
 			Baptist church, part of the Twin Rivers Baptist Association.
-		</dd>
+		</p>
 	</div>
-</dl>
+</div>
 
 <style>
 	.facts {
 		margin-block: 2.75rem 0;
 		border-bottom: 1px solid var(--line);
 	}
-	.facts > div {
+	.row {
 		padding: 1.1rem 0 1.2rem;
 		border-top: 1px solid var(--line);
 	}
-	dt {
+	h2 {
+		margin: 0;
+		font: inherit;
 		font-weight: 800;
 	}
-	dd {
-		margin: 0.2rem 0 0;
+	.body {
+		margin-top: 0.2rem;
 	}
-	dd a {
+	.body a {
 		font-weight: 700;
 	}
-	/* His photo sits beside the words, in a cream mat like a print from the church album. */
-	.pastor dd {
+	/* His photo sits beside the words, in a cream mat like a print from the church album. With
+	   enlarged text the words move under the photo. */
+	.pastor .body {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: flex-start;
 		gap: 1rem;
 		margin-top: 0.6rem;
+	}
+	.pastor p {
+		flex: 1 1 10rem;
+		min-width: 0;
 	}
 	.pastor img {
 		flex: none;
@@ -105,7 +114,7 @@
 		font-weight: 700;
 	}
 	.beliefs dd {
-		margin-top: 0.1rem;
+		margin: 0.1rem 0 0;
 		color: var(--sage);
 	}
 	.beliefs + p {
@@ -117,15 +126,15 @@
 		.facts {
 			margin-top: 3.5rem;
 		}
-		.facts > div {
+		.row {
 			display: grid;
 			grid-template-columns: 12rem minmax(0, 1fr);
 			gap: 2rem;
 		}
-		.facts > div > dd {
+		.row > .body {
 			margin: 0;
 		}
-		.pastor dd {
+		.pastor .body {
 			gap: 1.5rem;
 		}
 		.pastor img {

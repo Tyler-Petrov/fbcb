@@ -9,5 +9,29 @@
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
+		<script>
+			// Hides each event, and its notice under the service times, once its last day has
+			// passed in Bellflower, even when the site hasn't been rebuilt since.
+			(function () {
+				try {
+					var parts = {};
+					new Intl.DateTimeFormat('en-US', {
+						timeZone: 'America/Chicago',
+						year: 'numeric',
+						month: '2-digit',
+						day: '2-digit'
+					})
+						.formatToParts(new Date())
+						.forEach(function (part) {
+							parts[part.type] = part.value;
+						});
+					var today = parts.year + '-' + parts.month + '-' + parts.day;
+					var past = document.querySelectorAll('[data-last-day]');
+					for (var i = 0; i < past.length; i++) {
+						if (today > past[i].getAttribute('data-last-day')) past[i].style.display = 'none';
+					}
+				} catch (e) {}
+			})();
+		</script>
 	</body>
 </html>
