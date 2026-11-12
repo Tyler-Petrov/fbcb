@@ -86,7 +86,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
     <p class="kicker">We stopped by to say hello.</p>
     <h1>Community <span>Friendsgiving</span></h1>
     {{ b.subtitle(br=true) }}
-    <div class="free">{{ b.pie(dollop=true) }}<p><b>Free meal</b><span>Everyone welcome</span></p></div>
+    <div class="free">{{ b.pie(cut=true) }}<p><b>Free meal</b><span>Everyone welcome</span></p></div>
     <section class="when">
       <p class="date">Sunday, December 6</p>
       <p class="time">{{ b.meal_time() }}</p>
@@ -107,7 +107,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
 <div class="hanger {{ side }}">
   <div class="card back">
     <h2>Community <span>Friendsgiving</span></h2>
-    <div class="free">{{ b.pie(dollop=true) }}<p><b>Free meal</b><span>Everyone welcome</span></p></div>
+    <div class="free">{{ b.pie(cut=true) }}<p><b>Free meal</b><span>Everyone welcome</span></p></div>
     <div class="recap"><p class="d">Sunday, December 6</p><p class="t">{{ b.meal_time() }}</p><p class="p"><b>Bellflower Community Building</b><br>{{ venue_address }}</p></div>
     {{ b.setting() }}
     <section class="menu">

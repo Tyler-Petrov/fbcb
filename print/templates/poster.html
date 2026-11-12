@@ -19,14 +19,14 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .lede { display: flex; align-items: flex-start; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.3 if H > 15 else 0.3) }}; }
 .sub { font-size: {{ pt(31) }}; line-height: 1.2; margin-top: {{ inch(0.45 if H > 15 else 0.35) }}; }
 .seal {
-  flex: none; position: relative; width: {{ inch(2.85 if H > 15 else 2.55) }}; height: {{ inch(2.85 if H > 15 else 2.55) }};
-  color: var(--green); text-align: center; padding-top: {{ inch(0.74 if H > 15 else 0.72) }}; margin-right: -{{ inch(0.1) }};
+  flex: none; position: relative; width: {{ inch(3.0 if H > 15 else 2.7) }}; height: {{ inch(3.0 if H > 15 else 2.7) }};
+  color: var(--green); text-align: center; padding-top: {{ inch(0.86 if H > 15 else 0.84) }}; margin-right: -{{ inch(0.1) }};
 }
 .seal .pie { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
 .seal b, .seal i, .seal span { position: relative; }
-.seal b { display: block; font-weight: 800; font-size: {{ pt(46) }}; line-height: .9; letter-spacing: -.01em; }
-.seal i { display: block; font-weight: 500; font-size: {{ pt(30) }}; line-height: 1; }
-.seal span { display: block; font-weight: 800; font-size: {{ pt(12.5) }}; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; margin-top: {{ inch(0.08) }}; }
+.seal b { display: block; font-weight: 800; font-size: {{ pt(42) }}; line-height: .9; letter-spacing: -.01em; }
+.seal i { display: block; font-weight: 500; font-size: {{ pt(28) }}; line-height: 1; }
+.seal span { display: block; font-weight: 800; font-size: {{ pt(11.5) }}; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; margin-top: {{ inch(0.08) }}; }
 
 .setting { margin-top: {{ inch(0.14 if H > 15 else 0.06) }}; }
 .when { margin-top: {{ inch(0.16) }}; }
@@ -40,9 +40,10 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 
 .menu { margin-top: {{ inch(0.4 if H > 15 else 0.2) }}; }
 .menu .eyebrow { font-size: {{ pt(14) }}; }
-.menu p.dishes { font-size: {{ pt(22) }}; font-weight: 500; line-height: 1.4; margin-top: {{ inch(0.06) }}; }
+.menu p.dishes { font-size: {{ pt(23) }}; font-weight: 500; line-height: 1.4; margin-top: {{ inch(0.08) }}; }
 .menu .dot { color: var(--gold); font-weight: 800; padding: 0 .08em; }
-.menu .by { font-size: {{ pt(19) }}; color: var(--soft); font-style: italic; margin-top: {{ inch(0.04) }}; }
+.menu .label { line-height: 1.2; }
+.menu .by { font-size: {{ pt(18) }}; color: var(--soft); font-style: italic; margin-left: .12in; }
 
 .panel {
   position: absolute; left: 0; right: 0; bottom: 0; height: {{ inch(2.8) }};
@@ -76,9 +77,8 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
   </section>
 
   <section class="menu">
-    <p class="eyebrow">On the table</p>
+    <p class="label"><span class="eyebrow">On the table</span> <span class="by">{{ b.caterer() }}</span></p>
     <p class="dishes">{{ b.menu_inline() }}</p>
-    <p class="by">{{ b.caterer() }}</p>
   </section>
 
   <section class="panel">
