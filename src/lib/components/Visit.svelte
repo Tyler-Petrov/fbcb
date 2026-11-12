@@ -1,10 +1,5 @@
 <script lang="ts">
-	import { address, directionsUrl, events, phone, schedule } from '#lib/church.ts';
-	import { builtOn, isUpcoming } from '#lib/time.ts';
-
-	// Upcoming events that move or change a regular service get a line right under the times.
-	// The script in src/app.html hides it after the event's last day.
-	const notices = events.filter((e) => e.notice && isUpcoming(e, builtOn));
+	import { address, directionsUrl, phone, schedule } from '#lib/church.ts';
 </script>
 
 <section class="frame" aria-labelledby="times-heading">
@@ -17,11 +12,6 @@
 			</li>
 		{/each}
 	</ul>
-	{#each notices as event (event.id)}
-		<p class="notice" data-last-day={event.lastDay}>
-			<a href="#{event.id}">{event.notice}</a>
-		</p>
-	{/each}
 	<div class="find">
 		<p class="where">{address.street}, Bellflower, Missouri</p>
 		<p class="acts">
@@ -78,12 +68,6 @@
 		.time {
 			display: block;
 		}
-	}
-	.notice {
-		margin-top: 1.1rem;
-		padding-left: 0.85rem;
-		border-left: 3px solid var(--cream);
-		font-weight: 700;
 	}
 	.where {
 		margin-top: 1.25rem;

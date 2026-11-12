@@ -96,7 +96,7 @@ export const schedule: Gathering[] = [
 export const scheduleSummary = schedule.map((g) => `${g.what} ${g.time} ${g.ampm}`).join(', ');
 
 export type ChurchEvent = {
-	/** Short and unique, like 'friendsgiving-2026'. The notice under the service times links to it. */
+	/** Short and unique, like 'friendsgiving-2026'. */
 	id: string;
 	/** Shown large. For a long word, put \u00AD (a soft hyphen) where it may break, as in
 	 * 'Friends\u00ADgiving'. Otherwise the title shrinks to fit on small screens. */
@@ -107,9 +107,6 @@ export type ChurchEvent = {
 	text: string[];
 	/** Adds a button for texting an RSVP to the church phone. */
 	rsvp?: boolean;
-	/** One line shown right under the service times, for anything that moves or changes a
-	 * regular service. Leave it out for events that don't. */
-	notice?: string;
 	/** The last day the card shows, as YYYY-MM-DD in Central time. Usually the day of the
 	 * event. Visitors with JavaScript turned off keep seeing it until the site is released again. */
 	lastDay: string;
@@ -125,8 +122,6 @@ export const events: ChurchEvent[] = [
 			'That Sunday, worship is at 10:30 a.m. and the meal runs from 12:30 to 2:30 p.m. Both are at the Bellflower community building.'
 		],
 		rsvp: true,
-		notice:
-			'On Sunday, December 6, worship and a free meal are at the Bellflower community building.',
 		lastDay: '2026-12-06'
 	}
 ];

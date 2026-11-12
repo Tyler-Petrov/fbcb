@@ -51,8 +51,6 @@
 		padding: 1.5rem min(1.25rem, 20px) 1.6rem;
 		border-radius: 4px;
 		background: var(--green-lit);
-		/* The notice under the service times links here. */
-		scroll-margin-top: 1rem;
 	}
 	.head {
 		display: flex;

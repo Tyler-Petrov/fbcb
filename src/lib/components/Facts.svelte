@@ -15,11 +15,11 @@
 	<div class="row pastor">
 		<h2>{pastor}</h2>
 		<div class="body">
-			<img src={pastorPhoto} width="360" height="450" loading="lazy" alt="Photo of {pastor}" />
 			<p>
 				The church phone rings {pastor}. Call with a question about faith, or if you just need
 				someone to talk to. <a class="nowrap" href={phone.tel}>{phone.display}</a>
 			</p>
+			<img src={pastorPhoto} width="360" height="450" loading="lazy" alt="Photo of {pastor}" />
 		</div>
 	</div>
 	<div class="row">
@@ -79,8 +79,8 @@
 	.body a {
 		font-weight: 700;
 	}
-	/* His photo sits beside the words, in a cream mat like a print from the church album. With
-	   enlarged text the words move under the photo. */
+	/* His photo sits to the right of the words, in a cream mat like a print from the church
+	   album. With enlarged text the photo moves under the words. */
 	.pastor .body {
 		display: flex;
 		flex-wrap: wrap;
