@@ -1,0 +1,67 @@
+{# Shared fonts, palette, and small pieces used by every print file. #}
+{% macro head(title, page_css) -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<style>
+@font-face { font-family: "Fraunces"; font-weight: 600; src: url("{{ fonts }}/Fraunces-600.woff"); }
+@font-face { font-family: "Fraunces"; font-weight: 800; src: url("{{ fonts }}/Fraunces-800.woff"); }
+@font-face { font-family: "Atkinson"; font-weight: 400; src: url("{{ fonts }}/AtkinsonHyperlegible-400.woff"); }
+@font-face { font-family: "Atkinson"; font-weight: 400; font-style: italic; src: url("{{ fonts }}/AtkinsonHyperlegible-400i.woff"); }
+@font-face { font-family: "Atkinson"; font-weight: 700; src: url("{{ fonts }}/AtkinsonHyperlegible-700.woff"); }
+
+:root {
+  --ink: #3a2416;      /* warm brown body text */
+  --rust: #9a3412;     /* headline */
+  --gold: #c58a1a;     /* rules and accents */
+  --olive: #5b6b2a;    /* labels */
+  --tint: #f8eedd;     /* the only filled areas; very light to save ink */
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { color: var(--ink); font-family: "Atkinson", sans-serif; }
+.serif { font-family: "Fraunces", serif; }
+.ph {
+  background: #ffe500; color: #b00000; font-family: "Atkinson", sans-serif;
+  font-weight: 700; font-style: normal; letter-spacing: 0;
+  border: 2px dashed #b00000; padding: 0 .2em; white-space: nowrap;
+}
+.qr { display: block; width: 100%; height: auto; }
+.qr-ph-flag {
+  display: block; margin-top: .25em; background: #ffe500; color: #b00000;
+  border: 2px dashed #b00000; font-weight: 700; text-align: center;
+  font-size: .7em; padding: .1em .2em; line-height: 1.2;
+}
+{{ page_css }}
+</style>
+</head>
+{%- endmacro %}
+
+{# Three autumn leaves between two thin rules. #}
+{% macro leaves(width="3in") -%}
+<svg class="leaves" style="width: {{ width }}" viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <line x1="0" y1="30" x2="100" y2="30" stroke="#c58a1a" stroke-width="2.5"/>
+  <line x1="200" y1="30" x2="300" y2="30" stroke="#c58a1a" stroke-width="2.5"/>
+  {% for x, rot, color in [(120, -20, "#c58a1a"), (150, 0, "#9a3412"), (180, 20, "#5b6b2a")] %}
+  <g transform="translate({{ x }} 46) rotate({{ rot }})">
+    <path d="M0 0 C -14 -12 -14 -32 0 -44 C 14 -32 14 -12 0 0 Z" fill="{{ color }}"/>
+    <line x1="0" y1="2" x2="0" y2="-38" stroke="#fff" stroke-width="2"/>
+  </g>
+  {% endfor %}
+</svg>
+{%- endmacro %}
+
+{% macro menu_items() -%}
+<li>Turkey</li> <li>Dressing</li> <li>Mashed potatoes &amp; gravy</li> <li>Green beans</li>
+<li>Rolls</li> <li>Salad</li> <li>Pie &amp; other desserts</li> <li>Tea, coffee &amp; water</li>
+{%- endmacro %}
+
+{% macro qr_block(caption) -%}
+<div class="qr-block">
+  <div class="qr-frame">{{ qr }}</div>
+  <div class="qr-caption">{{ caption }}</div>
+  <div class="qr-url">{{ site_label }}</div>
+  {% if not final %}<span class="qr-ph-flag">PLACEHOLDER QR: DO NOT PRINT</span>{% endif %}
+</div>
+{%- endmacro %}

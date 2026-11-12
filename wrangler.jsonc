@@ -1,0 +1,9 @@
+// Cloudflare Worker that serves the prerendered site in build/ as static assets.
+// Deployed only by the GitHub workflows (see `pnpm release`).
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "fbcb",
+	"compatibility_date": "2026-11-01",
+	"assets": { "directory": "./build" },
+	"preview_urls": true
+}

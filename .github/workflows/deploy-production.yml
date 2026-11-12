@@ -1,0 +1,47 @@
+name: Deploy production
+
+# Started by `pnpm release`. Builds main and deploys it to the fbcb Worker.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_production:
+        description: Confirm production deploy (unchecked runs are rejected)
+        required: true
+        type: boolean
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Require confirmation
+        if: ${{ !inputs.confirm_production }}
+        run: |
+          echo "::error::Production deploy was not confirmed. Use pnpm release."
+          exit 1
+      - name: Require main
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: |
+          echo "::error::Production deploys only from main."
+          exit 1
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Deploy
+        run: pnpm exec wrangler deploy --message "${GITHUB_SHA::7}"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

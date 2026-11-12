@@ -1,0 +1,37 @@
+node_modules
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Written by `pnpm dev` for this worktree's running dev server
+.dev-server.json
+.dev-server.log
+
+# Print files are rebuilt by print/build.sh
+/print/out/
+__pycache__/
+
+# Reference screenshots, kept local (38 MB)
+/research/screens/
+
+# Claude Code worktrees
+.claude/worktrees/

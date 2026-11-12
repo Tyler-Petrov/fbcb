@@ -1,0 +1,27 @@
+# Friendsgiving print materials: the single source of truth.
+# Edit a value, then run:  ./build.sh
+# Leave a value as "" and it prints as a bright yellow  [ PLACEHOLDER ]  box.
+
+# Website the QR code points to. Set it with:  ./build.sh --url https://example.org
+site_url = ""
+
+# Shown under the QR code (e.g. "fbcbellflower.org"). Blank = derived from site_url.
+site_label = ""
+
+# RSVP deadline as it should read on paper, e.g. "Sunday, Nov. 29"
+rsvp_deadline = ""
+
+# Community building street address, e.g. "123 Main St., Bellflower"
+venue_address = ""
+
+# Church street address. Confirmed by Tyler, Nov 9.
+church_address = "302 S Main St., Bellflower"
+
+# Weekly schedule for the table tent, e.g. "9:30 a.m."
+sunday_school_time = ""
+sunday_worship_time = ""
+wednesday_study_time = ""
+
+# Fixed facts (from the Nov 8 meeting)
+church_phone = "573-340-1070"
+pastor = "Pastor Jim"

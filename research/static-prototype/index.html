@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Baptist Church of Bellflower · Bellflower, Missouri</title>
+<meta name="description" content="A small Southern Baptist church on Main Street in Bellflower, Missouri. Sunday school 9:30 a.m., worship 10:30 a.m., Wednesday Bible study 6:00 p.m. Everyone is welcome.">
+<meta name="theme-color" content="#16110D">
+<meta property="og:title" content="First Baptist Church of Bellflower">
+<meta property="og:description" content="Sunday school 9:30 · Worship 10:30 · Wednesday Bible study 6:00 p.m. · Main Street, Bellflower, MO">
+<!-- PLACEHOLDER: once the cover photo is in assets/, add
+<meta property="og:image" content="https://YOUR-DOMAIN/assets/christmas-eve.jpg"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,500;0,700;1,500&family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #16110D;        /* dark walnut */
+    --bg-alt: #1D1612;    /* alternate section band */
+    --card: #271E18;      /* raised cards */
+    --line: #4A3B2E;
+    --gold: #E3B04B;      /* lamp gold, the one accent */
+    --cream: #F4EBDB;     /* main text on dark; background of the light section */
+    --soft: #D8C9B0;      /* secondary text on dark, still bright enough outdoors */
+    --ink: #2A1F17;       /* text on cream */
+    --ink-soft: #5C4B3B;
+    --gold-ink: #85570F;  /* gold that passes contrast on cream */
+
+    --slab: "Zilla Slab", Rockwell, "Roboto Slab", Georgia, serif;
+    --sans: "Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --nav-h: 3.75rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--cream); font: 400 1.125rem/1.6 var(--sans); }
+  img { max-width: 100%; display: block; }
+  a { color: var(--gold); text-underline-offset: .2em; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(100% - 2.5rem, 64rem); margin-inline: auto; }
+  .skip { position: absolute; left: -999px; top: .5rem; background: var(--gold); color: var(--bg); padding: .6rem 1rem; z-index: 20; font-weight: 700; }
+  .skip:focus { left: .5rem; }
+  [id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
+
+  /* ---------- Sticky nav: one row, like Misfits ---------- */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(22,17,13,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; gap: 1rem; height: var(--nav-h); }
+  .brand { font: 700 1.2rem/1 var(--slab); color: var(--cream); text-decoration: none; white-space: nowrap; }
+  .brand span { color: var(--gold); }
+  .nav ul { list-style: none; display: flex; margin: 0 0 0 auto; padding: 0; height: 100%; }
+  .nav a.link {
+    display: flex; align-items: center; height: 100%; min-height: 44px; padding: 0 .85rem;
+    color: var(--soft); text-decoration: none; font: 600 1rem/1 var(--sans);
+  }
+  .nav a.link:hover { color: var(--cream); }
+  .nav a.link[aria-current="true"] { color: var(--gold); box-shadow: inset 0 -3px var(--gold); }
+  @media (max-width: 44rem) {
+    :root { --nav-h: 3.25rem; }
+    .brand { display: none; }
+    .nav .wrap { width: 100%; }
+    .nav ul { margin: 0; width: 100%; justify-content: space-between; overflow-x: auto; scrollbar-width: none; }
+    .nav a.link { padding: 0 .7rem; font-size: 1rem; }
+  }
+  @media (max-width: 24rem) {
+    .nav ul { overflow: visible; }
+    .nav a.link { padding: 0 .4rem; font-size: .95rem; }
+    .row.is-next .what::after { display: table; margin: .35rem 0 0 0; margin-left: 0; }
+    .row .what { display: block; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 3rem 0 2.5rem; }
+  .hero-grid { display: grid; gap: 2rem; align-items: center; }
+  .hero-grid { grid-template-areas: "intro" "sched" "cta"; }
+  .intro { grid-area: intro; } .schedule { grid-area: sched; } .cta { grid-area: cta; }
+  @media (min-width: 56rem) { .hero-grid { grid-template-columns: 1.15fr 1fr; grid-template-areas: "intro sched" "cta sched"; gap: 0 3.5rem; } .cta { align-self: start; } .schedule { align-self: start; margin-top: 1.9rem; } }
+  @media (max-width: 55.99rem) { .hero-grid { gap: 1.5rem; } .cta .where { margin-top: 0; } }
+  .kicker { font: 700 .875rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 .75rem; }
+  .title { margin: 0; font: 700 clamp(2.5rem, 8vw, 4.6rem)/.98 var(--slab); letter-spacing: -.015em; }
+  .title small { display: block; font: 500 italic clamp(1.35rem, 3.5vw, 2rem)/1.2 var(--slab); color: var(--gold); margin-top: .5rem; letter-spacing: 0; }
+  .welcome { margin: 1.1rem 0 0; font-size: 1.2rem; max-width: 30rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    min-height: 3.25rem; padding: .8rem 1.35rem; border-radius: 8px;
+    font: 700 1.05rem/1 var(--sans); text-decoration: none;
+  }
+  .btn svg { width: 1.2em; height: 1.2em; flex: none; }
+  .btn--gold { background: var(--gold); color: var(--bg); }
+  .btn--line { border: 2px solid var(--gold); color: var(--gold); }
+  .where { margin: 1.1rem 0 0; color: var(--soft); }
+  .where strong { color: var(--cream); }
+  @media (max-width: 30rem) {
+    .hero { padding-top: 1.25rem; }
+    .wide-only { display: none; }
+    .kicker { margin-bottom: .5rem; }
+    .welcome { margin-top: .75rem; }
+    .hero-grid { gap: 1.1rem !important; }
+    .schedule { padding: 1rem 1.2rem .4rem; }
+    .day { margin-top: .6rem; }
+    .actions .btn { flex: 1 1 100%; }
+  }
+
+  /* Schedule card, grouped by day like a bulletin */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+  .schedule { padding: 1.25rem 1.4rem .6rem; }
+  .schedule h2 { margin: 0 0 .25rem; font: 700 .875rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+  .day { font: 700 1.35rem/1.2 var(--slab); margin: 1rem 0 .1rem; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .55rem 0; border-bottom: 1px solid var(--line); }
+  .day + .row { border-top: 0; }
+  .schedule .row:last-child { border-bottom: 0; }
+  .row .what { font-weight: 600; font-size: 1.1rem; }
+  .row .time { font: 700 1.5rem/1 var(--slab); white-space: nowrap; }
+  .row .time span { font: 600 1rem/1 var(--sans); margin-left: .2rem; }
+  .row.is-next .what::after {
+    content: "Next"; display: inline-block; margin-left: .55rem; vertical-align: .12em;
+    font: 700 .8rem/1 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+    background: var(--gold); color: var(--bg); padding: .25rem .45rem; border-radius: 4px;
+  }
+  .row.is-live .what::after { content: "Happening now"; }
+
+  /* Photo: full width under the hero text */
+  .photo { margin: 2.5rem 0 0; border-radius: 12px; overflow: hidden; position: relative; aspect-ratio: 16 / 9; background: var(--card); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.5rem 1.25rem .9rem; background: linear-gradient(transparent, rgba(0,0,0,.7)); font: 500 italic 1.05rem/1.3 var(--slab); color: var(--cream); }
+  .photo--empty { aspect-ratio: 3 / 1; display: grid; place-items: center; border: 1.5px dashed var(--line); background: var(--bg-alt); }
+  .photo--empty p { margin: 0; color: var(--soft); font: 500 italic 1.1rem/1.3 var(--slab); padding: 0 1rem; text-align: center; }
+  @media (max-width: 30rem) {
+    .photo { margin-inline: -1.25rem; border-radius: 0; }
+    .photo--empty { border-inline: 0; aspect-ratio: 2 / 1; }
+  }
+
+  /* ---------- Sections ---------- */
+  .section { padding: 4rem 0; }
+  .section--alt { background: var(--bg-alt); border-block: 1px solid var(--line); }
+  .h2 { font: 700 clamp(2rem, 5vw, 2.6rem)/1.1 var(--slab); margin: 0 0 .6rem; }
+  .lede { color: var(--soft); margin: 0 0 2rem; max-width: 38rem; font-size: 1.15rem; }
+
+  /* Events */
+  .event { display: grid; grid-template-columns: 5.25rem 1fr; gap: 1rem 1.4rem; padding: 1.5rem; }
+  .date { text-align: center; border: 2px solid var(--gold); border-radius: 10px; padding: .55rem 0 .65rem; align-self: start; }
+  .date .m { font: 700 .875rem/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .date .d { font: 700 2.3rem/1 var(--slab); margin-top: .2rem; }
+  .event h3 { font: 700 1.6rem/1.15 var(--slab); margin: .1rem 0 .3rem; }
+  .event .when { color: var(--gold); font-weight: 700; margin: 0; }
+  .event .body { grid-column: 2; }
+  .details { margin: 0 0 1rem; display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; }
+  .details dt { color: var(--gold); font-weight: 700; }
+  .details dd { margin: 0; }
+  .event p { margin: 0 0 .8rem; }
+  .event a[href^="sms"] { display: inline-block; padding: .5rem 0; margin: -.5rem 0; }
+  .event .body > :last-child { margin-bottom: 0; }
+  @media (max-width: 34rem) {
+    .event { grid-template-columns: 4.25rem 1fr; padding: 1.25rem; }
+    .date .d { font-size: 2rem; }
+    .event h3 { font-size: 1.4rem; }
+    .event .body { grid-column: 1 / -1; }
+  }
+  .more { margin-top: 1.25rem; }
+  .fb-embed { margin: 1.25rem auto 0; max-width: 500px; background: #fff; border-radius: 12px; overflow: hidden; }
+  .fb-embed iframe { border: 0; width: 100%; display: block; }
+
+  /* Sermons */
+  .video { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 1.25rem; }
+  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .yt { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 1.5rem; padding: 1.5rem; }
+  .yt h3 { font: 700 1.4rem/1.2 var(--slab); margin: 0 0 .2rem; }
+  .yt p { margin: 0; color: var(--soft); }
+  @media (max-width: 30rem) { .yt .btn { flex: 1 1 100%; } }
+
+  /* About: the one light section */
+  .light { background: var(--cream); color: var(--ink); }
+  .light .kicker { color: var(--gold-ink); }
+  .light .lede { color: var(--ink-soft); }
+  .light a { color: var(--gold-ink); }
+  .since { display: grid; gap: .25rem 2rem; align-items: center; padding-bottom: 2rem; margin-bottom: 2.25rem; border-bottom: 1px solid #D9CBB3; }
+  @media (min-width: 44rem) { .since { grid-template-columns: auto 1fr; } }
+  .since .year { font: 700 clamp(4rem, 12vw, 6rem)/1 var(--slab); color: var(--gold-ink); margin: 0; letter-spacing: -.02em; }
+  .since p { margin: 0; font-size: 1.15rem; max-width: 34rem; }
+  .since strong { font: 700 1.35rem/1.3 var(--slab); display: block; margin-bottom: .2rem; }
+  .about-grid { display: grid; gap: 2rem; }
+  @media (min-width: 52rem) { .about-grid { grid-template-columns: 1.4fr 1fr; gap: 3.5rem; align-items: start; } }
+  .beliefs { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem; }
+  .beliefs li { padding-left: 1.1rem; border-left: 3px solid var(--gold); }
+  .beliefs strong { display: block; font: 700 1.25rem/1.3 var(--slab); }
+  .pastor { padding: 1.5rem; background: #EADFCB; border-radius: 12px; }
+  .pastor .kicker { margin-bottom: .3rem; }
+  .pastor .name { font: 700 1.6rem/1.2 var(--slab); margin: 0 0 .5rem; }
+  .pastor p { margin: 0 0 1.1rem; }
+  .pastor .btn { width: 100%; background: var(--ink); color: var(--cream); }
+
+  /* Visit */
+  .visit-grid { display: grid; gap: 1.5rem; }
+  @media (min-width: 52rem) { .visit-grid { grid-template-columns: 1fr 1.25fr; } }
+  .facts { padding: .5rem 1.5rem 1.5rem; }
+  .fact { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  .fact .label { font: 700 .875rem/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0 0 .45rem; }
+  .fact .value { font: 700 1.3rem/1.35 var(--slab); margin: 0; }
+  .facts .actions { margin-top: 1.25rem; }
+  .facts .actions .btn { flex: 1 1 12rem; }
+  .map { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); min-height: 20rem; background: var(--card); }
+  .map iframe { width: 100%; height: 100%; min-height: 20rem; border: 0; display: block; }
+
+  footer { padding: 2.25rem 0 2.75rem; color: var(--soft); font-size: 1rem; text-align: center; border-top: 1px solid var(--line); }
+  footer p { margin: .25rem 0; }
+  footer a { display: inline-block; padding: .6rem .35rem; }
+  footer strong { color: var(--cream); }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#times">Skip to service times</a>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">First Baptist <span>Bellflower</span></a>
+    <ul>
+      <li><a class="link" href="#times">Times</a></li>
+      <li><a class="link" href="#events">Events</a></li>
+      <li><a class="link" href="#sermons">Sermons</a></li>
+      <li><a class="link" href="#about">About</a></li>
+      <li><a class="link" href="#visit">Visit</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- ===== Hero ===== -->
+  <section class="hero" aria-label="Welcome">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="intro">
+          <p class="kicker">Southern Baptist · <span style="white-space:nowrap">Since 1907</span></p>
+          <h1 class="title">First Baptist Church <small>of Bellflower, Missouri</small></h1>
+          <p class="welcome"><span class="wide-only">A small church with an open door. </span>Come as you are. You'll be welcome here.</p>
+        </div>
+        <div class="card schedule" id="times">
+          <h2>Service times</h2>
+          <p class="day">Sunday</p>
+          <div class="row" data-day="0" data-start="570" data-end="630"><span class="what">Sunday school</span><span class="time">9:30<span>am</span></span></div>
+          <div class="row" data-day="0" data-start="630" data-end="720"><span class="what">Worship</span><span class="time">10:30<span>am</span></span></div>
+          <p class="day">Wednesday</p>
+          <div class="row" data-day="3" data-start="1080" data-end="1155"><span class="what">Bible study</span><span class="time">6:00<span>pm</span></span></div>
+        </div>
+        <div class="cta">
+          <!-- ADDRESS: unconfirmed (220 vs 200 S Main St). Also in Visit. Map links search by church name, so they don't depend on it. -->
+          <p class="where"><strong>220 S Main St</strong><span class="wide-only"> · the brightly painted church on Main Street</span></p>
+          <div class="actions">
+            <a class="btn btn--gold" href="https://www.google.com/maps/search/?api=1&query=First+Baptist+Church+of+Bellflower,+Bellflower,+MO+63333">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              Get directions
+            </a>
+            <a class="btn btn--line" href="tel:+15733401070">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+              Call 573-340-1070
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PLACEHOLDER: when the Christmas Eve photo arrives, save it as assets/christmas-eve.jpg and replace
+           this whole <figure> with:
+      <figure class="photo">
+        <img src="assets/christmas-eve.jpg" alt="The whole congregation of First Baptist Church of Bellflower together on Christmas Eve">
+        <figcaption>Our church family on Christmas Eve</figcaption>
+      </figure> -->
+      <figure class="photo photo--empty"><p>Our Christmas Eve church family photo goes here</p></figure>
+    </div>
+  </section>
+
+  <!-- ===== Events ===== -->
+  <section class="section section--alt" id="events">
+    <div class="wrap">
+      <p class="kicker">Coming up</p>
+      <h2 class="h2">Events</h2>
+      <p class="lede">Every event also goes on our Facebook page.</p>
+
+      <!-- Friendsgiving card removes itself after Dec 6, 2026. -->
+      <article class="card event" data-hide-after="2026-12-07">
+        <div class="date" aria-hidden="true"><div class="m">Dec</div><div class="d">6</div></div>
+        <div>
+          <h3>Community Friendsgiving</h3>
+          <p class="when">Sunday, December 6</p>
+        </div>
+        <div class="body">
+          <dl class="details">
+            <dt>Worship</dt><dd>10:30 a.m.</dd>
+            <dt>Meal</dt><dd>12:30 to 2:30 p.m.</dd>
+            <dt>Where</dt><dd>Bellflower community building. Worship and the meal are both there that day.</dd>
+          </dl>
+          <p>A free turkey dinner with all the trimmings and pie, catered by the Bellflower Youth Club. Everyone in Bellflower is invited to the service, the meal, or both.</p>
+          <p><strong>RSVP by text to <a href="sms:+15733401070">573-340-1070</a></strong> so there's enough food.</p>
+        </div>
+      </article>
+
+      <!-- PLACEHOLDER: Facebook page not found yet. When it's known, uncomment this block, put the page
+           URL (URL-encoded) after href=, and update the links marked data-placeholder="facebook".
+      <div class="fb-embed">
+        <iframe title="Events from our Facebook page" height="560" loading="lazy" scrolling="no"
+          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FYOUR-PAGE&tabs=events&width=500&height=560&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false"></iframe>
+      </div> -->
+      <p class="more"><a class="btn btn--line" href="https://www.facebook.com/" data-placeholder="facebook">More events on Facebook</a></p>
+    </div>
+  </section>
+
+  <!-- ===== Sermons ===== -->
+  <section class="section" id="sermons">
+    <div class="wrap">
+      <p class="kicker">Missed a Sunday?</p>
+      <h2 class="h2">Sermons</h2>
+      <p class="lede">Pastor Jim's Sunday sermons go up on our YouTube channel.</p>
+      <!-- PLACEHOLDER: YouTube channel not found yet. Take the channel ID (starts with UC), change UC to UU,
+           put it after list= below, and uncomment. The newest sermon will then play here automatically.
+      <div class="video"><iframe title="Latest sermon" loading="lazy" allowfullscreen
+        src="https://www.youtube-nocookie.com/embed/videoseries?list=UUxxxxxxxxxxxxxxxxxxxxxx"></iframe></div> -->
+      <div class="card yt">
+        <div>
+          <h3>Watch on YouTube</h3>
+          <p>Every Sunday sermon, newest first.</p>
+        </div>
+        <a class="btn btn--gold" href="https://www.youtube.com/" data-placeholder="youtube">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5l13 7.5-13 7.5z"/></svg>
+          Watch sermons
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About (light section) ===== -->
+  <section class="section light" id="about">
+    <div class="wrap">
+      <p class="kicker">Who we are</p>
+      <h2 class="h2">What we're about</h2>
+      <p class="lede">A small Southern Baptist congregation where people know your name.</p>
+      <div class="since">
+        <p class="year">1907</p>
+        <p><strong>The year our building went up on Main Street.</strong>It's still here, still brightly painted, and still where we meet every week. You can't miss it.</p>
+        <!-- Tyler: add a sentence about when the congregation started, if anyone knows. -->
+      </div>
+      <div class="about-grid">
+        <div>
+          <ul class="beliefs">
+            <li><strong>Jesus first</strong>We believe Jesus died for our sins and rose again, and that anyone can be saved by trusting him.</li>
+            <li><strong>Reading the Bible together</strong>Sunday mornings and Wednesday nights, we open it together and talk about how to live it.</li>
+            <li><strong>Good neighbors</strong>We pray for each other, show up for each other, and try to serve all of Bellflower.</li>
+          </ul>
+        </div>
+        <aside class="pastor" aria-label="Our pastor">
+          <p class="kicker">Our pastor</p>
+          <p class="name">Pastor Jim</p>
+          <p>Questions about faith, or just need someone to talk to? Call the church. Pastor Jim answers.</p>
+          <a class="btn" href="tel:+15733401070">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+            Call 573-340-1070
+          </a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Visit ===== -->
+  <section class="section" id="visit">
+    <div class="wrap">
+      <p class="kicker">Find us</p>
+      <h2 class="h2">Visit</h2>
+      <p class="lede">Everyone's welcome, and there's no need to call ahead.</p>
+      <div class="visit-grid">
+        <div class="card facts">
+          <div class="fact">
+            <p class="label">Address</p>
+            <!-- ADDRESS: unconfirmed -->
+            <p class="value">220 S Main St<br>Bellflower, MO 63333</p>
+          </div>
+          <div class="fact">
+            <p class="label">Sundays</p>
+            <p class="value">Sunday school 9:30 a.m.<br>Worship 10:30 a.m.</p>
+          </div>
+          <div class="fact">
+            <p class="label">Wednesdays</p>
+            <p class="value">Bible study 6:00 p.m.</p>
+          </div>
+          <div class="actions">
+            <a class="btn btn--gold" href="https://www.google.com/maps/search/?api=1&query=First+Baptist+Church+of+Bellflower,+Bellflower,+MO+63333">Get directions</a>
+            <a class="btn btn--line" href="tel:+15733401070">Call 573-340-1070</a>
+          </div>
+        </div>
+        <div class="map">
+          <iframe title="Map showing First Baptist Church of Bellflower on S Main St" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=First+Baptist+Church+of+Bellflower,+Bellflower,+MO+63333&z=16&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>First Baptist Church of Bellflower</strong> · Bellflower, Missouri</p>
+    <p>Southern Baptist · Twin Rivers Baptist Association</p>
+    <p><a href="https://www.facebook.com/" data-placeholder="facebook">Facebook</a> · <a href="https://www.youtube.com/" data-placeholder="youtube">YouTube</a> · <a href="tel:+15733401070">573-340-1070</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Today in Bellflower (Central time), whatever the visitor's clock says.
+  var p = new Intl.DateTimeFormat("en-US", { timeZone: "America/Chicago", weekday: "short", hour: "numeric",
+    minute: "numeric", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit" })
+    .formatToParts(new Date()).reduce(function (o, x) { o[x.type] = x.value; return o; }, {});
+  var today = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday);
+  var now = (+p.hour) * 60 + (+p.minute);
+  var iso = p.year + "-" + p.month + "-" + p.day;
+
+  // Remove dated items once they're over.
+  document.querySelectorAll("[data-hide-after]").forEach(function (el) {
+    if (iso >= el.getAttribute("data-hide-after")) el.remove();
+  });
+
+  // Tag the next gathering in the schedule.
+  var best = null;
+  document.querySelectorAll(".row[data-day]").forEach(function (r) {
+    var gap = (+r.dataset.day - today + 7) % 7, s = +r.dataset.start, e = +r.dataset.end;
+    var live = gap === 0 && now >= s && now < e;
+    var wait = live ? -1 : gap * 1440 + s - now;
+    if (wait < -1) wait += 7 * 1440;
+    if (!best || wait < best.wait) best = { r: r, wait: wait, live: live };
+  });
+  if (best) { best.r.classList.add("is-next"); if (best.live) best.r.classList.add("is-live"); }
+
+  // Highlight the nav link for the section on screen.
+  if (!("IntersectionObserver" in window)) return;
+  var links = {};
+  document.querySelectorAll(".nav a.link").forEach(function (a) { links[a.hash.slice(1)] = a; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      Object.keys(links).forEach(function (k) { links[k].removeAttribute("aria-current"); });
+      var a = links[en.target.id]; if (a) a.setAttribute("aria-current", "true");
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  Object.keys(links).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+})();
+</script>
+</body>
+</html>
