@@ -29,9 +29,6 @@
 		border-bottom: 1px solid var(--line);
 		container-type: inline-size;
 	}
-	.times:focus {
-		outline: none;
-	}
 	/* The time sits at the right of its name, and drops under it when enlarged text runs out of
 	   room. */
 	li {

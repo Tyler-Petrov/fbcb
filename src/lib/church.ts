@@ -127,13 +127,18 @@ export const events: ChurchEvent[] = [
 
 // Mistakes here would quietly break the page, so they stop the build instead. Each event's id
 // names its spot on the page, so a repeated id would break links to it. A lastDay that isn't
-// YYYY-MM-DD would compare wrongly and keep an event up for months.
+// a real date written YYYY-MM-DD would compare wrongly and keep an event up for months.
 const eventIds = events.map((e) => e.id);
 if (new Set(eventIds).size !== eventIds.length) {
 	throw new Error('Each event in src/lib/church.ts needs its own id.');
 }
 for (const e of events) {
-	if (!/^\d{4}-\d{2}-\d{2}$/.test(e.lastDay)) {
+	const day = new Date(`${e.lastDay}T00:00:00Z`);
+	if (
+		!/^\d{4}-\d{2}-\d{2}$/.test(e.lastDay) ||
+		isNaN(day.getTime()) ||
+		day.toISOString().slice(0, 10) !== e.lastDay
+	) {
 		throw new Error(`Event "${e.id}" in src/lib/church.ts: write lastDay like 2027-01-15.`);
 	}
 }
