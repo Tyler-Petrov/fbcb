@@ -30,6 +30,7 @@
   --soft: #d6dccd;       /* quieter text on green, still bright */
   --gold: #e3b04b;       /* lamp gold, from the website */
   --gold-ink: #85570f;   /* gold that reads on cream */
+  --harvest: #e58a43;    /* pumpkin, for the one "free meal" mark on each piece */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-family: "Besley", Georgia, serif; color: var(--cream); }
@@ -42,7 +43,7 @@ html { font-family: "Besley", Georgia, serif; color: var(--cream); }
   border: 2px dashed #b00000; padding: 0 .2em; white-space: nowrap;
 }
 .nowrap { white-space: nowrap; }
-small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
+small { font-size: .62em; font-weight: 700; letter-spacing: .02em; }
 .gold { color: var(--gold); }
 .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--gold); }
 .panel .eyebrow { color: var(--gold-ink); }
@@ -52,7 +53,7 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 .c { margin: 0 .03em; letter-spacing: 0; }
 /* The place-setting divider: fork, plate, knife on a rule. Says "a meal" without a photo. */
 .setting { display: flex; align-items: center; gap: .12in; }
-.setting .rule { flex: 1; border-top: 1.5pt solid var(--line); }
+.setting .rule { flex: 1; border-top: 1.5pt solid #4a7d69; }
 .setting svg { flex: none; display: block; }
 .qr { display: block; width: 100%; height: auto; }
 .qr-block { text-align: center; }
@@ -81,11 +82,13 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 
 {% macro setting(w=1.1) -%}
 <div class="setting"><span class="rule"></span>
-<svg style="width: {{ w }}in; height: {{ w * 32 / 66 }}in" viewBox="15 0 66 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+<svg style="width: {{ w }}in; height: {{ w * 32 / 76 }}in" viewBox="2 0 76 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
      fill="none" stroke="#e3b04b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M19 3 V11 M23 3 V11 M27 3 V11 M19 11 C19 14.5 27 14.5 27 11 M23 13.5 V29"/>
-  <circle cx="48" cy="16" r="13.5"/><circle cx="48" cy="16" r="8.5"/>
-  <path d="M73 29 V3 C78 6 79 13 76.5 18 H73"/>
+  <path d="M8 3 V11 M12 3 V11 M16 3 V11 M8 11 C8 15.5 16 15.5 16 11"/>
+  <path d="M12 14.5 V29" stroke-width="3"/>
+  <circle cx="40" cy="16" r="13.5"/><circle cx="40" cy="16" r="8.5"/>
+  <path d="M65 29 V3 C71.5 5 72.5 13.5 70 18.5 H65 Z" fill="#e3b04b" fill-opacity=".25"/>
+  <path d="M65 18.5 V29" stroke-width="3"/>
 </svg>
 <span class="rule"></span></div>
 {%- endmacro %}

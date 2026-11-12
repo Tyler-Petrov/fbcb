@@ -20,8 +20,8 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .sub { font-size: {{ pt(31) }}; line-height: 1.2; margin-top: {{ inch(0.45 if H > 15 else 0.35) }}; }
 .seal {
   flex: none; width: {{ inch(2.6 if H > 15 else 2.4) }}; height: {{ inch(2.6 if H > 15 else 2.4) }}; border-radius: 50%;
-  background: var(--gold); color: var(--green); text-align: center;
-  padding-top: {{ inch(0.5 if H > 15 else 0.42) }}; transform: rotate(-4deg); margin-right: {{ inch(0.05) }};
+  background: var(--harvest); color: var(--green); text-align: center;
+  padding-top: {{ inch(0.5 if H > 15 else 0.42) }}; transform: none; margin-right: {{ inch(0.05) }};
 }
 .seal b { display: block; font-weight: 800; font-size: {{ pt(56) }}; line-height: .9; letter-spacing: -.01em; }
 .seal i { display: block; font-weight: 500; font-size: {{ pt(32) }}; line-height: 1; }
@@ -52,7 +52,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .panel .phone { font-weight: 800; font-size: {{ pt(58) }}; line-height: 1.05; letter-spacing: -.015em; white-space: nowrap; }
 .panel .ask { font-size: {{ pt(21) }}; line-height: 1.3; margin-top: {{ inch(0.06) }}; }
 .panel .ask b { font-weight: 700; }
-.qr-block { flex: none; width: {{ inch(2.25) }}; }
+.qr-block { flex: none; width: {{ inch(2.05) }}; }
 .qr-cta { margin-top: -{{ inch(0.06) }}; font-size: {{ pt(14.5) }}; }
 .qr-url { font-size: {{ pt(16.5) }}; }
 {% endset %}
