@@ -15,18 +15,13 @@
 h1 { font-weight: 800; font-size: {{ pt(94) }}; line-height: .94; letter-spacing: -.015em; margin-top: {{ inch(0.16) }}; }
 h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: -.01em; }
 
-/* The subtitle shares a row with the pie: the one picture, and the one loud thing on the page. */
-.lede { display: flex; align-items: flex-start; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.3 if H > 15 else 0.3) }}; }
-.sub { font-size: {{ pt(31) }}; line-height: 1.2; margin-top: {{ inch(0.45 if H > 15 else 0.35) }}; }
-.seal {
-  flex: none; position: relative; width: {{ inch(3.0 if H > 15 else 2.7) }}; height: {{ inch(3.0 if H > 15 else 2.7) }};
-  color: var(--green); text-align: center; padding-top: {{ inch(0.86 if H > 15 else 0.84) }}; margin-right: -{{ inch(0.1) }};
-}
-.seal .pie { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
-.seal b, .seal i, .seal span { position: relative; }
-.seal b { display: block; font-weight: 800; font-size: {{ pt(42) }}; line-height: .9; letter-spacing: -.01em; }
-.seal i { display: block; font-weight: 500; font-size: {{ pt(28) }}; line-height: 1; }
-.seal span { display: block; font-weight: 800; font-size: {{ pt(11.5) }}; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; margin-top: {{ inch(0.08) }}; }
+/* Tagline and the free meal on the left, the pie on the right: the one picture. */
+.lede { display: flex; align-items: center; justify-content: space-between; gap: {{ inch(0.4) }}; margin-top: {{ inch(0.3 if H > 15 else 0.36) }}; }
+.sub { font-size: {{ pt(31) }}; line-height: 1.2; }
+.free { margin-top: {{ inch(0.26) }}; color: var(--harvest); }
+.free b { display: block; font-weight: 800; font-size: {{ pt(56) }}; line-height: 1; letter-spacing: -.01em; }
+.free span { display: block; color: var(--cream); font-weight: 700; font-size: {{ pt(15) }}; letter-spacing: .14em; text-transform: uppercase; margin-top: {{ inch(0.06) }}; }
+.lede .pie { flex: none; display: block; width: {{ inch(2.75 if H > 15 else 2.3) }}; height: {{ inch(2.75 if H > 15 else 2.3) }}; margin-right: -{{ inch(0.1) }}; }
 
 .setting { margin-top: {{ inch(0.14 if H > 15 else 0.06) }}; }
 .when { margin-top: {{ inch(0.16) }}; }
@@ -42,8 +37,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .menu .eyebrow { font-size: {{ pt(14) }}; }
 .menu p.dishes { font-size: {{ pt(23) }}; font-weight: 500; line-height: 1.4; margin-top: {{ inch(0.08) }}; }
 .menu .dot { color: var(--gold); font-weight: 800; padding: 0 .08em; }
-.menu .label { line-height: 1.2; }
-.menu .by { font-size: {{ pt(18) }}; color: var(--soft); font-style: italic; margin-left: .12in; }
+.menu .by { font-size: {{ pt(17) }}; color: var(--soft); font-style: italic; margin-top: {{ inch(0.02) }}; }
 
 .panel {
   position: absolute; left: 0; right: 0; bottom: 0; height: {{ inch(2.8) }};
@@ -64,8 +58,11 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
   <p class="host eyebrow">First Baptist Church of Bellflower</p>
   <h1>Community <span>Friendsgiving</span></h1>
   <div class="lede">
-    {{ b.subtitle(br=true) }}
-    <div class="seal">{{ b.pie() }}<b>Free</b><i>meal</i><span>Everyone<br>welcome</span></div>
+    <div>
+      {{ b.subtitle(br=true) }}
+      <p class="free"><b>Free meal</b><span>Everyone welcome</span></p>
+    </div>
+    {{ b.pie(cut=true) }}
   </div>
 
   {{ b.setting(1.45 * s) }}
@@ -77,8 +74,9 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
   </section>
 
   <section class="menu">
-    <p class="label"><span class="eyebrow">On the table</span> <span class="by">{{ b.caterer() }}</span></p>
+    <p class="eyebrow">On the table</p>
     <p class="dishes">{{ b.menu_inline() }}</p>
+    <p class="by">{{ b.caterer() }}</p>
   </section>
 
   <section class="panel">
