@@ -76,12 +76,12 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 
 {% macro meal_time() %}12<span class="c">:</span>30–{{ t("2:30", "p.m.") }}{% endmacro %}
 
-{# "Come early" names the place: worship that day is at the community building. #}
-{% macro early(br=false) %}<p class="early">Come early for worship{% if br %}<br>{% endif %} here at <b class="nowrap">{{ t("10:30", "a.m.") }}</b></p>{% endmacro %}
+{# Worship that day is at the community building, so the line says so outright. #}
+{% macro early(br=false) %}<p class="early">Come early for worship in the{% if br %}<br>{% endif %} same building at <b class="nowrap">{{ t("10:30", "a.m.") }}</b></p>{% endmacro %}
 
-{% macro setting(w=1.3) -%}
+{% macro setting(w=1.1) -%}
 <div class="setting"><span class="rule"></span>
-<svg style="width: {{ w }}in; height: {{ w / 3 }}in" viewBox="0 0 96 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+<svg style="width: {{ w }}in; height: {{ w * 32 / 66 }}in" viewBox="15 0 66 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
      fill="none" stroke="#e3b04b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M19 3 V11 M23 3 V11 M27 3 V11 M19 11 C19 14.5 27 14.5 27 11 M23 13.5 V29"/>
   <circle cx="48" cy="16" r="13.5"/><circle cx="48" cy="16" r="8.5"/>

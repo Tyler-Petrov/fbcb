@@ -16,18 +16,18 @@ h1 { font-weight: 800; font-size: {{ pt(94) }}; line-height: .94; letter-spacing
 h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: -.01em; }
 
 /* The subtitle shares a row with the gold seal: the one loud thing on the page. */
-.lede { display: flex; align-items: center; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.34 if H > 15 else 0.26) }}; }
-.sub { font-size: {{ pt(31) }}; line-height: 1.2; }
+.lede { display: flex; align-items: flex-start; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.3 if H > 15 else 0.3) }}; }
+.sub { font-size: {{ pt(31) }}; line-height: 1.2; margin-top: {{ inch(0.45 if H > 15 else 0.35) }}; }
 .seal {
-  flex: none; width: {{ inch(2.6) }}; height: {{ inch(2.6) }}; border-radius: 50%;
+  flex: none; width: {{ inch(2.6 if H > 15 else 2.4) }}; height: {{ inch(2.6 if H > 15 else 2.4) }}; border-radius: 50%;
   background: var(--gold); color: var(--green); text-align: center;
-  padding-top: {{ inch(0.5) }}; transform: rotate(-4deg); margin-right: {{ inch(0.05) }};
+  padding-top: {{ inch(0.5 if H > 15 else 0.42) }}; transform: rotate(-4deg); margin-right: {{ inch(0.05) }};
 }
 .seal b { display: block; font-weight: 800; font-size: {{ pt(56) }}; line-height: .9; letter-spacing: -.01em; }
 .seal i { display: block; font-weight: 500; font-size: {{ pt(32) }}; line-height: 1; }
 .seal span { display: block; font-weight: 800; font-size: {{ pt(15.5) }}; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; margin-top: {{ inch(0.08) }}; }
 
-.setting { margin-top: {{ inch(0.2 if H > 15 else 0.06) }}; }
+.setting { margin-top: {{ inch(0.14 if H > 15 else 0.06) }}; }
 .when { margin-top: {{ inch(0.16) }}; }
 .date { font-weight: 800; font-size: {{ pt(50) }}; line-height: 1.05; letter-spacing: -.01em; }
 .time { font-weight: 800; font-size: {{ pt(84) }}; line-height: 1; letter-spacing: -.01em; color: var(--gold); white-space: nowrap; }
@@ -66,7 +66,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
     <div class="seal"><b>Free</b><i>meal</i><span>Everyone<br>welcome</span></div>
   </div>
 
-  {{ b.setting(1.6 * s) }}
+  {{ b.setting(1.45 * s) }}
   <section class="when">
     <p class="date">Sunday, December 6</p>
     <p class="time">{{ b.meal_time() }}</p>
