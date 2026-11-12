@@ -12,7 +12,7 @@ PR previews are opt-in: add the `deploy-preview` label to the PR, and each push 
 
 ## Dev server
 
-`pnpm dev` starts this worktree's background dev server on a free port and prints its local and Tailscale URLs. `pnpm dev restart` and `pnpm dev stop` do what they say, and its output is in `.dev-server.log`. It stops itself after an hour with no requests and no open pages. Start, restart, or stop it whenever you need to.
+`pnpm dev` starts this worktree's background dev server on a free port, then stays attached to it and prints its URLs: HTTPS through `tailscale serve`, the Tailscale IP, and localhost. Give people the `https://` one, since browsers refuse plain HTTP on `ts.net` names. The server stops 30 seconds after no `pnpm dev` is attached, so run it as a background command. `pnpm dev restart`, `pnpm dev stop`, and `pnpm dev servers` do what they say, and its output is in `.dev-server.log`. Start, restart, or stop it whenever you need to.
 
 ## Svelte AI tools
 
