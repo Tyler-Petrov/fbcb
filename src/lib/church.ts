@@ -78,6 +78,9 @@ export const statementOfFaith: { title: string; text: string }[] = [
 	}
 ];
 
+// His photo is src/lib/assets/pastor-jim.jpg, 360 by 450 pixels. It is cropped from the photo
+// beside his name on the Twin Rivers Baptist Association's churches page
+// (twinriversbaptist.com/pages/churches). Replace that file to change it.
 export const pastor = 'Pastor Jim';
 
 export type Gathering = { what: string; time: string; ampm: 'a.m.' | 'p.m.' };

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import pastorPhoto from '#lib/assets/pastor-jim.jpg';
 	import {
 		facebookUrl,
 		faithSource,
@@ -10,11 +11,14 @@
 </script>
 
 <dl class="facts frame">
-	<div>
+	<div class="pastor">
 		<dt>{pastor}</dt>
 		<dd>
-			The church phone rings {pastor}. Call with a question about faith, or if you just need someone
-			to talk to. <a class="nowrap" href={phone.tel}>{phone.display}</a>
+			<img src={pastorPhoto} width="360" height="450" loading="lazy" alt="Photo of {pastor}" />
+			<p>
+				The church phone rings {pastor}. Call with a question about faith, or if you just need
+				someone to talk to. <a class="nowrap" href={phone.tel}>{phone.display}</a>
+			</p>
 		</dd>
 	</div>
 	<div>
@@ -72,6 +76,19 @@
 	dd a {
 		font-weight: 700;
 	}
+	/* His photo sits beside the words, in a cream mat like a print from the church album. */
+	.pastor dd {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-top: 0.6rem;
+	}
+	.pastor img {
+		flex: none;
+		width: 6rem;
+		height: auto;
+		border: 0.3rem solid var(--cream);
+	}
 	summary {
 		cursor: pointer;
 		font-weight: 700;
@@ -107,6 +124,12 @@
 		}
 		.facts > div > dd {
 			margin: 0;
+		}
+		.pastor dd {
+			gap: 1.5rem;
+		}
+		.pastor img {
+			width: 7.5rem;
 		}
 	}
 </style>
