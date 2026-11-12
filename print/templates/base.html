@@ -48,6 +48,12 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 .panel .eyebrow { color: var(--gold-ink); }
 .sub { font-weight: 500; }
 .sub em { color: var(--gold); white-space: nowrap; }
+/* Besley's colon sits tight against bold figures; give it a hair of room. */
+.c { margin: 0 .03em; letter-spacing: 0; }
+/* The place-setting divider: fork, plate, knife on a rule. Says "a meal" without a photo. */
+.setting { display: flex; align-items: center; gap: .12in; }
+.setting .rule { flex: 1; border-top: 1.5pt solid var(--line); }
+.setting svg { flex: none; display: block; }
 .qr { display: block; width: 100%; height: auto; }
 .qr-block { text-align: center; }
 /* The written address may run wider than the tile; it never wraps mid-word. */
@@ -64,10 +70,24 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 
 {# "10:30 a.m." with the a.m. small, like the times on the website. #}
 {% macro t(time, half) -%}
-{{ time }}&#8202;<small>{{ half }}</small>
+{{ time|replace(":", '<span class="c">:</span>')|safe }}&#8202;<small>{{ half }}</small>
 {%- endmacro %}
 
-{% macro meal_time() %}12:30–{{ t("2:30", "p.m.") }}{% endmacro %}
+{% macro meal_time() %}12<span class="c">:</span>30–{{ t("2:30", "p.m.") }}{% endmacro %}
+
+{# "Come early" names the place: worship that day is at the community building. #}
+{% macro early(br=false) %}<p class="early">Come early for worship{% if br %}<br>{% endif %} here at <b class="nowrap">{{ t("10:30", "a.m.") }}</b></p>{% endmacro %}
+
+{% macro setting(w=1.3) -%}
+<div class="setting"><span class="rule"></span>
+<svg style="width: {{ w }}in; height: {{ w / 3 }}in" viewBox="0 0 96 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+     fill="none" stroke="#e3b04b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M19 3 V11 M23 3 V11 M27 3 V11 M19 11 C19 14.5 27 14.5 27 11 M23 13.5 V29"/>
+  <circle cx="48" cy="16" r="13.5"/><circle cx="48" cy="16" r="8.5"/>
+  <path d="M73 29 V3 C78 6 79 13 76.5 18 H73"/>
+</svg>
+<span class="rule"></span></div>
+{%- endmacro %}
 
 {% macro subtitle(br=false) -%}
 <p class="sub">You’re not just welcome.{% if br %}<br>{% else %} {% endif %}<em>You’re invited.</em></p>
@@ -78,7 +98,8 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 {# The menu as dishes. Drinks are left off: tea, coffee and water go without saying. #}
 {% macro menu_inline() -%}
 {% set dishes = ["Turkey &amp; dressing", "Mashed potatoes &amp; gravy", "Green beans", "Rolls &amp; salad", "Pie &amp; desserts"] %}
-{% for d in dishes %}<span class="nowrap">{{ d|safe }}</span>{% if not loop.last %}<span class="dot"> · </span>{% endif %}{% endfor %}
+{# Two set lines so no line ends on a stray dot. #}
+{% for d in dishes %}<span class="nowrap">{{ d|safe }}</span>{% if loop.index == 2 %}<br>{% elif not loop.last %}<span class="dot"> · </span>{% endif %}{% endfor %}
 {%- endmacro %}
 
 {# The QR code on its cream tile, with the address written out under it. #}

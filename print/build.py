@@ -94,7 +94,9 @@ def main() -> None:
     )
     # "9:30 a.m." -> "9:30 <small>a.m.</small>", the way the website sets times.
     env.filters["ampm"] = lambda v: Markup(
-        re.sub(r"\s*([ap]\.m\.)", "&#8202;<small>\\1</small>", str(v))
+        re.sub(r"\s*([ap]\.m\.)", "&#8202;<small>\\1</small>", str(v)).replace(
+            ":", '<span class="c">:</span>'
+        )
     )
     method = str(cfg.get("rsvp_method", "text")).strip().lower()
     if method not in ("text", "call"):
