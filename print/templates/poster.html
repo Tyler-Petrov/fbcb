@@ -16,18 +16,18 @@ h1 { font-weight: 800; font-size: {{ pt(94) }}; line-height: .94; letter-spacing
 h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: -.01em; }
 
 /* The subtitle shares a row with the gold seal: the one loud thing on the page. */
-.lede { display: flex; align-items: center; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.2 if H > 15 else 0.16) }}; }
+.lede { display: flex; align-items: center; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.34 if H > 15 else 0.26) }}; }
 .sub { font-size: {{ pt(31) }}; line-height: 1.2; }
 .seal {
-  flex: none; width: {{ inch(2.75) }}; height: {{ inch(2.75) }}; border-radius: 50%;
+  flex: none; width: {{ inch(2.6) }}; height: {{ inch(2.6) }}; border-radius: 50%;
   background: var(--gold); color: var(--green); text-align: center;
-  padding-top: {{ inch(0.55) }}; transform: rotate(-5deg); margin-right: {{ inch(0.05) }};
+  padding-top: {{ inch(0.5) }}; transform: rotate(-4deg); margin-right: {{ inch(0.05) }};
 }
 .seal b { display: block; font-weight: 800; font-size: {{ pt(56) }}; line-height: .9; letter-spacing: -.01em; }
 .seal i { display: block; font-weight: 500; font-size: {{ pt(32) }}; line-height: 1; }
 .seal span { display: block; font-weight: 800; font-size: {{ pt(15.5) }}; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; margin-top: {{ inch(0.08) }}; }
 
-.setting { margin-top: {{ inch(0.22 if H > 15 else 0.06) }}; }
+.setting { margin-top: {{ inch(0.2 if H > 15 else 0.06) }}; }
 .when { margin-top: {{ inch(0.16) }}; }
 .date { font-weight: 800; font-size: {{ pt(50) }}; line-height: 1.05; letter-spacing: -.01em; }
 .time { font-weight: 800; font-size: {{ pt(84) }}; line-height: 1; letter-spacing: -.01em; color: var(--gold); white-space: nowrap; }
@@ -40,7 +40,7 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .menu { margin-top: {{ inch(0.32 if H > 15 else 0.16) }}; }
 .menu .eyebrow { font-size: {{ pt(14) }}; }
 .menu p.dishes { font-size: {{ pt(23) }}; line-height: 1.4; margin-top: {{ inch(0.06) }}; }
-.menu .dot { color: var(--gold); }
+.menu .dot { color: var(--gold); font-weight: 800; padding: 0 .08em; }
 .menu .by { font-size: {{ pt(19) }}; color: var(--soft); font-style: italic; margin-top: {{ inch(0.04) }}; }
 
 .panel {
@@ -53,8 +53,8 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .panel .ask { font-size: {{ pt(21) }}; line-height: 1.3; margin-top: {{ inch(0.06) }}; }
 .panel .ask b { font-weight: 700; }
 .qr-block { flex: none; width: {{ inch(2.25) }}; }
-.qr-cta { margin-top: -{{ inch(0.06) }}; font-size: {{ pt(13) }}; }
-.qr-url { font-size: {{ pt(15) }}; }
+.qr-cta { margin-top: -{{ inch(0.06) }}; font-size: {{ pt(14.5) }}; }
+.qr-url { font-size: {{ pt(16.5) }}; }
 {% endset %}
 {{ b.head("Community Friendsgiving poster", css) }}
 <body>

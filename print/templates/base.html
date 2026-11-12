@@ -104,11 +104,11 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 {%- endmacro %}
 
 {# The QR code on its cream tile, with the address written out under it. #}
-{% macro qr_block() -%}
+{% macro qr_block(caption=true) -%}
 <div class="qr-block">
   {{ qr }}
-  <div class="qr-cta">Scan to visit our website</div>
-  <div class="qr-url">{{ site_label }}</div>
+  {% if caption %}<div class="qr-cta">Scan to visit our website</div>
+  <div class="qr-url">{{ site_label }}</div>{% endif %}
   {% if not final %}<span class="qr-ph-flag">PLACEHOLDER QR: DO NOT PRINT</span>{% endif %}
 </div>
 {%- endmacro %}

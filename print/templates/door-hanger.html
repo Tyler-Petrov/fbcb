@@ -48,24 +48,23 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
 /* Back: what it is, what's for dinner, and the QR code. */
 .back h2 { font-weight: 800; font-size: 27pt; line-height: .98; letter-spacing: -.015em; }
 .back h2 span { display: block; font-style: italic; font-weight: 500; }
-.back .recap { margin-top: .18in; }
+.back .recap { margin-top: .14in; }
 .back .recap .d { font-weight: 700; font-size: 16pt; line-height: 1.2; }
 .back .recap .t { font-weight: 800; font-size: 22pt; line-height: 1.15; color: var(--gold); }
 .back .recap .p { font-size: 12.5pt; line-height: 1.3; color: var(--soft); }
-.back .setting { margin-top: .32in; }
-.back .menu { margin-top: .2in; }
+.back .setting { margin-top: .24in; }
+.back .menu { margin-top: .14in; }
 .back .menu ul { list-style: none; margin-top: .06in; }
-.back .menu li { font-size: 16pt; line-height: 1.7; }
+.back .menu li { font-size: 15.5pt; line-height: 1.5; }
 .back .menu .eyebrow { font-size: 10pt; }
 .back .menu li::before { content: "·"; color: var(--gold); font-weight: 800; display: inline-block; width: .2in; }
 .back .by { font-size: 12pt; color: var(--soft); font-style: italic; margin-top: .08in; }
-.back .panel { display: flex; align-items: center; gap: .18in; padding-top: .28in; }
-.back .panel .text { flex: 1; min-width: 0; }
-.back .panel .phone { font-size: 19.5pt; }
-.back .panel .ask { font-size: 11.5pt; }
-.back .qr-block { flex: none; width: 1.12in; }
-.back .qr-cta { font-size: 7pt; margin-top: -.03in; }
-.back .qr-url { font-size: 8.5pt; }
+.back .panel { padding-top: .22in; padding-bottom: .26in; }
+.back .panel .ask { font-size: 12.5pt; }
+.back .scan { display: flex; align-items: center; gap: .16in; margin-top: .14in; }
+.back .qr-block { flex: none; width: 1.1in; }
+.back .scan p { font-size: 11.5pt; line-height: 1.3; }
+.back .scan b { font-weight: 700; }
 .back .qr-ph-flag { font-size: 6pt; }
 {% endset %}
 
@@ -120,12 +119,13 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
       <p class="by">{{ b.caterer() }}</p>
     </section>
     <section class="panel">
-      <div class="text">
-        <p class="eyebrow">RSVP {{ b.rsvp_how() }}</p>
-        <p class="phone">{{ phone }}</p>
-        <p class="ask">Reply by<br><b class="nowrap">{{ rsvp_deadline }}</b></p>
+      <p class="eyebrow">RSVP {{ b.rsvp_how() }}</p>
+      <p class="phone">{{ phone }}</p>
+      <p class="ask">Reply by <b class="nowrap">{{ rsvp_deadline }}</b></p>
+      <div class="scan">
+        {{ b.qr_block(caption=false) }}
+        <p>Scan to visit<br>our website<br><b>{{ site_label }}</b></p>
       </div>
-      {{ b.qr_block() }}
     </section>
   </div>
   {{ die() }}
