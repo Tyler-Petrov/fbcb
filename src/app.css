@@ -46,9 +46,10 @@ h2 {
 
 /* ---------- Shared building blocks ---------- */
 
-/* One column for the whole page, so every edge lines up. */
+/* One column for the whole page, so every edge lines up. The side margins stay 20px when
+   text is enlarged, so the bigger text gets the room. */
 .frame {
-	width: min(100% - 2.5rem, 56rem);
+	width: min(100% - min(2.5rem, 40px), 56rem);
 	margin-inline: auto;
 }
 .acts {
@@ -58,13 +59,16 @@ h2 {
 }
 .btn {
 	display: inline-flex;
-	flex-wrap: wrap; /* very large text: "Call" on one line, the whole number on the next */
+	/* Very large text: the words wrap onto more lines, centered. The number stays whole while it
+	   fits, and past that it breaks after a hyphen. */
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 	gap: 0 0.3em;
 	flex: 1 1 auto;
 	min-height: 3.25rem;
-	padding: 0.7rem 0.9rem;
+	padding: 0.7rem min(0.9rem, 14.4px);
 	border: 2px solid var(--cream);
 	border-radius: 4px;
 	background: var(--cream);

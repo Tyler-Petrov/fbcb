@@ -37,6 +37,7 @@
 		margin: 1.6rem 0 0;
 		padding: 0;
 		border-bottom: 1px solid var(--line);
+		container-type: inline-size;
 	}
 	.times:focus {
 		outline: none;
@@ -52,8 +53,10 @@
 		padding: 0.65rem 0;
 		border-top: 1px solid var(--line);
 	}
+	/* A zero basis keeps every time beside its name until even the name's longest word can't fit,
+	   so the rows break together rather than one at a time. */
 	.what {
-		flex: 1 1 8rem;
+		flex: 1 1 0;
 		font-weight: 500;
 	}
 	.time {
@@ -65,6 +68,16 @@
 	small {
 		font-size: 1rem;
 		font-weight: 500;
+	}
+	/* Enlarged text: once the widest row ("Wednesday", the gap and "6:00 p.m.", about 11.9em)
+	   no longer fits, all three times move under their names together. em here is the list's own
+	   text size, so this follows the visitor's text setting. Browsers without container queries
+	   fall back to the wrapping above. */
+	@container (max-width: 12.5em) {
+		li,
+		.time {
+			display: block;
+		}
 	}
 	.notice {
 		margin-top: 1.1rem;

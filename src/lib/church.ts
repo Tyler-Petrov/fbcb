@@ -1,5 +1,5 @@
 // Everything a volunteer might need to change lives in this file.
-// After editing, rebuild the site (pnpm build) so the change reaches the published pages.
+// After editing, open a pull request to main. Once it is merged, run pnpm release to publish it.
 
 export const phone = {
 	display: '573-340-1070',
@@ -96,7 +96,10 @@ export const schedule: Gathering[] = [
 export const scheduleSummary = schedule.map((g) => `${g.what} ${g.time} ${g.ampm}`).join(', ');
 
 export type ChurchEvent = {
+	/** Short and unique, like 'friendsgiving-2026'. The notice under the service times links to it. */
 	id: string;
+	/** Shown large. For a long word, put \u00AD (a soft hyphen) where it may break, as in
+	 * 'Friends\u00ADgiving'. Otherwise the title shrinks to fit on small screens. */
 	title: string;
 	/** Include the year so the card can't be misread later. */
 	when: string;
@@ -108,7 +111,7 @@ export type ChurchEvent = {
 	 * regular service. Leave it out for events that don't. */
 	notice?: string;
 	/** The last day the card shows, as YYYY-MM-DD in Central time. Usually the day of the
-	 * event. Visitors with JavaScript turned off keep seeing it until the site is rebuilt. */
+	 * event. Visitors with JavaScript turned off keep seeing it until the site is released again. */
 	lastDay: string;
 };
 
@@ -128,9 +131,15 @@ export const events: ChurchEvent[] = [
 	}
 ];
 
-// Each event's id names its spot on the page, so a repeated id would break links to it.
-// Stop the build instead.
+// Mistakes here would quietly break the page, so they stop the build instead. Each event's id
+// names its spot on the page, so a repeated id would break links to it. A lastDay that isn't
+// YYYY-MM-DD would compare wrongly and keep an event up for months.
 const eventIds = events.map((e) => e.id);
 if (new Set(eventIds).size !== eventIds.length) {
 	throw new Error('Each event in src/lib/church.ts needs its own id.');
+}
+for (const e of events) {
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(e.lastDay)) {
+		throw new Error(`Event "${e.id}" in src/lib/church.ts: write lastDay like 2027-01-15.`);
+	}
 }

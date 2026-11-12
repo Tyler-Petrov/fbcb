@@ -5,14 +5,26 @@
 	// Events already over when the site was built are left out. The script in src/app.html hides
 	// the rest in the visitor's browser after their last day.
 	const upcoming = events.filter((e) => isUpcoming(e, builtOn));
+
+	// The title's longest word sets how small the title may get on a narrow screen with enlarged
+	// text, so that no word has to split. A letter of the title font is at most about 0.74em wide.
+	// A soft hyphen (\u00AD) in church.ts marks where a long word may break instead.
+	const fit = (title: string) =>
+		Math.max(...title.split(/[\s\u00AD]+/).map((w) => w.length)) * 0.74;
 </script>
 
 {#each upcoming as event (event.id)}
-	<section class="event frame" aria-labelledby={event.id} data-last-day={event.lastDay}>
-		<!-- The date shows above the title but follows it in the page, so jumping to the
-		     heading still reads the date next. -->
+	<section
+		class="event frame"
+		id={event.id}
+		aria-labelledby="{event.id}-title"
+		data-last-day={event.lastDay}
+		style:--fit={fit(event.title)}
+	>
+		<!-- The date shows above the title but follows it in the page, so a screen reader reads
+		     the title, then the date. -->
 		<div class="head">
-			<h2 id={event.id}>{event.title}</h2>
+			<h2 id="{event.id}-title">{event.title}</h2>
 			<p class="date">{event.when}</p>
 		</div>
 		<div class="text">
@@ -36,9 +48,11 @@
 		grid-template-columns: minmax(0, 1fr);
 		gap: 1rem;
 		margin-top: 2.75rem;
-		padding: 1.5rem 1.25rem 1.6rem;
+		padding: 1.5rem min(1.25rem, 20px) 1.6rem;
 		border-radius: 4px;
 		background: var(--green-lit);
+		/* The notice under the service times links here. */
+		scroll-margin-top: 1rem;
 	}
 	.head {
 		display: flex;
@@ -52,14 +66,15 @@
 	h2 {
 		margin: 0.15rem 0 0;
 		font: 800 clamp(1.7rem, 7vw, 2.3rem) / 1.08 var(--face);
-		/* Enlarged text: capped so the longest word, "Community" (about 6.5em), fits inside the
-		   panel, which is the screen less 2.5rem of page margin and 2.5rem of padding. */
-		font-size: min(clamp(1.7rem, 7vw, 2.3rem), (100vw - 5rem) / 6.6);
+		/* Enlarged text: capped so the longest word fits inside the panel, which is the screen less
+		   40px of page margin and 40px of padding. */
+		font-size: min(clamp(1.7rem, 7vw, 2.3rem), (100vw - min(5rem, 80px)) / var(--fit, 6.6));
 		letter-spacing: -0.01em;
 		hyphens: manual;
 	}
 	.text {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 0.85rem;
 	}
 
@@ -73,7 +88,10 @@
 		/* Here the title has the narrower of two columns: the panel less 4rem of padding and a
 		   3rem gap, split 1 to 1.25. */
 		h2 {
-			font-size: min(clamp(1.7rem, 7vw, 2.3rem), (min(100vw - 2.5rem, 56rem) - 7rem) / 2.25 / 6.6);
+			font-size: min(
+				clamp(1.7rem, 7vw, 2.3rem),
+				(min(100vw - min(2.5rem, 40px), 56rem) - 7rem) / 2.25 / var(--fit, 6.6)
+			);
 		}
 	}
 </style>

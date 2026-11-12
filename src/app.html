@@ -7,11 +7,12 @@
 		<meta name="theme-color" content="#0f2f25" />
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<body>
 		<div style="display: contents">%sveltekit.body%</div>
 		<script>
 			// Hides each event, and its notice under the service times, once its last day has
-			// passed in Bellflower, even when the site hasn't been rebuilt since.
+			// passed in Bellflower, even when the site hasn't been rebuilt since. It works out the
+			// date like bellflowerDate and isUpcoming in src/lib/time.ts, so change them together.
 			(function () {
 				try {
 					var parts = {};
