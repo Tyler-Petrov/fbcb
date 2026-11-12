@@ -1,153 +1,99 @@
 :root {
-	--bg: #16110d; /* dark walnut */
-	--bg-alt: #241a13; /* alternate section band */
-	--card: #2e2219; /* raised cards */
-	--line: #4a3b2e;
-	--gold: #e3b04b; /* lamp gold, the one accent */
-	--cream: #f4ebdb; /* main text on dark; background of the light section */
-	--soft: #d8c9b0; /* secondary text on dark, still bright enough outdoors */
-	--ink: #2a1f17; /* text on cream */
-	--ink-soft: #5c4b3b;
-	--gold-ink: #85570f; /* gold that passes contrast on cream */
-
-	--slab: 'Zilla Slab', Rockwell, 'Roboto Slab', Georgia, serif;
-	--sans: 'Libre Franklin', system-ui, -apple-system, 'Segoe UI', sans-serif;
-	--nav-h: 3.75rem;
-}
-@media (max-width: 44rem) {
-	:root {
-		--nav-h: 3.25rem;
-	}
+	--green: #0f2f25; /* the page */
+	--green-lit: #173d31; /* the raised event panel, and button hover */
+	--line: #2f5d4d;
+	--cream: #f4eddc; /* main text and buttons */
+	--sage: #b7cabd; /* quieter text */
+	--face: 'Besley', Clarendon, Rockwell, Georgia, serif;
 }
 
 * {
 	box-sizing: border-box;
 }
 html {
-	scroll-behavior: smooth;
-	/* Keeps anchor jumps and keyboard focus clear of the sticky nav. */
-	scroll-padding-top: calc(var(--nav-offset, var(--nav-h)) + 1rem);
 	-webkit-text-size-adjust: 100%;
 }
 body {
 	margin: 0;
-	background: var(--bg);
+	background: var(--green);
 	color: var(--cream);
-	font: 400 1.125rem/1.6 var(--sans);
+	font: 400 1.125rem/1.6 var(--face);
 	/* Long words wrap instead of pushing the page sideways when text is enlarged. */
 	overflow-wrap: break-word;
 }
 img {
-	max-width: 100%;
 	display: block;
+	max-width: 100%;
 }
 a {
-	color: var(--gold);
-	text-underline-offset: 0.2em;
+	color: inherit;
+	text-underline-offset: 0.22em;
+	text-decoration-thickness: 1.5px;
 }
-:focus-visible {
-	outline: 3px solid var(--gold);
-	outline-offset: 3px;
-	border-radius: 4px;
-}
-h1,
-h2,
-h3 {
-	text-wrap: balance;
-}
-p,
-li,
-dd {
+p {
+	margin: 0;
 	text-wrap: pretty;
 }
-@media (prefers-reduced-motion: reduce) {
-	html {
-		scroll-behavior: auto;
-	}
+h1,
+h2 {
+	text-wrap: balance;
+}
+:focus-visible {
+	outline: 3px solid var(--cream);
+	outline-offset: 3px;
+	border-radius: 2px;
 }
 
 /* ---------- Shared building blocks ---------- */
-.wrap {
-	width: min(100% - min(2.5rem, 10vw), 64rem);
+
+/* One column for the whole page, so every edge lines up. */
+.frame {
+	width: min(100% - 2.5rem, 56rem);
 	margin-inline: auto;
 }
-.card {
-	background: var(--card);
-	border: 1px solid var(--line);
-	border-radius: 12px;
-}
-.kicker {
-	font: 700 0.875rem/1.3 var(--sans);
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: var(--gold);
-	margin: 0 0 0.75rem;
-}
-.section {
-	padding: 4rem 0;
-}
-.section--alt {
-	background: var(--bg-alt);
-	border-top: 1px solid var(--line);
-}
-.section--alt + .section {
-	border-top: 1px solid var(--line);
-}
-@media (max-width: 30rem) {
-	.section {
-		padding: 2.75rem 0;
-	}
-}
-.h2 {
-	font: 700 clamp(2rem, 5vw, 2.6rem)/1.1 var(--slab);
-	/* Very large text: cap at the screen width so words don't split. */
-	font-size: min(clamp(2rem, 5vw, 2.6rem), 12vw);
-	margin: 0 0 0.6rem;
-}
-.lede {
-	color: var(--soft);
-	margin: 0 0 2rem;
-	max-width: 38rem;
-	font-size: 1.15rem;
-}
-.actions {
+.acts {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.75rem;
-	margin-top: 1.5rem;
+	gap: 0.5rem;
 }
 .btn {
 	display: inline-flex;
 	flex-wrap: wrap; /* very large text: "Call" on one line, the whole number on the next */
 	align-items: center;
 	justify-content: center;
-	gap: 0.3rem 0.55rem;
+	gap: 0 0.3em;
+	flex: 1 1 auto;
 	min-height: 3.25rem;
-	max-width: 100%;
-	padding: 0.8rem min(1.35rem, 4vw);
-	border-radius: 8px;
-	font: 700 1.05rem/1 var(--sans);
+	padding: 0.7rem 0.9rem;
+	border: 2px solid var(--cream);
+	border-radius: 4px;
+	background: var(--cream);
+	color: var(--green);
+	font: 700 1rem/1.15 var(--face);
 	text-decoration: none;
 }
-.btn svg {
-	width: 1.2em;
-	height: 1.2em;
-	flex: none;
+.btn span {
+	white-space: nowrap;
 }
-.btn--gold {
-	background: var(--gold);
-	color: var(--bg);
+.btn:hover {
+	background: #fff;
+	border-color: #fff;
 }
 .btn--line {
-	border: 2px solid var(--gold);
-	color: var(--gold);
+	background: transparent;
+	color: var(--cream);
+}
+.btn--line:hover {
+	background: var(--green-lit);
+	border-color: var(--cream);
 }
 /* Keeps a phone number or short phrase from splitting across lines. */
 .nowrap {
 	white-space: nowrap;
 }
-@media (max-width: 30rem) {
-	.wide-only {
-		display: none;
+@media (min-width: 52rem) {
+	.btn {
+		flex: none;
+		padding-inline: 1.25rem;
 	}
 }

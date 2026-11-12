@@ -12,7 +12,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
 		rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,500;0,700;1,500&family=Libre+Franklin:wght@400;600;700&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..800;1,400..800&display=swap"
 	/>
 </svelte:head>
 
