@@ -32,10 +32,10 @@ html { font-family: "Besley", Georgia, serif; color: var(--cream); }
   font-weight: 700; font-style: normal; letter-spacing: 0; font-size: .8em;
   border: 2px dashed #b00000; padding: 0 .2em; white-space: nowrap;
 }
-.it { font-style: italic; }
 .sage { color: var(--sage); }
 .nowrap { white-space: nowrap; }
 small { font-size: .62em; font-weight: 500; }
+.sub em { white-space: nowrap; }
 .qr { display: block; width: 100%; height: auto; }
 .qr-ph-flag {
   display: block; margin-top: .3em; background: #ffe500; color: #b00000;
@@ -52,12 +52,14 @@ small { font-size: .62em; font-weight: 500; }
 {{ time }}&#8202;<small>{{ half }}</small>
 {%- endmacro %}
 
-{% macro menu_items() -%}
-<li>Turkey</li> <li>Dressing</li> <li>Mashed potatoes &amp; gravy</li> <li>Green beans</li>
-<li>Rolls</li> <li>Salad</li> <li>Pie &amp; other desserts</li>
+{# The line every piece carries under its title. #}
+{% macro subtitle() -%}
+<p class="sub">You’re not just welcome. <em>You’re invited.</em></p>
 {%- endmacro %}
 
-{% macro drinks() %}Tea, coffee &amp; water{% endmacro %}
+{% macro menu() -%}
+Turkey, dressing, mashed potatoes &amp; gravy, green beans, rolls, salad, pie &amp; desserts<br>Tea, coffee &amp; water
+{%- endmacro %}
 
 {# The QR code in its cream mat, with the address written out under it. #}
 {% macro qr_block(caption) -%}

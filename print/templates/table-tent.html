@@ -11,56 +11,71 @@
 .half.bottom { top: 5.5in; }
 .card {
   left: {{ mat }}in; top: {{ mat }}in; width: {{ 8.5 - 2 * mat }}in; height: {{ 5.5 - 2 * mat }}in;
-  padding: .36in .45in .32in;
-  display: flex; flex-direction: column; justify-content: space-between;
+  padding: .42in .5in .38in;
 }
 .fold { position: absolute; top: 5.5in; width: .25in; border-top: .75pt solid #9aa79f; }
 .fold.l { left: 0; } .fold.r { right: 0; }
 
-.head { display: flex; gap: .4in; align-items: flex-start; }
-.head .text { flex: 1; }
-.thanks { font-style: italic; color: var(--sage); font-size: 15pt; line-height: 1.3; }
-h1 { font-weight: 800; font-size: 30pt; line-height: 1.05; letter-spacing: -.012em; margin-top: .06in; }
-h1 span { display: block; font-style: italic; font-weight: 500; }
-.welcome { font-size: 13.5pt; line-height: 1.4; margin-top: .1in; color: var(--sage); }
-.qr-block { width: 1.55in; flex: none; text-align: center; }
-.qr-mat { border-radius: 2pt; overflow: hidden; }
-.qr-caption { font-style: italic; color: var(--sage); font-size: 10pt; line-height: 1.25; margin-top: .06in; }
-.qr-url { font-weight: 700; font-size: 10.5pt; line-height: 1.25; word-break: break-all; }
+.week { display: flex; text-align: center; }
+.week > div { flex: 1; }
+.week > div + div { border-left: 1pt solid var(--line); }
+.icon { display: block; width: .62in; height: .62in; margin: 0 auto .1in; }
+.what { font-weight: 500; font-size: 13pt; line-height: 1.25; color: var(--sage); }
+.time { font-weight: 700; font-size: 30pt; line-height: 1.1; white-space: nowrap; margin-top: .02in; }
 
-.times {
-  display: flex; gap: .3in;
-  border-top: 1pt solid var(--line); border-bottom: 1pt solid var(--line);
-  padding: .1in 0 .12in;
+.church {
+  position: absolute; left: .5in; right: .5in; bottom: .38in;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: .4in;
+  border-top: 1pt solid var(--line); padding-top: .2in;
 }
-.times > div { flex: 1; }
-.what { font-weight: 500; font-size: 12.5pt; line-height: 1.25; }
-.time { font-weight: 700; font-size: 25pt; line-height: 1.1; white-space: nowrap; }
-.find { display: flex; justify-content: space-between; align-items: baseline; gap: .3in; margin-top: .12in; }
-.find p { font-size: 13pt; line-height: 1.3; }
-.find b { font-weight: 700; }
+h1 { font-weight: 800; font-size: 27pt; line-height: 1.05; letter-spacing: -.012em; }
+h1 span { display: block; font-style: italic; font-weight: 500; }
+.church > div:first-child { flex: 1; }
+.url { font-size: 11.5pt; line-height: 1.3; color: var(--sage); margin-top: .1in; }
+.url b { color: var(--cream); }
+.qr-block { width: 1.3in; flex: none; }
+.qr-url { display: none; }
+.qr-ph-flag { font-size: 7pt; }
 {% endset %}
+
+{# Line icons, drawn on a 48-unit grid in cream. #}
+{% macro icon(name) -%}
+<svg class="icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+     fill="none" stroke="#f4eddc" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+{% if name == "school" %}{# an open book #}
+  <path d="M24 15 C19 11 11 10.5 5 12.5 V38 C11 36 19 36.5 24 40 C29 36.5 37 36 43 38 V12.5 C37 10.5 29 11 24 15 Z"/>
+  <path d="M24 15 V40"/>
+  <path d="M10 18.5 C13 17.8 16.5 18 19.5 19.5 M10 24.5 C13 23.8 16.5 24 19.5 25.5 M28.5 19.5 C31.5 18 35 17.8 38 18.5 M28.5 25.5 C31.5 24 35 23.8 38 24.5"/>
+{% elif name == "worship" %}{# the church: steeple, cross, door #}
+  <path d="M24 3.5 V11 M20.5 6.5 H27.5"/>
+  <path d="M17 23 L24 13 L31 23"/>
+  <path d="M17 23 V44 M31 23 V44"/>
+  <path d="M6 44 V31 L17 25 M42 44 V31 L31 25"/>
+  <path d="M3.5 44 H44.5"/>
+  <path d="M21 44 V37.5 A3 3 0 0 1 27 37.5 V44"/>
+{% elif name == "study" %}{# a Bible under the evening moon #}
+  <rect x="8" y="13" width="24" height="31" rx="2.5"/>
+  <path d="M13 13 V44"/>
+  <path d="M22.5 21 V35 M18 25.5 H27"/>
+  <path d="M41 4.5 A7.5 7.5 0 1 0 45.5 17 A6 6 0 0 1 41 4.5 Z" fill="#f4eddc" stroke-width="1.6"/>
+{% endif %}
+</svg>
+{%- endmacro %}
+
 {% macro half(cls) -%}
 <div class="half {{ cls }}">
   <div class="card">
-    <div class="head">
-      <div class="text">
-        <p class="thanks">Thank you for sharing this meal with us.</p>
-        <h1>First Baptist Church <span>of Bellflower</span></h1>
-        <p class="welcome">A small church with an open door. Come as you are, any week.</p>
-      </div>
-      {{ b.qr_block("Scan for our website") }}
+    <div class="week">
+      <div>{{ icon("school") }}<p class="what">Sunday school</p><p class="time">{{ sunday_school_time|ampm }}</p></div>
+      <div>{{ icon("worship") }}<p class="what">Sunday worship</p><p class="time">{{ sunday_worship_time|ampm }}</p></div>
+      <div>{{ icon("study") }}<p class="what">Wednesday Bible study</p><p class="time">{{ wednesday_study_time|ampm }}</p></div>
     </div>
-    <div>
-      <div class="times">
-        <div><p class="what">Sunday school</p><p class="time">{{ sunday_school_time|ampm }}</p></div>
-        <div><p class="what">Sunday worship</p><p class="time">{{ sunday_worship_time|ampm }}</p></div>
-        <div><p class="what">Wednesday Bible study</p><p class="time">{{ wednesday_study_time|ampm }}</p></div>
+    <div class="church">
+      <div>
+        <h1>First Baptist Church <span>of Bellflower</span></h1>
+        <p class="url">Scan for our website: <b>{{ site_label }}</b></p>
       </div>
-      <div class="find">
-        <p><b>{{ church_address }}, MO 63333</b></p>
-        <p>{{ pastor }}, <b class="nowrap">{{ phone }}</b></p>
-      </div>
+      {{ b.qr_block("") }}
     </div>
   </div>
 </div>

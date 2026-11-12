@@ -85,9 +85,7 @@ def main() -> None:
     qr.save(qr_png, scale=40, border=4, dark=QR_DARK, light="#ffffff")
     # Vector copy for the print shop: 2 in. square, scales to any size.
     qr.save(qr_pdf, scale=144 / (qr.symbol_size(border=4)[0]), border=4, dark=QR_DARK)
-    qr_inline = Markup(
-        qr.svg_inline(scale=1, border=4, dark=QR_DARK, light=QR_CREAM, omitsize=True, svgclass="qr")
-    )
+    qr_inline = Markup(rounded_qr_svg(qr))
 
     # ---- Render ----------------------------------------------------------
     env = Environment(
@@ -169,6 +167,43 @@ def main() -> None:
             print(f"  QR currently encodes the dummy address {PLACEHOLDER_URL}")
     else:
         print("No placeholders left. Files in out/ are ready for the print shop.")
+
+
+def rounded_qr_svg(qr: segno.QRCode, border: int = 4) -> str:
+    """The QR code as the prints show it: rounded green modules and finder squares
+    on a cream tile with rounded corners, in the same colors as the rest of the set."""
+    m = qr.matrix  # without the quiet zone
+    n = len(m)
+    size = n + 2 * border
+    finders = [(0, 0), (n - 7, 0), (0, n - 7)]  # (col, row) of each 7x7 corner square
+
+    def in_finder(r: int, c: int) -> bool:
+        return any(fr <= r < fr + 7 and fc <= c < fc + 7 for fc, fr in finders)
+
+    def rrect(x: float, y: float, w: float, h: float, rx: float) -> str:
+        # One rounded rectangle as a path, so rings can use even-odd fill.
+        return (
+            f"M{x + rx} {y}h{w - 2 * rx}a{rx} {rx} 0 0 1 {rx} {rx}v{h - 2 * rx}"
+            f"a{rx} {rx} 0 0 1 {-rx} {rx}h{-(w - 2 * rx)}a{rx} {rx} 0 0 1 {-rx} {-rx}"
+            f"v{-(h - 2 * rx)}a{rx} {rx} 0 0 1 {rx} {-rx}z"
+        )
+
+    dots = [
+        f'<rect x="{c + border + 0.06:g}" y="{r + border + 0.06:g}" width=".88" height=".88" rx=".3"/>'
+        for r in range(n)
+        for c in range(n)
+        if m[r][c] and not in_finder(r, c)
+    ]
+    rings = []
+    for fc, fr in finders:
+        x, y = fc + border, fr + border
+        rings.append(f'<path fill-rule="evenodd" d="{rrect(x, y, 7, 7, 2)}{rrect(x + 1, y + 1, 5, 5, 1.3)}"/>')
+        rings.append(f'<path d="{rrect(x + 2, y + 2, 3, 3, 0.9)}"/>')
+    return (
+        f'<svg class="qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">'
+        f'<rect width="{size}" height="{size}" rx="{size * 0.09:.2f}" fill="{QR_CREAM}"/>'
+        f'<g fill="{QR_DARK}">{"".join(rings)}{"".join(dots)}</g></svg>'
+    )
 
 
 def zbar(path: Path) -> list[str]:
