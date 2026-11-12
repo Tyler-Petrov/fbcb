@@ -97,6 +97,7 @@
 		width: 6rem;
 		height: auto;
 		border: 0.3rem solid var(--cream);
+		border-radius: 4px;
 	}
 	summary {
 		cursor: pointer;
