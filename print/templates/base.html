@@ -60,12 +60,12 @@ small { font-size: .62em; font-weight: 500; }
 {# The two event times. Worship is the smaller of the pair; the meal is the event. #}
 {% macro event_times() -%}
 <div class="times">
-  <div class="worship"><p class="what">Worship · guests welcome</p><p class="time">{{ t("10:30", "a.m.") }}</p></div>
+  <div class="worship"><p class="what">Worship · guests invited</p><p class="time">{{ t("10:30", "a.m.") }}</p></div>
   <div class="meal"><p class="what"><b>Free</b> meal</p><p class="time">12:30–{{ t("2:30", "p.m.") }}</p></div>
 </div>
 {%- endmacro %}
 
-{% macro caterer() %}Catered by Bellflower <span class="nowrap">Youth Club</span>{% endmacro %}
+{% macro caterer() %}Catered by <span class="nowrap">Bellflower Youth Club</span>{% endmacro %}
 {% macro subtitle() -%}
 <p class="sub">You’re not just welcome. <em>You’re invited.</em></p>
 {%- endmacro %}
@@ -91,7 +91,7 @@ Turkey, dressing, green beans,<br>mashed potatoes &amp; gravy,<br>rolls, salad, 
 {# RSVP wording follows rsvp_method in event.toml. #}
 {# "Your name and how many are coming / by <deadline>", broken on purpose. #}
 {% macro rsvp_ask(short=false) -%}
-{% if short %}Your name and how many,<br>{% else %}Your name and how many are coming<br>{% endif %}by <b class="nowrap">{{ rsvp_deadline }}</b>
+{% if short %}Your name and how many<br>{% else %}Your name and how many are coming<br>{% endif %}by <b class="nowrap">{{ rsvp_deadline }}</b>
 {%- endmacro %}
 {% macro rsvp_how() %}{{ 'by text' if rsvp_text else 'by phone' }}{% endmacro %}
 {% macro rsvp_verb() %}{{ 'Text' if rsvp_text else 'Call' }}{% endmacro %}
