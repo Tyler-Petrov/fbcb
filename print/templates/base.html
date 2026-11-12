@@ -1,9 +1,15 @@
 {# Shared look for every print file, taken from the "family photo" home page mock
-   (pagedrop.page/fbcb/home-mocks/r3-3-family-photo): one typeface, one green, cream.
+   (pagedrop.page/fbcb/home-mocks/r3-3-family-photo): Besley, the church green, cream,
+   and the website's lamp gold as the one accent.
 
    Every piece is a green card set in a margin of bare paper. On the website the photo
    sits in a cream mat; on paper the sheet itself is the mat. It also means nothing has
-   to print to the edge, which FedEx's copiers can't do without trimming. #}
+   to print to the edge, which FedEx's copiers can't do without trimming.
+
+   Colour does the sorting:
+     gold   the facts someone acts on (when, the free meal)
+     cream  everything else on green
+     green  on the cream panel at the foot of each piece (RSVP and QR) #}
 {% macro head(title, page_css) -%}
 <!doctype html>
 <html lang="en">
@@ -19,27 +25,33 @@
 {% endfor %}
 :root {
   --green: #0f2f25;
-  --green-lit: #173d31;  /* raised boxes */
-  --line: #2f5d4d;       /* hairline rules */
-  --cream: #f4eddc;      /* text, and the mat around the QR code */
-  --sage: #b7cabd;       /* quieter text */
+  --line: #2f5d4d;       /* hairline rules on green */
+  --cream: #f4eddc;      /* text on green, and the panel */
+  --soft: #d6dccd;       /* quieter text on green, still bright */
+  --gold: #e3b04b;       /* lamp gold, from the website */
+  --gold-ink: #85570f;   /* gold that reads on cream */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-family: "Besley", Georgia, serif; color: var(--cream); }
-.card { background: var(--green); position: absolute; }
+.card { background: var(--green); position: absolute; overflow: hidden; }
+/* The cream foot of every card. */
+.panel { background: var(--cream); color: var(--green); }
 .ph {
   background: #ffe500; color: #b00000;
   font-weight: 700; font-style: normal; letter-spacing: 0; font-size: .8em;
   border: 2px dashed #b00000; padding: 0 .2em; white-space: nowrap;
 }
 .nowrap { white-space: nowrap; }
-small { font-size: .62em; font-weight: 500; }
-.sub em { white-space: nowrap; }
+small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
+.gold { color: var(--gold); }
+.eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--gold); }
+.panel .eyebrow { color: var(--gold-ink); }
+.sub { font-weight: 500; }
+.sub em { color: var(--gold); white-space: nowrap; }
 .qr { display: block; width: 100%; height: auto; }
 .qr-block { text-align: center; }
 /* The written address may run wider than the tile; it never wraps mid-word. */
-.qr-url { font-weight: 700; line-height: 1.25; margin-top: .08in; white-space: nowrap; margin-left: -1in; margin-right: -1in; }
-.what b { color: var(--cream); font-weight: 700; }
+.qr-url { font-weight: 700; line-height: 1.2; white-space: nowrap; margin: 0 -1in; }
 .qr-ph-flag {
   display: block; margin-top: .3em; background: #ffe500; color: #b00000;
   border: 2px dashed #b00000; font-weight: 700; text-align: center;
@@ -55,28 +67,18 @@ small { font-size: .62em; font-weight: 500; }
 {{ time }}&#8202;<small>{{ half }}</small>
 {%- endmacro %}
 
-{# The line every piece carries. #}
+{% macro meal_time() %}12:30–{{ t("2:30", "p.m.") }}{% endmacro %}
 
-{# The two event times. Worship is the smaller of the pair; the meal is the event. #}
-{% macro event_times() -%}
-<div class="times">
-  <div class="worship"><p class="what">Worship · guests invited</p><p class="time">{{ t("10:30", "a.m.") }}</p></div>
-  <div class="meal"><p class="what"><b>Free</b> meal</p><p class="time">12:30–{{ t("2:30", "p.m.") }}</p></div>
-</div>
+{% macro subtitle(br=false) -%}
+<p class="sub">You’re not just welcome.{% if br %}<br>{% else %} {% endif %}<em>You’re invited.</em></p>
 {%- endmacro %}
 
 {% macro caterer() %}Catered by <span class="nowrap">Bellflower Youth Club</span>{% endmacro %}
-{% macro subtitle() -%}
-<p class="sub">You’re not just welcome. <em>You’re invited.</em></p>
-{%- endmacro %}
 
-{# Broken at item boundaries so no line ends on a stray "&". #}
-{% macro menu(narrow=false) -%}
-{% if narrow -%}
-Turkey, dressing, green beans,<br>mashed potatoes &amp; gravy,<br>rolls, salad, pie &amp; desserts<br>Tea, coffee &amp; water
-{%- else -%}
-<span class="nowrap">Turkey, dressing, mashed potatoes &amp; gravy</span><br><span class="nowrap">Green beans, rolls, salad, pie &amp; desserts</span><br>Tea, coffee &amp; water
-{%- endif %}
+{# The menu as dishes. Drinks are left off: tea, coffee and water go without saying. #}
+{% macro menu_inline() -%}
+{% set dishes = ["Turkey &amp; dressing", "Mashed potatoes &amp; gravy", "Green beans", "Rolls &amp; salad", "Pie &amp; desserts"] %}
+{% for d in dishes %}<span class="nowrap">{{ d|safe }}</span>{% if not loop.last %}<span class="dot"> · </span>{% endif %}{% endfor %}
 {%- endmacro %}
 
 {# The QR code on its cream tile, with the address written out under it. #}
@@ -89,9 +91,7 @@ Turkey, dressing, green beans,<br>mashed potatoes &amp; gravy,<br>rolls, salad, 
 {%- endmacro %}
 
 {# RSVP wording follows rsvp_method in event.toml. #}
-{# "Your name and how many are coming / by <deadline>", broken on purpose. #}
-{% macro rsvp_ask(short=false) -%}
-{% if short %}Your name and how many<br>{% else %}Your name and how many are coming<br>{% endif %}by <b class="nowrap">{{ rsvp_deadline }}</b>
-{%- endmacro %}
 {% macro rsvp_how() %}{{ 'by text' if rsvp_text else 'by phone' }}{% endmacro %}
-{% macro rsvp_verb() %}{{ 'Text' if rsvp_text else 'Call' }}{% endmacro %}
+{% macro rsvp_ask(short=false) -%}
+{% if short %}Your name and how many,{% else %}Send your name and how many are coming{% endif %} by <b class="nowrap">{{ rsvp_deadline }}</b>
+{%- endmacro %}

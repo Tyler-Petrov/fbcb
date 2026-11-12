@@ -7,52 +7,59 @@
 .hanger { position: absolute; top: 0; width: 4.25in; height: 11in; }
 .hanger.r { left: 4.25in; }
 .hanger.l { left: 0; }
-/* Content runs down from under the hole with fixed gaps; only the last group is
-   pinned to the bottom edge. */
+/* Content starts under the hole; the cream panel is pinned to the foot. */
 .card {
   left: {{ mat }}in; top: {{ mat }}in; width: {{ 4.25 - 2 * mat }}in; height: {{ 11 - 2 * mat }}in;
-  padding: 2.05in .3in 0;
+  padding: 1.95in .32in 0;
 }
-.gap { margin-top: .4in; }
-/* The back spreads its three groups over the full card. */
-.card.back { display: flex; flex-direction: column; justify-content: space-between; padding-bottom: .4in; }
-.card.back .gap { margin-top: 0; }
-.pin { position: absolute; left: .3in; right: .3in; bottom: .4in; }
 /* Hand-cutting guide: a 1.375 in. hole with a slit up to the top edge. */
 .die { position: absolute; left: 0; top: 0; width: 4.25in; height: 2in; }
 .cut-guide { position: absolute; top: 0; left: 4.25in; height: 11in; border-left: .75pt dashed #9aa79f; }
 
-.kicker { font-style: italic; color: var(--sage); font-size: 14pt; line-height: 1.3; }
-h1 { font-weight: 800; font-size: 33pt; line-height: 1; letter-spacing: -.01em; margin-top: .08in; }
+.eyebrow { font-size: 8pt; line-height: 1.3; letter-spacing: .08em; white-space: nowrap; }
+.kicker { font-style: italic; font-size: 15pt; line-height: 1.25; margin-top: .03in; }
+h1 { font-weight: 800; font-size: 35pt; line-height: .95; letter-spacing: -.015em; margin-top: .3in; }
 h1 span { display: block; font-style: italic; font-weight: 500; }
-.sub { font-weight: 500; font-size: 15pt; line-height: 1.3; margin-top: .14in; }
+.sub { font-size: 15pt; line-height: 1.25; margin-top: .14in; }
+.pill {
+  display: inline-block; margin-top: .2in; background: var(--gold); color: var(--green);
+  border-radius: 1in; padding: .05in .16in .06in;
+  font-weight: 800; font-size: 10pt; letter-spacing: .1em; text-transform: uppercase;
+}
 
-.date { font-weight: 800; font-size: 27pt; line-height: 1.08; letter-spacing: -.01em; }
-.times { margin-top: .1in; }
-.times > div { border-top: 1.5pt solid var(--line); padding: .08in 0 .1in; }
-.what { font-size: 14pt; line-height: 1.25; color: var(--sage); }
-.time { font-weight: 700; font-size: 26pt; line-height: 1.1; white-space: nowrap; }
-.worship .time { font-size: 22pt; }
-.where { border-top: 1.5pt solid var(--line); border-bottom: 1.5pt solid var(--line); padding: .1in 0 .12in; font-size: 14pt; line-height: 1.35; }
-.where b { font-weight: 700; }
-.where .ph { white-space: normal; }
+.when { margin-top: .45in; border-top: 1.5pt solid var(--line); padding-top: .2in; }
+.date { font-weight: 800; font-size: 19.5pt; line-height: 1.1; }
+.time { font-weight: 800; font-size: 32pt; line-height: 1.05; letter-spacing: -.02em; color: var(--gold); white-space: nowrap; }
+.place { margin-top: .2in; font-size: 12.5pt; line-height: 1.3; }
+.place b { font-weight: 700; }
+.place .addr { color: var(--soft); }
+.place .ph { white-space: normal; }
+.early { margin-top: .14in; font-size: 12.5pt; line-height: 1.3; color: var(--soft); font-style: italic; }
+.early b { color: var(--cream); font-style: normal; font-weight: 700; }
 
-.rsvp { border-top: 1.5pt solid var(--line); padding-top: .12in; }
-.rsvp .lead { font-weight: 800; font-size: 16pt; line-height: 1.2; }
-.rsvp .phone { font-weight: 800; font-size: 26pt; line-height: 1.1; letter-spacing: -.01em; }
-.rsvp p { font-size: 14pt; line-height: 1.35; }
-.rsvp .ph { white-space: normal; }
-.turn { font-size: 14pt; line-height: 1.3; margin-top: .06in; }
-.back-top .rsvp { border-top: 0; padding-top: 0; margin-top: .14in; }
-.pin.rsvp { border-top: 0; padding-top: 0; }
+.panel { position: absolute; left: 0; right: 0; bottom: 0; padding: .3in .32in .32in; }
+.panel .eyebrow { font-size: 10pt; }
+.panel .phone { font-weight: 800; font-size: 29pt; line-height: 1.1; letter-spacing: -.015em; white-space: nowrap; }
+.panel .ask { font-size: 12.5pt; line-height: 1.3; margin-top: .04in; }
+.panel .ask b { font-weight: 700; }
+.panel .ph { white-space: normal; }
 
-.menu { border-top: 1.5pt solid var(--line); padding-top: .12in; }
-.menu h2 { font-weight: 400; color: var(--sage); font-size: 14pt; line-height: 1.2; }
-.menu p { font-size: 14pt; line-height: 1.4; margin-top: .03in; }
-.menu .by { color: var(--sage); font-style: italic; margin-top: .06in; }
-.scan { border-top: 1.5pt solid var(--line); padding-top: .25in; }
-.qr-block { width: 2.15in; margin: 0 auto; }
-.qr-url { font-size: 13pt; }
+/* Back: what it is, what's for dinner, and the QR code. */
+.back h2 { font-weight: 800; font-size: 27pt; line-height: .98; letter-spacing: -.015em; }
+.back h2 span { display: block; font-style: italic; font-weight: 500; }
+.back .recap { margin-top: .18in; }
+.back .recap .d { font-weight: 700; font-size: 16pt; line-height: 1.2; }
+.back .recap .t { font-weight: 800; font-size: 22pt; line-height: 1.15; color: var(--gold); }
+.back .recap .p { font-size: 12.5pt; line-height: 1.3; color: var(--soft); }
+.back .menu { margin-top: .35in; border-top: 1.5pt solid var(--line); padding-top: .2in; }
+.back .menu ul { list-style: none; margin-top: .06in; }
+.back .menu li { font-size: 16pt; line-height: 1.6; }
+.back .menu li::before { content: "·"; color: var(--gold); font-weight: 800; display: inline-block; width: .2in; }
+.back .by { font-size: 12pt; color: var(--soft); font-style: italic; margin-top: .08in; }
+.back .panel { text-align: center; padding-top: .26in; }
+.back .panel .phone { font-size: 24pt; }
+.back .qr-block { width: 1.45in; margin: .14in auto 0; }
+.back .qr-url { font-size: 11pt; margin-top: -.03in; }
 {% endset %}
 
 {% macro die() -%}
@@ -65,20 +72,21 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
 {% macro front(side="l") -%}
 <div class="hanger {{ side }}">
   <div class="card">
-    <header>
-      <p class="kicker">First Baptist Church<br>of Bellflower stopped by.</p>
-      <h1>Community <span>Friendsgiving</span></h1>
-      {{ b.subtitle() }}
-    </header>
-    <section class="gap">
+    <p class="eyebrow">First Baptist Church of Bellflower</p>
+    <p class="kicker">We stopped by to invite you.</p>
+    <h1>Community <span>Friendsgiving</span></h1>
+    {{ b.subtitle(br=true) }}
+    <p class="pill">Free meal · All welcome</p>
+    <section class="when">
       <p class="date">Sunday, December 6</p>
-      {{ b.event_times() }}
-      <p class="where"><b>Bellflower <span class="nowrap">Community Building</span></b><br>{{ venue_address }}</p>
+      <p class="time">{{ b.meal_time() }}</p>
+      <p class="place"><b>Bellflower Community Building</b><br><span class="addr">{{ venue_address }}</span></p>
+      <p class="early">Come early for worship at <b>{{ b.t("10:30", "a.m.") }}</b></p>
     </section>
-    <section class="pin rsvp">
-      <p class="lead">RSVP {{ b.rsvp_how() }}</p>
+    <section class="panel">
+      <p class="eyebrow">RSVP {{ b.rsvp_how() }}</p>
       <p class="phone">{{ phone }}</p>
-      <p class="turn">{{ b.rsvp_ask(short=true) }}</p>
+      <p class="ask">{{ b.rsvp_ask(short=true) }}</p>
     </section>
   </div>
   {{ die() }}
@@ -88,20 +96,25 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
 {% macro back(side="l") -%}
 <div class="hanger {{ side }}">
   <div class="card back">
-    <section class="back-top">
-      <p class="kicker">Community Friendsgiving<br>Sunday, December 6<br>Free meal 12:30–2:30 p.m.<br>Bellflower Community Building</p>
-      <div class="rsvp">
-        <p class="lead">RSVP {{ b.rsvp_how() }}</p>
-        <p class="phone">{{ phone }}</p>
-        <p>{{ b.rsvp_ask(short=true) }}</p>
-      </div>
-    </section>
-    <section class="menu gap">
-      <h2>Menu</h2>
-      <p>{{ b.menu(narrow=true) }}</p>
+    <h2>Community <span>Friendsgiving</span></h2>
+    <p class="pill">Free meal · All welcome</p>
+    <div class="recap"><p class="d">Sunday, December 6</p><p class="t">{{ b.meal_time() }}</p><p class="p">Bellflower Community Building</p></div>
+    <section class="menu">
+      <p class="eyebrow">On the table</p>
+      <ul>
+        <li>Turkey &amp; dressing</li>
+        <li>Mashed potatoes &amp; gravy</li>
+        <li>Green beans</li>
+        <li>Rolls &amp; salad</li>
+        <li>Pie &amp; desserts</li>
+      </ul>
       <p class="by">{{ b.caterer() }}</p>
     </section>
-    <section class="scan gap">{{ b.qr_block() }}</section>
+    <section class="panel">
+      <p class="eyebrow">RSVP {{ b.rsvp_how() }}</p>
+      <p class="phone">{{ phone }}</p>
+      {{ b.qr_block() }}
+    </section>
   </div>
   {{ die() }}
 </div>

@@ -11,41 +11,45 @@
 .half.bottom { top: 5.5in; }
 .card {
   left: {{ mat }}in; top: {{ mat }}in; width: {{ 8.5 - 2 * mat }}in; height: {{ 5.5 - 2 * mat }}in;
-  padding: .36in .5in .34in;
-  display: flex; flex-direction: column; justify-content: space-between;
+  padding: .3in .45in 0;
 }
 .fold { position: absolute; top: 5.5in; width: .25in; border-top: .75pt solid #9aa79f; }
 .fold.l { left: 0; } .fold.r { right: 0; }
 
-.sub { text-align: center; font-weight: 500; font-size: 16pt; line-height: 1.2; }
-.week { display: flex; text-align: center; margin-top: .2in; }
-.week > div { flex: 1; padding: 0 .15in; }
-.week > div + div { border-left: 1.5pt solid var(--line); }
-.icon { display: block; width: .64in; height: .64in; margin: 0 auto .09in; }
-.day { font-size: 14pt; line-height: 1.2; color: var(--sage); }
-.what { font-size: 15pt; font-weight: 500; line-height: 1.2; }
-.time { font-weight: 700; font-size: 32pt; line-height: 1.1; white-space: nowrap; margin-top: .04in; }
+.sub { text-align: center; font-size: 21pt; line-height: 1.2; }
 
-.church {
-  display: flex; align-items: center; justify-content: space-between; gap: .4in;
-  border-top: 1.5pt solid var(--line); padding-top: .18in;
+/* Three identical stacks: icon box, name, time, day. Every row is one line in
+   every column, so the icons, names and times sit on the same lines. */
+.week { display: flex; margin-top: .3in; }
+.week > div { flex: 1; text-align: center; }
+.week > div + div { border-left: 1.5pt solid var(--line); }
+.icon { display: block; width: .82in; height: .82in; margin: 0 auto .14in; }
+.name { font-weight: 700; font-size: 18pt; line-height: 1.2; white-space: nowrap; }
+.time { font-weight: 800; font-size: 34pt; line-height: 1.1; letter-spacing: -.015em; color: var(--gold); white-space: nowrap; }
+.day { font-size: 10pt; line-height: 1.3; color: var(--soft); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+
+.panel {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1.42in;
+  padding: 0 .45in; display: flex; align-items: center; gap: .4in;
 }
-.church > h1 { flex: 1; }
-h1 { font-weight: 800; font-size: 28pt; line-height: 1.05; letter-spacing: -.012em; }
+.panel .who { flex: 1; min-width: 0; }
+h1 { font-weight: 800; font-size: 23pt; line-height: 1.02; letter-spacing: -.012em; }
 h1 span { display: block; font-style: italic; font-weight: 500; }
-.qr-block { width: 1.05in; flex: none; }
-.qr-url { font-size: 11pt; }
-.qr-ph-flag { font-size: 7pt; }
+.addr { font-size: 12pt; line-height: 1.3; margin-top: .06in; }
+.qr-block { width: 1.02in; flex: none; }
+.qr-url { font-size: 9.5pt; margin-top: -.02in; }
+.qr-ph-flag { font-size: 6.5pt; }
 {% endset %}
 
-{# Line icons, drawn on a 48-unit grid in cream. #}
+{# Line icons on a 48-unit grid, all drawn to the same height and stroke so they
+   read as one set. #}
 {% macro icon(name) -%}
 <svg class="icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-     fill="none" stroke="#f4eddc" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+     fill="none" stroke="#e3b04b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 {% if name == "school" %}{# an open book #}
-  <path d="M24 15 C19 11 11 10.5 5 12.5 V38 C11 36 19 36.5 24 40 C29 36.5 37 36 43 38 V12.5 C37 10.5 29 11 24 15 Z"/>
-  <path d="M24 15 V40"/>
-  <path d="M10 18.5 C13 17.8 16.5 18 19.5 19.5 M10 24.5 C13 23.8 16.5 24 19.5 25.5 M28.5 19.5 C31.5 18 35 17.8 38 18.5 M28.5 25.5 C31.5 24 35 23.8 38 24.5"/>
+  <path d="M24 11 C19 7 11 6.5 4 8.5 V40 C11 38 19 38.5 24 42 C29 38.5 37 38 44 40 V8.5 C37 6.5 29 7 24 11 Z"/>
+  <path d="M24 11 V42"/>
+  <path d="M9.5 16 C13 15.2 16.5 15.5 19.5 17 M9.5 22.5 C13 21.7 16.5 22 19.5 23.5 M9.5 29 C13 28.2 16.5 28.5 19.5 30 M28.5 17 C31.5 15.5 35 15.2 38.5 16 M28.5 23.5 C31.5 22 35 21.7 38.5 22.5 M28.5 30 C31.5 28.5 35 28.2 38.5 29"/>
 {% elif name == "worship" %}{# the church: steeple, cross, door #}
   <path d="M24 3.5 V11 M20.5 6.5 H27.5"/>
   <path d="M17 23 L24 13 L31 23"/>
@@ -54,10 +58,10 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
   <path d="M3.5 44 H44.5"/>
   <path d="M21 44 V37.5 A3 3 0 0 1 27 37.5 V44"/>
 {% elif name == "study" %}{# a Bible under the evening moon (Wednesday night) #}
-  <rect x="8" y="13" width="24" height="31" rx="2.5"/>
-  <path d="M13 13 V44"/>
-  <path d="M22.5 21 V35 M18 25.5 H27"/>
-  <path d="M41.5 4 A7 7 0 1 0 46 15.5 A5.5 5.5 0 0 1 41.5 4 Z" stroke-width="2"/>
+  <rect x="8" y="9" width="25" height="35" rx="2.5"/>
+  <path d="M13.5 9 V44"/>
+  <path d="M23.25 17.5 V33 M18.5 22.5 H28"/>
+  <path d="M40 3.5 A7 7 0 1 0 45.5 15 A5.5 5.5 0 0 1 40 3.5 Z" stroke-width="2.1"/>
 {% endif %}
 </svg>
 {%- endmacro %}
@@ -65,18 +69,19 @@ h1 span { display: block; font-style: italic; font-weight: 500; }
 {% macro half(cls) -%}
 <div class="half {{ cls }}">
   <div class="card">
-    <div>
-      {{ b.subtitle() }}
-      <div class="week">
-        <div>{{ icon("school") }}<p class="day">&nbsp;</p><p class="what">Sunday school</p><p class="time">{{ sunday_school_time|ampm }}</p></div>
-        <div>{{ icon("worship") }}<p class="day">Sunday</p><p class="what">Worship</p><p class="time">{{ sunday_worship_time|ampm }}</p></div>
-        <div>{{ icon("study") }}<p class="day">Wednesday night</p><p class="what">Bible study</p><p class="time">{{ wednesday_study_time|ampm }}</p></div>
+    {{ b.subtitle() }}
+    <div class="week">
+      <div>{{ icon("school") }}<p class="name">Sunday school</p><p class="time">{{ sunday_school_time|ampm }}</p><p class="day">Every Sunday</p></div>
+      <div>{{ icon("worship") }}<p class="name">Worship</p><p class="time">{{ sunday_worship_time|ampm }}</p><p class="day">Every Sunday</p></div>
+      <div>{{ icon("study") }}<p class="name">Bible study</p><p class="time">{{ wednesday_study_time|ampm }}</p><p class="day">Every Wednesday</p></div>
+    </div>
+    <section class="panel">
+      <div class="who">
+        <h1>First Baptist Church <span>of Bellflower</span></h1>
+        <p class="addr">{{ church_address }}</p>
       </div>
-    </div>
-    <div class="church">
-      <h1>First Baptist Church <span>of Bellflower</span></h1>
       {{ b.qr_block() }}
-    </div>
+    </section>
   </div>
 </div>
 {%- endmacro %}
