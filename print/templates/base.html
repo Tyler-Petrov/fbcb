@@ -58,6 +58,7 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 .qr-block { text-align: center; }
 /* The written address may run wider than the tile; it never wraps mid-word. */
 .qr-url { font-weight: 700; line-height: 1.2; white-space: nowrap; margin: 0 -1in; }
+.qr-cta { font-size: .78em; line-height: 1.2; white-space: nowrap; margin: 0 -1in; }
 .qr-ph-flag {
   display: block; margin-top: .3em; background: #ffe500; color: #b00000;
   border: 2px dashed #b00000; font-weight: 700; text-align: center;
@@ -106,6 +107,7 @@ small { font-size: .6em; font-weight: 700; letter-spacing: .02em; }
 {% macro qr_block() -%}
 <div class="qr-block">
   {{ qr }}
+  <div class="qr-cta">Scan to visit our website</div>
   <div class="qr-url">{{ site_label }}</div>
   {% if not final %}<span class="qr-ph-flag">PLACEHOLDER QR: DO NOT PRINT</span>{% endif %}
 </div>

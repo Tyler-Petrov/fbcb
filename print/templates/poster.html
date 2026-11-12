@@ -16,12 +16,12 @@ h1 { font-weight: 800; font-size: {{ pt(94) }}; line-height: .94; letter-spacing
 h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: -.01em; }
 
 /* The subtitle shares a row with the gold seal: the one loud thing on the page. */
-.lede { display: flex; align-items: center; justify-content: space-between; margin-top: {{ inch(0.2 if H > 15 else 0.16) }}; }
-.sub { font-size: {{ pt(34) }}; line-height: 1.18; }
+.lede { display: flex; align-items: center; justify-content: space-between; gap: {{ inch(0.35) }}; margin-top: {{ inch(0.2 if H > 15 else 0.16) }}; }
+.sub { font-size: {{ pt(31) }}; line-height: 1.2; }
 .seal {
   flex: none; width: {{ inch(2.75) }}; height: {{ inch(2.75) }}; border-radius: 50%;
   background: var(--gold); color: var(--green); text-align: center;
-  padding-top: {{ inch(0.5) }}; transform: rotate(-8deg); margin-right: {{ inch(0.05) }};
+  padding-top: {{ inch(0.6) }}; transform: rotate(-8deg); margin-right: {{ inch(0.05) }};
 }
 .seal b { display: block; font-weight: 800; font-size: {{ pt(56) }}; line-height: .9; letter-spacing: -.01em; }
 .seal i { display: block; font-weight: 500; font-size: {{ pt(32) }}; line-height: 1; }
@@ -53,7 +53,8 @@ h1 span { display: block; font-style: italic; font-weight: 500; letter-spacing: 
 .panel .ask { font-size: {{ pt(21) }}; line-height: 1.3; margin-top: {{ inch(0.06) }}; }
 .panel .ask b { font-weight: 700; }
 .qr-block { flex: none; width: {{ inch(2.25) }}; }
-.qr-url { font-size: {{ pt(15) }}; margin-top: -{{ inch(0.06) }}; }
+.qr-cta { margin-top: -{{ inch(0.06) }}; font-size: {{ pt(13) }}; }
+.qr-url { font-size: {{ pt(15) }}; }
 {% endset %}
 {{ b.head("Community Friendsgiving poster", css) }}
 <body>
