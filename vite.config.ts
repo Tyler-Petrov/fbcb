@@ -5,8 +5,9 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	// Lets the prerendered HTML leave out events that were already over when the site was built.
 	define: { __BUILD_TIME__: JSON.stringify(new Date().toISOString()) },
-	// `pnpm dev` prints this machine's Tailscale URL; Vite only answers hostnames it allows.
-	server: { allowedHosts: ['.ts.net'] },
+	// `pnpm dev` prints Tailscale URLs: the tailnet IP needs Vite on every interface, and the
+	// HTTPS one from `tailscale serve` needs its .ts.net hostname allowed.
+	server: { host: true, allowedHosts: ['.ts.net'] },
 	plugins: [
 		sveltekit({
 			compilerOptions: {
