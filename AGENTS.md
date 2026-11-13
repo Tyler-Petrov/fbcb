@@ -1,6 +1,6 @@
 # FBCB website
 
-Static SvelteKit site for First Baptist Church of Bellflower (adapter-static, served by the `fbcb` Cloudflare Worker). No backend. Church facts and meeting decisions are in `CONTEXT.md`. Nearly all content edits happen in `src/lib/church.ts`. `print/` builds the Friendsgiving print PDFs (`print/build.sh`, Python via uv) and is separate from the site.
+Static SvelteKit site for First Baptist Church of Bellflower (adapter-static, served by the `fbcb` Cloudflare Worker at https://fbcb.tpetrov.dev, a temporary domain until the church gets its own). No backend. Church facts and meeting decisions are in `CONTEXT.md`. Nearly all content edits happen in `src/lib/church.ts`. `print/` builds the Friendsgiving print PDFs (`print/build.sh`, Python via uv) and is separate from the site.
 
 ## Code changes and releases
 
