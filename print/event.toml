@@ -15,12 +15,16 @@ rsvp_deadline = ""
 venue_address = ""
 
 # Church street address. Confirmed by Tyler, Nov 9.
-church_address = "302 S Main St., Bellflower"
+church_address = "302 S Main St, Bellflower"
 
-# Weekly schedule for the table tent, e.g. "9:30 a.m."
-sunday_school_time = ""
-sunday_worship_time = ""
-wednesday_study_time = ""
+# Weekly schedule for the table tent. Confirmed by Tyler, Nov 9.
+sunday_school_time = "9:30 a.m."
+sunday_worship_time = "10:30 a.m."
+wednesday_study_time = "6:00 p.m."
+
+# How guests RSVP: "text" or "call". Texting to the church phone is untested;
+# switch to "call" if it can't take texts and every RSVP line rewords itself.
+rsvp_method = "text"
 
 # Fixed facts (from the Nov 8 meeting)
 church_phone = "573-340-1070"
