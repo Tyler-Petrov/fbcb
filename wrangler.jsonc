@@ -5,7 +5,11 @@
 	"name": "fbcb",
 	"compatibility_date": "2026-11-01",
 	"assets": { "directory": "./build" },
-	// Production URL. Temporary until the church's own domain is set up.
-	"routes": [{ "pattern": "fbcb.tpetrov.dev", "custom_domain": true }],
+	// Production URLs. fbcb.tpetrov.dev was the temporary domain and stays so old links keep working.
+	"routes": [
+		{ "pattern": "bellflowerbaptist.church", "custom_domain": true },
+		{ "pattern": "www.bellflowerbaptist.church", "custom_domain": true },
+		{ "pattern": "fbcb.tpetrov.dev", "custom_domain": true }
+	],
 	"preview_urls": true
 }
