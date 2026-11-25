@@ -1,4 +1,15 @@
-{# Shared fonts, palette, and small pieces used by every print file. #}
+{# Shared look for every print file, taken from the "family photo" home page mock
+   (pagedrop.page/fbcb/home-mocks/r3-3-family-photo): Besley, the church green, cream,
+   and the website's lamp gold as the one accent.
+
+   Every piece is a green card set in a margin of bare paper. On the website the photo
+   sits in a cream mat; on paper the sheet itself is the mat. It also means nothing has
+   to print to the edge, which FedEx's copiers can't do without trimming.
+
+   Colour does the sorting:
+     gold   the facts someone acts on (when, the free meal)
+     cream  everything else on green
+     green  on the cream panel at the foot of each piece (RSVP and QR) #}
 {% macro head(title, page_css) -%}
 <!doctype html>
 <html lang="en">
@@ -6,30 +17,51 @@
 <meta charset="utf-8">
 <title>{{ title }}</title>
 <style>
-@font-face { font-family: "Fraunces"; font-weight: 600; src: url("{{ fonts }}/Fraunces-600.woff"); }
-@font-face { font-family: "Fraunces"; font-weight: 800; src: url("{{ fonts }}/Fraunces-800.woff"); }
-@font-face { font-family: "Atkinson"; font-weight: 400; src: url("{{ fonts }}/AtkinsonHyperlegible-400.woff"); }
-@font-face { font-family: "Atkinson"; font-weight: 400; font-style: italic; src: url("{{ fonts }}/AtkinsonHyperlegible-400i.woff"); }
-@font-face { font-family: "Atkinson"; font-weight: 700; src: url("{{ fonts }}/AtkinsonHyperlegible-700.woff"); }
-
+{% for w in [400, 500, 700, 800] -%}
+@font-face { font-family: "Besley"; font-weight: {{ w }}; src: url("{{ fonts }}/Besley-{{ w }}.ttf"); }
+{% endfor -%}
+{% for w in [400, 500, 700] -%}
+@font-face { font-family: "Besley"; font-weight: {{ w }}; font-style: italic; src: url("{{ fonts }}/Besley-{{ w }}i.ttf"); }
+{% endfor %}
 :root {
-  --ink: #3a2416;      /* warm brown body text */
-  --rust: #9a3412;     /* headline */
-  --gold: #c58a1a;     /* rules and accents */
-  --olive: #5b6b2a;    /* labels */
-  --tint: #f8eedd;     /* the only filled areas; very light to save ink */
+  --green: #0f2f25;
+  --line: #2f5d4d;       /* hairline rules on green */
+  --cream: #f4eddc;      /* text on green, and the panel */
+  --soft: #d6dccd;       /* quieter text on green, still bright */
+  --gold: #e3b04b;       /* lamp gold, from the website */
+  --gold-ink: #85570f;   /* gold that reads on cream */
+  --harvest: #e58a43;    /* pumpkin, for the one "free meal" mark on each piece */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { color: var(--ink); font-family: "Atkinson", sans-serif; }
-.serif { font-family: "Fraunces", serif; }
+html { font-family: "Besley", Georgia, serif; color: var(--cream); }
+.card { background: var(--green); position: absolute; overflow: hidden; }
+/* The cream foot of every card. */
+.panel { background: var(--cream); color: var(--green); }
 .ph {
-  background: #ffe500; color: #b00000; font-family: "Atkinson", sans-serif;
-  font-weight: 700; font-style: normal; letter-spacing: 0;
+  background: #ffe500; color: #b00000;
+  font-weight: 700; font-style: normal; letter-spacing: 0; font-size: .8em;
   border: 2px dashed #b00000; padding: 0 .2em; white-space: nowrap;
 }
+.nowrap { white-space: nowrap; }
+small { font-size: .62em; font-weight: 700; letter-spacing: .02em; }
+.gold { color: var(--gold); }
+.eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--gold); }
+.panel .eyebrow { color: var(--gold-ink); }
+.sub { font-weight: 500; }
+.sub em { color: var(--gold); white-space: nowrap; }
+/* Besley's colon sits tight against bold figures; give it a hair of room. */
+.c { margin: 0 .03em; letter-spacing: 0; }
+/* The place-setting divider: fork, plate, knife on a rule. Says "a meal" without a photo. */
+.setting { display: flex; align-items: center; gap: .12in; }
+.setting .rule { flex: 1; border-top: 1.5pt solid #4a7d69; }
+.setting svg { flex: none; display: block; }
 .qr { display: block; width: 100%; height: auto; }
+.qr-block { text-align: center; }
+/* The written address may run wider than the tile; it never wraps mid-word. */
+.qr-url { font-weight: 700; line-height: 1.2; white-space: nowrap; margin: 0 -1in; }
+.qr-cta { font-size: .78em; line-height: 1.2; white-space: nowrap; margin: 0 -1in; }
 .qr-ph-flag {
-  display: block; margin-top: .25em; background: #ffe500; color: #b00000;
+  display: block; margin-top: .3em; background: #ffe500; color: #b00000;
   border: 2px dashed #b00000; font-weight: 700; text-align: center;
   font-size: .7em; padding: .1em .2em; line-height: 1.2;
 }
@@ -38,30 +70,72 @@ html { color: var(--ink); font-family: "Atkinson", sans-serif; }
 </head>
 {%- endmacro %}
 
-{# Three autumn leaves between two thin rules. #}
-{% macro leaves(width="3in") -%}
-<svg class="leaves" style="width: {{ width }}" viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <line x1="0" y1="30" x2="100" y2="30" stroke="#c58a1a" stroke-width="2.5"/>
-  <line x1="200" y1="30" x2="300" y2="30" stroke="#c58a1a" stroke-width="2.5"/>
-  {% for x, rot, color in [(120, -20, "#c58a1a"), (150, 0, "#9a3412"), (180, 20, "#5b6b2a")] %}
-  <g transform="translate({{ x }} 46) rotate({{ rot }})">
-    <path d="M0 0 C -14 -12 -14 -32 0 -44 C 14 -32 14 -12 0 0 Z" fill="{{ color }}"/>
-    <line x1="0" y1="2" x2="0" y2="-38" stroke="#fff" stroke-width="2"/>
-  </g>
-  {% endfor %}
+{# "10:30 a.m." with the a.m. small, like the times on the website. #}
+{% macro t(time, half) -%}
+{{ time|replace(":", '<span class="c">:</span>')|safe }}&#8202;<small>{{ half }}</small>
+{%- endmacro %}
+
+{% macro meal_time() %}12<span class="c">:</span>30–{{ t("2:30", "p.m.") }}{% endmacro %}
+
+{# Worship that day is at the community building, so the line says so outright. #}
+{% macro early(br=false) %}<p class="early">Come early for worship in the{% if br %}<br>{% endif %} same building at <b class="nowrap">{{ t("10:30", "a.m.") }}</b></p>{% endmacro %}
+
+{% macro setting(w=1.1) -%}
+<div class="setting"><span class="rule"></span>
+<svg style="width: {{ w }}in; height: {{ w * 32 / 76 }}in" viewBox="2 0 76 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+     fill="none" stroke="#e3b04b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8 3 V11 M12 3 V11 M16 3 V11 M8 11 C8 15.5 16 15.5 16 11"/>
+  <path d="M12 14.5 V29" stroke-width="3"/>
+  <circle cx="40" cy="16" r="13.5"/><circle cx="40" cy="16" r="8.5"/>
+  <path d="M65 29 V3 C71.5 5 72.5 13.5 70 18.5 H65 Z" fill="#e3b04b" fill-opacity=".25"/>
+  <path d="M65 18.5 V29" stroke-width="3"/>
 </svg>
+<span class="rule"></span></div>
 {%- endmacro %}
 
-{% macro menu_items() -%}
-<li>Turkey</li> <li>Dressing</li> <li>Mashed potatoes &amp; gravy</li> <li>Green beans</li>
-<li>Rolls</li> <li>Salad</li> <li>Pie &amp; other desserts</li> <li>Tea, coffee &amp; water</li>
+{% macro subtitle(br=false) -%}
+<p class="sub">You’re not just welcome.{% if br %}<br>{% else %} {% endif %}<em>You’re invited.</em></p>
 {%- endmacro %}
 
-{% macro qr_block(caption) -%}
+{% macro caterer() %}Catered by <span class="nowrap">Bellflower Youth Club</span>{% endmacro %}
+
+{# The menu as dishes. Drinks are left off: tea, coffee and water go without saying. #}
+{% macro menu_inline() -%}
+{% set dishes = ["Turkey &amp; dressing", "Mashed potatoes &amp; gravy", "Green beans", "Rolls &amp; salad", "Pie &amp; desserts"] %}
+{# Two set lines so no line ends on a stray dot. #}
+{% for d in dishes %}<span class="nowrap">{{ d|safe }}</span>{% if loop.index == 2 %}<br>{% elif not loop.last %}<span class="dot"> · </span>{% endif %}{% endfor %}
+{%- endmacro %}
+
+{# The QR code on its cream tile, with the address written out under it. #}
+{% macro qr_block(caption=true) -%}
 <div class="qr-block">
-  <div class="qr-frame">{{ qr }}</div>
-  <div class="qr-caption">{{ caption }}</div>
-  <div class="qr-url">{{ site_label }}</div>
+  {{ qr }}
+  {% if caption %}<div class="qr-cta">Scan to visit our website</div>
+  <div class="qr-url">{{ site_label }}</div>{% endif %}
   {% if not final %}<span class="qr-ph-flag">PLACEHOLDER QR: DO NOT PRINT</span>{% endif %}
 </div>
+{%- endmacro %}
+
+{# RSVP wording follows rsvp_method in event.toml. #}
+{% macro rsvp_how() %}{{ 'by text' if rsvp_text else 'by phone' }}{% endmacro %}
+{% macro rsvp_ask(short=false) -%}
+{% if short %}Your name and how many,{% else %}Send your name and how many are coming{% endif %} by <b class="nowrap">{{ rsvp_deadline }}</b>
+{%- endmacro %}
+
+{# A pumpkin pie from above on a cream plate: crimped gold crust, pumpkin filling. It is
+   the "free meal" mark on every piece, so the one picture of food is the thing that is
+   free. The plate keeps the crimped edge from reading as petals; the small version
+   shows slice cuts so it reads as pie at an inch across. #}
+{% macro pie(cut=false) -%}
+<svg class="pie" viewBox="-51 -51 102 102" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle r="50" fill="#f4eddc"/>
+  <circle r="46.5" fill="none" stroke="#d6cbb3" stroke-width="1.2"/>
+  <g transform="scale(.86)">
+  <g fill="#e3b04b"><circle r="44.5"/><circle cx="44.50" cy="0.00" r="5.6"/><circle cx="43.21" cy="10.65" r="5.6"/><circle cx="39.40" cy="20.68" r="5.6"/><circle cx="33.31" cy="29.51" r="5.6"/><circle cx="25.28" cy="36.62" r="5.6"/><circle cx="15.78" cy="41.61" r="5.6"/><circle cx="5.36" cy="44.18" r="5.6"/><circle cx="-5.36" cy="44.18" r="5.6"/><circle cx="-15.78" cy="41.61" r="5.6"/><circle cx="-25.28" cy="36.62" r="5.6"/><circle cx="-33.31" cy="29.51" r="5.6"/><circle cx="-39.40" cy="20.68" r="5.6"/><circle cx="-43.21" cy="10.65" r="5.6"/><circle cx="-44.50" cy="-0.00" r="5.6"/><circle cx="-43.21" cy="-10.65" r="5.6"/><circle cx="-39.40" cy="-20.68" r="5.6"/><circle cx="-33.31" cy="-29.51" r="5.6"/><circle cx="-25.28" cy="-36.62" r="5.6"/><circle cx="-15.78" cy="-41.61" r="5.6"/><circle cx="-5.36" cy="-44.18" r="5.6"/><circle cx="5.36" cy="-44.18" r="5.6"/><circle cx="15.78" cy="-41.61" r="5.6"/><circle cx="25.28" cy="-36.62" r="5.6"/><circle cx="33.31" cy="-29.51" r="5.6"/><circle cx="39.40" cy="-20.68" r="5.6"/><circle cx="43.21" cy="-10.65" r="5.6"/></g>
+  <path d="M39.71 4.82 L46.16 5.60 M37.40 14.18 L43.48 16.49 M32.92 22.72 L38.27 26.42 M26.52 29.94 L30.84 34.81 M18.59 35.42 L21.61 41.17 M9.57 38.84 L11.13 45.15 M-0.00 40.00 L-0.00 46.50 M-9.57 38.84 L-11.13 45.15 M-18.59 35.42 L-21.61 41.17 M-26.52 29.94 L-30.84 34.81 M-32.92 22.72 L-38.27 26.42 M-37.40 14.18 L-43.48 16.49 M-39.71 4.82 L-46.16 5.60 M-39.71 -4.82 L-46.16 -5.60 M-37.40 -14.18 L-43.48 -16.49 M-32.92 -22.72 L-38.27 -26.42 M-26.52 -29.94 L-30.84 -34.81 M-18.59 -35.42 L-21.61 -41.17 M-9.57 -38.84 L-11.13 -45.15 M-0.00 -40.00 L-0.00 -46.50 M9.57 -38.84 L11.13 -45.15 M18.59 -35.42 L21.61 -41.17 M26.52 -29.94 L30.84 -34.81 M32.92 -22.72 L38.27 -26.42 M37.40 -14.18 L43.48 -16.49 M39.71 -4.82 L46.16 -5.60" stroke="#b9852c" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <circle r="38.8" fill="#c97b34"/>
+  <circle r="37" fill="#e58a43"/>
+  {% if cut %}<path d="M0 0 L31.18 -18.00 M0 0 L31.18 18.00 M0 0 L-31.18 18.00" stroke="#b9612a" stroke-width="2.2" stroke-linecap="round" fill="none"/>{% endif %}
+  </g>
+</svg>
 {%- endmacro %}
